@@ -9,7 +9,7 @@ import java.awt.Color;
  */
 public class Entity {
     
-    private int x, y;           //Coordinate locations
+    private int x, y;           //Coordinate locations in relation to the grid
     private final int size = 5; //The size of the entity
     private Color color;        //The color of the entity (maybe used later)
     

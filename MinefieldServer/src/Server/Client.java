@@ -1,6 +1,8 @@
 package Server;
 
+import GameMechanics.Map;
 import GameMechanics.Player;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,6 +28,9 @@ public class Client implements Runnable{
     //Client data
     private Player player;
     
+    //Map data
+    private Map map;
+    
     /**
      * This constructor sets up the client 
      * with the client's connection socket
@@ -43,7 +48,7 @@ public class Client implements Runnable{
             this.close();
         }
         
-        player = new Player(10,10); //Temp use
+        player = new Player(4,4); //Temp use
         
         //Start up data Thread
         DataThread temp = new DataThread();
@@ -104,6 +109,14 @@ public class Client implements Runnable{
         return this.canGetInfo;
     }
     
+    
+    /**
+     * This updates the map for collision detection
+     */
+    public void updateMap(Map m){
+    	this.map = m;
+    }
+    
     /**
      * The Thread: Reads in data from the client 
      * and uses it appropriately
@@ -125,10 +138,10 @@ public class Client implements Runnable{
                     }
                     
                     //Movement
-                    if(keys[0]) player.moveLeft(3);
-                    if(keys[1]) player.moveUp(3);
-                    if(keys[2]) player.moveRight(3);
-                    if(keys[3]) player.moveDown(3);
+                    if(keys[0] && map.validLocation(player.getX()-1, player.getY())) player.moveLeft(1);
+                    if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
+                    if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
+                    if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
                 }
                 
                 sleep(25);
@@ -139,6 +152,10 @@ public class Client implements Runnable{
             }
         }
     }
+    
+    /**
+     * This closes the client
+     */
     public void close(){
         try{
             this.clientSocket.close();

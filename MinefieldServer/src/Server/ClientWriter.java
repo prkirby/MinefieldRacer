@@ -3,6 +3,8 @@ package Server;
 
 import java.util.ArrayList;
 
+import GameMechanics.Map;
+
 /**
  * This class sets up all of the appropriate data 
  * and sends it to the clients that are currently 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 public class ClientWriter implements Runnable{
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
+    private Map map = new Map(40,25);
     
     
     /**
@@ -62,6 +65,8 @@ public class ClientWriter implements Runnable{
                 if(!clients.get(cl).isActive()){
                     clients.remove(cl);
                     cl--;
+                }else{ //If the client exists
+                	clients.get(cl).updateMap(map);
                 }
             }
         }catch(NullPointerException e){

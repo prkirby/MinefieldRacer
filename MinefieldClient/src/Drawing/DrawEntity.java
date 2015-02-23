@@ -19,6 +19,6 @@ public abstract class DrawEntity {
      */
     public static void draw(Graphics g, Entity e){
         g.setColor(e.getColor());
-        g.fillRect(e.getX(), e.getY(), e.getSize(), e.getSize());
+        g.fillRect(e.getX()*e.getSize()*5, e.getY()*e.getSize()*5, e.getSize()*5, e.getSize()*5);
     }
 }

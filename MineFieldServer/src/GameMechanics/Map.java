@@ -82,4 +82,23 @@ public class Map {
 	public String[][] getMap(){
 		return this.map;
 	}
+	
+	/**
+	 * Determines if the given coordinate is a valid location to go to
+	 * @param x
+	 * 			The x coordinate
+	 * @param y
+	 * 			The y coordinate
+	 * @return
+	 * 			If the give coordinate is a valid coordinate
+	 */
+	public boolean validLocation(int x, int y){
+		if(x >= map.length || y >= map[0].length)
+			return false;
+		if(x < 0 || y < 0)
+			return false;
+		if(!map[x][y].equals("W"))
+			return true;
+		return false;
+	}
 }
