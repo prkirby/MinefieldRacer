@@ -12,6 +12,7 @@ public class Entity {
     private int x, y;           //Coordnate locations
     private final int size = 5; //The size of the entity
     private Color color;        //The color of the entity (maybe used later)
+    private String test;
     
     /**
      * Default Constructor (Not in use)
