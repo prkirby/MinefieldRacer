@@ -18,13 +18,14 @@ import javax.swing.JPanel;
 public class MainGUI {
     
     //Hud setup vars
-    private int Width = 1050;
-    private int Height = 650;
+    private int Width = 550;
+    private int Height = 550;
     private JFrame frame = new JFrame();
     private myJPanel mainpanel = new myJPanel();
     
     //Player interation vars
     private boolean[] keyPresses = {false,false,false,false};
+    private boolean canPress = true;
     
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
@@ -67,6 +68,13 @@ public class MainGUI {
         return this.keyPresses;
     }
     
+    /**
+     * This resets the key presses
+     */
+    public void resetKeyPresses(){
+    	for(int k = 0; k < this.keyPresses.length; k++ )
+    		this.keyPresses[k] = false;
+    }
     /**
      * Sets up the data of all of the visible entities
      * @param c 
@@ -114,31 +122,41 @@ public class MainGUI {
          *          The event
          */
         public void keyPressed(KeyEvent e) {
+
+            if(canPress)
             switch (e.getKeyCode()){
                 //Movement Keys
                 case KeyEvent.VK_A:
-                keyPresses[0] = true;    
+                keyPresses[0] = true;  
+                canPress = false;
                 break;
                 case KeyEvent.VK_W:
-                keyPresses[1] = true;    
+                keyPresses[1] = true;  
+                canPress = false;
                 break;
                 case KeyEvent.VK_D:
-                keyPresses[2] = true;    
+                keyPresses[2] = true; 
+                canPress = false;
                 break;
                 case KeyEvent.VK_S:
-                keyPresses[3] = true;    
+                keyPresses[3] = true;
+                canPress = false;
                 break;
                 case KeyEvent.VK_LEFT:
-                keyPresses[0] = true;    
+                keyPresses[0] = true;  
+                canPress = false;
                 break;
                 case KeyEvent.VK_UP:
-                keyPresses[1] = true;    
+                keyPresses[1] = true; 
+                canPress = false;
                 break;
                 case KeyEvent.VK_RIGHT:
-                keyPresses[2] = true;    
+                keyPresses[2] = true;  
+                canPress = false;
                 break;
                 case KeyEvent.VK_DOWN:
-                keyPresses[3] = true;    
+                keyPresses[3] = true; 
+                canPress = false;
                 break;
             }
         }
@@ -159,28 +177,36 @@ public class MainGUI {
             switch (e.getKeyCode()){
                 //Movement Keys
                 case KeyEvent.VK_A:
-                keyPresses[0] = false;    
+                keyPresses[0] = false;
+                canPress = true;
                 break;
                 case KeyEvent.VK_W:
-                keyPresses[1] = false;    
+                keyPresses[1] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_D:
-                keyPresses[2] = false;    
+                keyPresses[2] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_S:
-                keyPresses[3] = false;    
+                keyPresses[3] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_LEFT:
-                keyPresses[0] = false;    
+                keyPresses[0] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_UP:
-                keyPresses[1] = false;    
+                keyPresses[1] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_RIGHT:
-                keyPresses[2] = false;    
+                keyPresses[2] = false;
+                canPress = true;    
                 break;
                 case KeyEvent.VK_DOWN:
-                keyPresses[3] = false;    
+                keyPresses[3] = false;
+                canPress = true;    
                 break;
             }
         
