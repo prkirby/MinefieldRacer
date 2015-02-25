@@ -68,6 +68,13 @@ public class MainGUI {
     }
     
     /**
+     * This resets the keypresses
+     */
+    public void resetKeyPresses(){
+    	for(int k = 0; k < this.keyPresses.length; k++ )
+    		this.keyPresses[k] = false;
+    }
+    /**
      * Sets up the data of all of the visible entities
      * @param c 
      *          The data of the entities
