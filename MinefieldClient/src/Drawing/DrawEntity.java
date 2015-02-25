@@ -18,7 +18,8 @@ public abstract class DrawEntity {
      *          The entity to draw
      */
     public static void draw(Graphics g, Entity e){
+    	int scale = 10;
         g.setColor(e.getColor());
-        g.fillRect(e.getX()*e.getSize()*5, e.getY()*e.getSize()*5, e.getSize()*5, e.getSize()*5);
+        g.fillRect(e.getX()*e.getSize()*scale, e.getY()*e.getSize()*scale, e.getSize()*scale, e.getSize()*scale);
     }
 }
