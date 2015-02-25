@@ -47,6 +47,7 @@ public class InputThread implements Runnable{
         while(true){
             try {
                 output.println(setupData(mainGUI.keyPresses())); //To server
+                mainGUI.resetKeyPresses();
             } catch (Exception ex) {
                 System.out.println("Error getting output to the server (InputThread).");
                 break;
