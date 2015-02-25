@@ -68,7 +68,7 @@ public class MainGUI {
     }
     
     /**
-     * This resets the keypresses
+     * This resets the key presses
      */
     public void resetKeyPresses(){
     	for(int k = 0; k < this.keyPresses.length; k++ )
