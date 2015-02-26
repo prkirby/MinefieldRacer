@@ -5,7 +5,9 @@ import java.net.URL;
 import javax.sound.sampled.*;
 
 public enum SFX {
-	MOVE("move.wav");
+	MOVE("move.wav"),
+	SHOOT("gun.wav"),
+	MP3("mp3Test.mp3");
 
 	private Clip clip;
 

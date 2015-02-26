@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import audio.AudioEngine;
 import audio.SFX;
 
 /**
@@ -35,8 +34,6 @@ public class MainGUI {
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
     
-    //Audio Engine
-    private AudioEngine audioEngine = new AudioEngine();
     
     /**
      * Default Constructor: Sets up all of the drawing
@@ -176,10 +173,15 @@ public class MainGUI {
             //Check if keyPressed is a movement Key for sound
             for (int i : movementKeys) {
             	if (i == e.getKeyCode()) {
-            		audioEngine.playSFX("move");
+            		SFX.MOVE.play();
             	}
             }
             
+            if (e.getKeyCode() == KeyEvent.VK_SPACE)
+            	SFX.SHOOT.play();
+            
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+            	SFX.MP3.play();
           
         }
 
