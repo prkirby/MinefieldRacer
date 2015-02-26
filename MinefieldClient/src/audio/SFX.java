@@ -2,8 +2,7 @@ package audio;
 
 public enum SFX {
 	MOVE("move.wav"),
-	SHOOT("gun.wav"),
-	MP3("mp3Test.mp3");
+	SHOOT("gun.wav");
 
 	private String filename;
 

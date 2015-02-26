@@ -180,8 +180,6 @@ public class MainGUI {
             if (e.getKeyCode() == KeyEvent.VK_SPACE)
             	SFX.SHOOT.play();
             
-            if (e.getKeyCode() == KeyEvent.VK_ENTER)
-            	SFX.MP3.play();
           
         }
 
