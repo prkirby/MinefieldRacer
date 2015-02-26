@@ -2,96 +2,73 @@ package audio;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-
 
 import javax.sound.sampled.*;
 
-public class AudioEngine {
+public class AudioEngine extends Thread implements LineListener, Runnable{
 
-	public static Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
-	public static Mixer mixer = AudioSystem.getMixer(mixerInfo[0]);
-	public static HashMap<String, SoundEffect> sfxMap = new HashMap<String, SoundEffect>();
+	private Clip clip;
+	private String filename;
+	boolean playCompleted;
 	
-	/**
-	 * Override Default constructor to initial audio maps
-	 */
-	public AudioEngine() {
-		soundEffectsInit();
-	}
-	
-	/**
-	 * Instantiates Sound Effects
-	 */
-	public void soundEffectsInit() {
-		SoundEffect move = new SoundEffect("move.wav");
-		sfxMap.put("move", move);
 
+	public AudioEngine(String filename) {
+		this.filename = filename;
 	}
-	/**
-	 * Prints the info of the users AudioSystem, i.e. inputs and outputs
-	 * Used for debugging purposes
-	 * 
-	 */
-	public void printInfo() {
-		for (Mixer.Info info : mixerInfo) {
-			System.out.println(info.getName() + " --- " + info.getDescription());
+
+	void play() {
+		
+		run();
+		
+	}
+
+	public void run() {
+		try {
+			// Get URL of audio resource
+			URL url = AudioEngine.class.getResource("/audio/soundEffects/" + filename);
+			// Set up an audio input stream piped from the sound file.
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			// Get a clip resource.
+			clip = AudioSystem.getClip();
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioInputStream);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
 		}
-	}
+		
+		clip.start();
 
-	/**
-	 * A private class for creating Sound Effect objects with 
-	 * appropriate lines in the mixer and audio file reference
-	 */
-	private class SoundEffect {
-
-		private Clip clip;
-		DataLine.Info info = new DataLine.Info(Clip.class, null);
-
-
-		public SoundEffect(String fileName) {
-			
+		while (!playCompleted) {
+			// Wait for playback to complete
 			try {
-				clip = (Clip) mixer.getLine(info);
-			} catch (LineUnavailableException e) { e.printStackTrace(); }
-			
-			try {
-				URL audioURL = AudioEngine.class.getResource("soundEffects/" + fileName);
-				System.out.println(audioURL);
-				AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
-				clip.open(audioStream);
-			} catch (LineUnavailableException e) { 
-				e.printStackTrace(); 
-			} catch (IOException e) {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
-			} catch (UnsupportedAudioFileException e) {
-					e.printStackTrace();
 			}
-				
 		}
-		
-		public void play(){
-			if (clip.isRunning()) {
-				clip.stop();
-			}
-			clip.setFramePosition(0);
-			clip.start();
+
+		clip.close();
+		return;
+	}
+
+	@Override
+	public void update(LineEvent event) {
+		LineEvent.Type type = event.getType();
+
+		if (type == LineEvent.Type.START) {
+			System.out.println("Playback started.");
+
+		} else if (type == LineEvent.Type.STOP) {
+			playCompleted = true;
+			System.out.println("Playback completed.");
 		}
-//		public void stop() {
-//			clip.stop();
-//		}
 
 	}
-	
-	/**
-	 * Plays a SoundEffect object
-	 * @param filename
-	 */
-	public void playSFX(String filename) {
-		System.out.println(filename);
-		System.out.println(sfxMap);
-		sfxMap.get(filename).play();
-		
-	}
+
+
 
 }
