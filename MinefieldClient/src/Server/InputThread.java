@@ -1,9 +1,11 @@
 package Server;
 
 import Drawing.MainGUI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 
 /**
  * This is the client input to server thread. It 
@@ -17,7 +19,7 @@ public class InputThread implements Runnable{
     private BufferedReader input = null; //Input from server
     private PrintWriter output = null;   //Output to server
     private MainGUI mainGUI;             //The Client visuals
-    
+
     /**
      * The primary constructor. This sets up the read and write
      * @param input

@@ -2,14 +2,19 @@
 package Drawing;
 
 import GameMechanics.Entity;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import audio.AudioEngine;
+import audio.SFX;
 
 /**
  * This class represents the primary visuals for the client.
@@ -30,6 +35,9 @@ public class MainGUI {
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
     
+    //Audio Engine
+    private AudioEngine audioEngine = new AudioEngine();
+    
     /**
      * Default Constructor: Sets up all of the drawing
      */
@@ -48,6 +56,9 @@ public class MainGUI {
         frame.getContentPane().add(mainpanel);
         frame.setVisible(true);
         frame.pack();
+        
+        //Initialize AudioEngines
+        SFX.init();
         
         this.display();
     }
@@ -111,6 +122,8 @@ public class MainGUI {
      */
     private class Push extends myJPanel implements KeyListener{
         
+    	int[] movementKeys = {KeyEvent.VK_A, KeyEvent.VK_W, KeyEvent.VK_D, KeyEvent.VK_S, 
+    			KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN};
         /**
          * The default constructor (not in use)
          */
@@ -122,7 +135,7 @@ public class MainGUI {
          *          The event
          */
         public void keyPressed(KeyEvent e) {
-
+        	
             if(canPress)
             switch (e.getKeyCode()){
                 //Movement Keys
@@ -159,6 +172,15 @@ public class MainGUI {
                 canPress = false;
                 break;
             }
+            
+            //Check if keyPressed is a movement Key for sound
+            for (int i : movementKeys) {
+            	if (i == e.getKeyCode()) {
+            		audioEngine.playSFX("move");
+            	}
+            }
+            
+          
         }
 
         /**
