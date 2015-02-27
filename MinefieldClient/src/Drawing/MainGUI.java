@@ -110,8 +110,10 @@ public class MainGUI {
             
             ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
             
-            DrawMap.draw(g, map);
-            DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+            if(map!=null)
+            	DrawMap.draw(g, map);
+            if(temp.size()>0)
+            	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
             for(int e = 1; e < temp.size(); e++){
                 DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
             }

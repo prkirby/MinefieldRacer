@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;                                //The port for the server
-    private final String ipAddress = "141.219.208.220";                 //The IP Address of the sever
+    private final String ipAddress = "141.219.209.189";                 //The IP Address of the sever
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -82,7 +82,7 @@ public class ConnectionThread implements Runnable{
                     if(flag.equals("DATA")){
                         this.readData(scan);
                     }else if(flag.equals("MAP")){
-                    	
+                    	this.readMap(scan);
                     }else
                         this.close();
                 }
@@ -124,12 +124,19 @@ public class ConnectionThread implements Runnable{
         in.mainGUI().display();
     }
     
+    /**
+     * 
+     * @param scan
+     */
     public void readMap(Scanner scan){
  	   String[][] ret = new String[11][11];
- 	   for(int x=0; x < 11; x++){
- 		   for(int y=0; y < 11; y++){
+ 	   
+ 	   for(int x = 0; x < 11; x++){
+ 		   for(int y = 0; y < 11; y++){
  			   ret[x][y] = scan.next();
+ 			   //System.out.print(ret[x][y]+" ");
      	   }
+ 		   //System.out.println("");
  	   }
  	   
  	   in.mainGUI().map(ret);
