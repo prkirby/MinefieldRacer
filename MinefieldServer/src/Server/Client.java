@@ -191,6 +191,7 @@ public class Client implements Runnable{
         public void run() {
             while(true){
                 output.println(data);
+                output.println(sendMap());
                 this.sleep(15);
             }
         }
@@ -206,6 +207,24 @@ public class Client implements Runnable{
            }catch(InterruptedException e){
                System.out.println("Room has been interrupted");
            }
+       }
+       
+       /**
+        * 
+        * @return
+        */
+       public String sendMap(){
+    	   String ret = "MAP ";
+    	   for(int x=player.getX()-5; x <= player.getX()+5; x++){
+    		   for(int y=player.getY()-5; y <= player.getY()+5; y++){
+    			   if(x < 0 || x > map.map.length || y < 0 || y > map.map[0].length)
+    				   ret+="0 ";
+    			   else
+    				   ret+=map.getMap()[x][y]+" ";
+        	   }
+    	   }
+    	   
+    	   return ret;
        }
         
     }

@@ -1,6 +1,7 @@
 package Server;
 
 import GameMechanics.Entity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -80,6 +81,8 @@ public class ConnectionThread implements Runnable{
 
                     if(flag.equals("DATA")){
                         this.readData(scan);
+                    }else if(flag.equals("MAP")){
+                    	
                     }else
                         this.close();
                 }
@@ -119,6 +122,17 @@ public class ConnectionThread implements Runnable{
         }        
         in.mainGUI().coords(data);
         in.mainGUI().display();
+    }
+    
+    public void readMap(Scanner scan){
+ 	   String[][] ret = new String[11][11];
+ 	   for(int x=0; x < 11; x++){
+ 		   for(int y=0; y < 11; y++){
+ 			   ret[x][y] = scan.next();
+     	   }
+ 	   }
+ 	   
+ 	   in.mainGUI().map(ret);
     }
     
     /**
