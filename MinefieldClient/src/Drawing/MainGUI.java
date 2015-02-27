@@ -29,6 +29,7 @@ public class MainGUI {
     
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
+    private String[][] map = new String[11][11];
     
     /**
      * Default Constructor: Sets up all of the drawing
@@ -85,6 +86,15 @@ public class MainGUI {
     }
     
     /**
+     * Sets up the data
+     * @param m
+     * 			
+     */
+    public void map(String[][] m){
+    	this.map = m;
+    }
+    
+    /**
      * This class represents the panel that the player sees
      */
     private class myJPanel extends JPanel{
@@ -100,8 +110,10 @@ public class MainGUI {
             
             ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
             
-            for(int e = 0; e < temp.size(); e++){
-                DrawEntity.draw(g, temp.get(e));
+            DrawMap.draw(g, map);
+            DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+            for(int e = 1; e < temp.size(); e++){
+                DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
             }
         }
     }
