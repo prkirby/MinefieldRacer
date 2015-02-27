@@ -18,7 +18,7 @@ public class DrawMap {
     	for(int x = 0; x < 11; x++){
     		for(int y =0; y < 11; y++){
     			try{
-    			if(map[x][y].equals("w")){
+    			if(map[x][y].equals("W")){
     				g.setColor(Color.black);
     				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
     			}else if(map[x][y].equals("0")){

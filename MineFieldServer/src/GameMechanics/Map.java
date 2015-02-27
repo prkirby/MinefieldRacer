@@ -63,8 +63,9 @@ public class Map {
 			int height = s.nextInt();
 			map = new String[width][height];
 			
-			for(int w = 0; w < width; w++){
-				for(int h = 0; h < height ; h++){
+			for(int h = 0; h < height ; h++){
+				for(int w = 0; w < width; w++){
+				
 					map[w][h] = s.next();
 				}
 			}
