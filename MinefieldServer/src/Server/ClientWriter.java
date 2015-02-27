@@ -1,6 +1,7 @@
 
 package Server;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import GameMechanics.Map;
@@ -15,7 +16,7 @@ import GameMechanics.Map;
 public class ClientWriter implements Runnable{
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(40,25);
+    private Map map = new Map(new File("MAPS\\test1.txt"));
     
     
     /**

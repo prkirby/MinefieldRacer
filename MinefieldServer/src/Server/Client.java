@@ -191,7 +191,9 @@ public class Client implements Runnable{
         public void run() {
             while(true){
                 output.println(data);
+                try{
                 output.println(sendMap());
+                }catch(NullPointerException e){}
                 this.sleep(15);
             }
         }
@@ -213,12 +215,12 @@ public class Client implements Runnable{
         * 
         * @return
         */
-       public String sendMap(){
+       public String sendMap() throws NullPointerException{
     	   String ret = "MAP ";
     	   for(int x=player.getX()-5; x <= player.getX()+5; x++){
     		   for(int y=player.getY()-5; y <= player.getY()+5; y++){
-    			   if(x < 0 || x > map.map.length || y < 0 || y > map.map[0].length)
-    				   ret+="0 ";
+    			   if(x < 0 || x > map.map.length-1 || y < 0 || y > map.map[0].length-1)
+    				   ret+="n ";
     			   else
     				   ret+=map.getMap()[x][y]+" ";
         	   }
