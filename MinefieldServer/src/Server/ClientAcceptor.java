@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class ClientAcceptor implements Runnable{
 
-    private int serverPort = 1111;              //The port of the server
+    private int serverPort = 1110;              //The port of the server
     private ServerSocket serverSocket = null;   //The server's socket
     private boolean isStopped = false;          //Determines if the server is done
     private InetAddress hostAddress = null;     //The IP of the computer running the server

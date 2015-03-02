@@ -16,7 +16,7 @@ public class Main {
      * @param args 
      *          Holds the arguments for the program (not in use)
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ConnectionThread connect = new ConnectionThread();
         new Thread(connect).start();
     } 
