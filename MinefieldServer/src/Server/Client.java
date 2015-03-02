@@ -11,8 +11,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- *
- * @author Xazaviar
+ * This class represents the client and performs all interactions with the client
+ * @author Joseph Ryan
  */
 public class Client implements Runnable{
 
@@ -30,6 +30,9 @@ public class Client implements Runnable{
     
     //Map data
     private Map map;
+    
+    //Modal variables
+    private boolean canRace = false;
     
     /**
      * This constructor sets up the client 
@@ -178,6 +181,24 @@ public class Client implements Runnable{
         }catch(InterruptedException e){
             System.out.println("Room has been interrupted");
         }
+    }
+    
+    /**
+     * Returns if the client is allowed to race
+     * @return
+     * 			If the client can race
+     */
+    public boolean canRace(){
+    	return this.canRace;
+    }
+    
+    /**
+     * Sets the client's race allowance
+     * @param b
+     * 			If the client can or cannot race
+     */
+    public void setCanRace(boolean b){
+    	this.canRace = b;
     }
     
     /**

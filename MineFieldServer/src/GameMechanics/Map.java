@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Map {
 
 	public String[][] map;	//The actual map
+	private int width, height;
 	
 	/**
 	 * Default constructor (not in use)
@@ -28,6 +29,9 @@ public class Map {
 	 * 			The height of the map
 	 */
 	public Map(int width, int height){
+		
+		this.width= width;
+		this.height = height;
 		
 		//Build the map
 		map = new String[width][height];
@@ -59,8 +63,8 @@ public class Map {
 		try {
 			Scanner s = new Scanner(f);
 			
-			int width = s.nextInt();
-			int height = s.nextInt();
+			width = s.nextInt();
+			height = s.nextInt();
 			map = new String[width][height];
 			
 			for(int w = 0; w < width; w++){
@@ -81,6 +85,24 @@ public class Map {
 	 */
 	public String[][] getMap(){
 		return this.map;
+	}
+	
+	/**
+	 * Returns the height of the map
+	 * @return
+	 * 			The height of the map
+	 */
+	public int getHeight(){
+		return this.getHeight();
+	}
+	
+	/**
+	 * Returns the width of the map
+	 * @return
+	 * 			the width of the map
+	 */
+	public int getWidth(){
+		return this.getWidth();
 	}
 	
 	/**

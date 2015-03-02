@@ -18,6 +18,14 @@ public class ClientWriter implements Runnable{
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
     private Map map = new Map(new File("MAPS\\test1.txt"));
     
+    private final int raceTime = 5 * 60 * 1000; //5 Minutes
+    private final int lobbyTime = 60 * 1000;	//1 Minute
+    private int currentTime = 0;				//Time counter
+    private boolean inRace = false;				//Race = true, lobby = false;
+    
+    private boolean haveWinner = false;			//Temporary variable
+    private boolean someoneWon = false;			//Temporary variable
+    
     
     /**
      * The default constructor (not in use)
@@ -51,8 +59,37 @@ public class ClientWriter implements Runnable{
                 }catch(IndexOutOfBoundsException e){}
             }
             checkClients();
-            sleep(5);
+            sleep(5); //5 ms
+            switchModes();
         }
+    }
+    
+    /**
+     * This determines if a mode switch is necessary. If it is, it does it.
+     */
+    private void switchModes(){
+        currentTime+=5;//5 ms
+    	if(this.currentTime >= this.lobbyTime && !inRace){
+    		this.inRace = true;
+    		this.currentTime = 0;
+    		
+    		//Start race
+    		//Place all current clients at the starting line
+    		for(int c = 0; c < this.clients.size(); c++){
+    			if(this.clients.get(c).canRace()){
+    				this.clients.get(c).player().setX(1);
+    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()));
+    			}
+    		}
+    		
+    	}else if(this.currentTime >= this.raceTime && inRace){
+    		this.inRace = false;
+    		this.currentTime = 0;
+    		this.haveWinner = false;
+    		this.someoneWon = false;
+    		
+    		//Start Lobby
+    	}
     }
     
     /**
@@ -68,6 +105,14 @@ public class ClientWriter implements Runnable{
                     cl--;
                 }else{ //If the client exists
                 	clients.get(cl).updateMap(map);
+                	if(!this.inRace)
+                		clients.get(cl).setCanRace(true);
+                	
+                	//If a client met win Condition
+                	if(!this.haveWinner && this.someoneWon){
+                		this.currentTime = this.raceTime-10*1000; //Ten seconds left
+                		this.haveWinner = true;
+                	}
                 }
             }
         }catch(NullPointerException e){
