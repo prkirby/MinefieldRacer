@@ -30,6 +30,9 @@ public class Client implements Runnable{
 
 	//Map data
 	private Map map;
+	
+	//Modal variables
+    private boolean canRace = false;
 
 	/**
 	 * This constructor sets up the client 
@@ -81,6 +84,24 @@ public class Client implements Runnable{
 	public Player player(){
 		return this.player;
 	}
+	
+	/**
+     * Returns if the client is allowed to race
+     * @return
+     * 			If the client can race
+     */
+    public boolean canRace(){
+    	return this.canRace;
+    }
+    
+    /**
+     * Sets the client's race allowance
+     * @param b
+     * 			If the client can or cannot race
+     */
+    public void setCanRace(boolean b){
+    	this.canRace = b;
+    }
 
 	/**
 	 * Sets up the data that will be sent to the client
