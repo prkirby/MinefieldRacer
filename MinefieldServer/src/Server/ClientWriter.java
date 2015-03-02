@@ -106,4 +106,8 @@ public class ClientWriter implements Runnable{
             System.out.println("Room has been interrupted");
         }
     }
+    
+    public void mineHit() {
+    	// Does mine things
+    }
 }
