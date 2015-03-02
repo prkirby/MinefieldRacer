@@ -2,14 +2,18 @@
 package Drawing;
 
 import GameMechanics.Entity;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import audio.SFX;
 
 /**
  * This class represents the primary visuals for the client.
@@ -30,6 +34,8 @@ public class MainGUI {
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
     private String[][] map = new String[11][11];
+    private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, 
+    		KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
     
     /**
      * Default Constructor: Sets up all of the drawing
@@ -172,6 +178,16 @@ public class MainGUI {
                 keyPresses[3] = true; 
                 canPress = false;
                 break;
+            }
+            
+            for (int i : movementKeys) {
+            	if (e.getKeyCode() == i) {
+            		SFX.MOVE.play();
+            	}
+            }
+            
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            	SFX.MOVE.play();
             }
         }
 
