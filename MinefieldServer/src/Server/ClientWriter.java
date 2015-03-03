@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import GameMechanics.Map;
+import GameMechanics.MineCreation;
 
 /**
  * This class sets up all of the appropriate data 
@@ -17,6 +18,8 @@ public class ClientWriter implements Runnable{
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
     private Map map = new Map(new File("MAPS/test1.txt"));
+    private Map mineLayer;
+    private int numMines = 30;
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
     private final int lobbyTime = 60 * 1000;	//1 Minute
@@ -74,6 +77,10 @@ public class ClientWriter implements Runnable{
     		this.currentTime = 0;
     		
     		//Start race
+    		//Populate mineLayer with mines and numbers
+    		mineLayer = new Map(MineCreation.createMapFile(
+    				map.getWidth(), map.getHeight(), numMines));
+    		
     		//Place all current clients at the starting line
     		for(int c = 0; c < this.clients.size(); c++){
     			if(this.clients.get(c).canRace()){

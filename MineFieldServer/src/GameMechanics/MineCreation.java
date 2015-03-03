@@ -1,16 +1,23 @@
 package GameMechanics;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class MineCreation {
+	
 	public static void main(String[] args){
-		createMapFile(10,10,10);
+		createMapFile(30,30,200);
 	}
-	public static void createMapFile(int width, int height, int numMines){
+	
+	private static File mineLayer = new File("MAPS/mineLayer.txt");
+	
+	public static File createMapFile(int width, int height, int numMines){
 		//quick safety check
 		if(numMines > width * height){
 			System.out.println("Too many mines for the given dimensions");
-			return;
+			return null;
 		}
 		Random xrand = new Random();
 		Random yrand = new Random();
@@ -43,15 +50,49 @@ public class MineCreation {
 			}
 		}
 
-		//prints out minefield
+		//writes out minefield
+		//If file doesn't exist, create it
+		if (!mineLayer.exists()) {
+			try {
+				mineLayer.createNewFile();
+			} catch (IOException e) {
+				System.out.println("Could not create mineLayer.txt");
+				e.printStackTrace();
+			}
+		}
+		//Create FileWriter
+		FileWriter mineWriter = null;
+		try {
+			mineWriter = new FileWriter(mineLayer.getAbsoluteFile());
+		} catch (IOException e) {
+			System.out.println("Could not create mineWriter");
+			e.printStackTrace();
+		}
+		
+		//Write out the mineLayer row by row
 		String row = "";
 		for(int j = 0; j < height; j++){
 			for(int i = 0; i < width; i++){//had to reverse in order to print properly
 				row = row + mineHolder[i][j] + " ";
 			}
-			System.out.println(row);
+			row += "\n";
+			try {
+				mineWriter.write(row);
+			} catch (IOException e) {
+				System.out.println("Could not write to mineLayer.txt");
+				e.printStackTrace();
+			}
 			row = "";
 		}
+		
+		//Try to close mineWriter
+		try {
+			mineWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return mineLayer;
 
 	}//end of createMapFile
 
