@@ -16,7 +16,7 @@ import GameMechanics.Map;
 public class ClientWriter implements Runnable{
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(new File("MAPS\\test1.txt"));
+    private Map map = new Map(new File("MAPS/test1.txt"));
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
     private final int lobbyTime = 60 * 1000;	//1 Minute

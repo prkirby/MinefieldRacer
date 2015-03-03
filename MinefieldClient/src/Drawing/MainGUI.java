@@ -20,227 +20,228 @@ import audio.SFX;
  * @author Joseph Ryan
  */
 public class MainGUI {
-    
-    //Hud setup vars
-    private int Width = 550;
-    private int Height = 550;
-    private JFrame frame = new JFrame();
-    private myJPanel mainpanel = new myJPanel();
-    
-    //Player interation vars
-    private boolean[] keyPresses = {false,false,false,false};
-    private boolean canPress = true;
-    
-    //Drawing data
-    private ArrayList<Entity> coords = new ArrayList<Entity>();
-    private String[][] map = new String[11][11];
-    private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, 
-    		KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
-    
-    /**
-     * Default Constructor: Sets up all of the drawing
-     */
-    public MainGUI(){
-        frame = new JFrame("SURVIVE!");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setSize(Width, Height);
-        
-        mainpanel.setPreferredSize(new Dimension(Width, Height));
-        mainpanel.setLayout(null);
-        mainpanel.addKeyListener(new Push());
-        mainpanel.setFocusable(true);
-        
-        //Start up the magic
-        frame.getContentPane().add(mainpanel);
-        frame.setVisible(true);
-        frame.pack();
-        
-        this.display();
-    }
-    
-    /**
-     * This is called whenever it is time to update the GUI
-     */
-    public void display(){
-        mainpanel.repaint();
-    }
-    
-    /**
-     * Returns the key presses made by the Client
-     * @return 
-     *          The key presses 
-     */
-    public boolean[] keyPresses(){
-        return this.keyPresses;
-    }
-    
-    /**
-     * This resets the key presses
-     */
-    public void resetKeyPresses(){
-    	for(int k = 0; k < this.keyPresses.length; k++ )
-    		this.keyPresses[k] = false;
-    }
-    /**
-     * Sets up the data of all of the visible entities
-     * @param c 
-     *          The data of the entities
-     */
-    public void coords(ArrayList<Entity> c){
-        this.coords = c;
-    }
-    
-    /**
-     * Sets up the data
-     * @param m
-     * 			
-     */
-    public void map(String[][] m){
-    	this.map = m;
-    }
-    
-    /**
-     * This class represents the panel that the player sees
-     */
-    private class myJPanel extends JPanel{
-       
-        /**
-         * Paints the panel
-         * @param g 
-         *          The graphics being used to draw
-         */
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-            super.setBackground(Color.WHITE);
-            
-            ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
-            
-            if(map!=null)
-            	DrawMap.draw(g, map);
-            if(temp.size()>0)
-            	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
-            for(int e = 1; e < temp.size(); e++){
-                DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
-            }
-        }
-    }
-    
-    /**
-     * This class represents the button pushes by the client
-     */
-    private class Push extends myJPanel implements KeyListener{
-        
-        /**
-         * The default constructor (not in use)
-         */
-        public Push(){}
-        
-        /**
-         * The event that occurs when a key is pressed
-         * @param e 
-         *          The event
-         */
-        public void keyPressed(KeyEvent e) {
 
-            if(canPress)
-            switch (e.getKeyCode()){
-                //Movement Keys
-                case KeyEvent.VK_A:
-                keyPresses[0] = true;  
-                canPress = false;
-                break;
-                case KeyEvent.VK_W:
-                keyPresses[1] = true;  
-                canPress = false;
-                break;
-                case KeyEvent.VK_D:
-                keyPresses[2] = true; 
-                canPress = false;
-                break;
-                case KeyEvent.VK_S:
-                keyPresses[3] = true;
-                canPress = false;
-                break;
-                case KeyEvent.VK_LEFT:
-                keyPresses[0] = true;  
-                canPress = false;
-                break;
-                case KeyEvent.VK_UP:
-                keyPresses[1] = true; 
-                canPress = false;
-                break;
-                case KeyEvent.VK_RIGHT:
-                keyPresses[2] = true;  
-                canPress = false;
-                break;
-                case KeyEvent.VK_DOWN:
-                keyPresses[3] = true; 
-                canPress = false;
-                break;
-            }
-            
-            for (int i : movementKeys) {
-            	if (e.getKeyCode() == i) {
-            		SFX.MOVE.play();
-            	}
-            }
-            
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            	SFX.MOVE.play();
-            }
-        }
+	//Hud setup vars
+	private int Width = 550;
+	private int Height = 550;
+	private JFrame frame = new JFrame();
+	private myJPanel mainpanel = new myJPanel();
 
-        /**
-         * The event that occurs when a key is typed (not in use)
-         * @param e 
-         *          The event
-         */
-        public void keyTyped(KeyEvent e) {}
+	//Player interation vars
+	private boolean[] keyPresses = {false,false,false,false};
+	private boolean canPress = true;
 
-        /**
-         * The event that occurs when a key is released (temporarily in use)
-         * @param e 
-         *          The event
-         */
-        public void keyReleased(KeyEvent e) {
-            switch (e.getKeyCode()){
-                //Movement Keys
-                case KeyEvent.VK_A:
-                keyPresses[0] = false;
-                canPress = true;
-                break;
-                case KeyEvent.VK_W:
-                keyPresses[1] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_D:
-                keyPresses[2] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_S:
-                keyPresses[3] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_LEFT:
-                keyPresses[0] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_UP:
-                keyPresses[1] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_RIGHT:
-                keyPresses[2] = false;
-                canPress = true;    
-                break;
-                case KeyEvent.VK_DOWN:
-                keyPresses[3] = false;
-                canPress = true;    
-                break;
-            }
-        
-        
-        }
-    }
+	//Drawing data
+	private ArrayList<Entity> coords = new ArrayList<Entity>();
+	private String[][] map = new String[11][11];
+	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, 
+			KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
+
+	/**
+	 * Default Constructor: Sets up all of the drawing
+	 */
+	public MainGUI(){
+		frame = new JFrame("SURVIVE!");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setSize(Width, Height);
+
+		mainpanel.setPreferredSize(new Dimension(Width, Height));
+		mainpanel.setLayout(null);
+		mainpanel.addKeyListener(new Push());
+		mainpanel.setFocusable(true);
+
+		//Start up the magic
+		frame.getContentPane().add(mainpanel);
+		frame.setVisible(true);
+		frame.pack();
+
+		this.display();
+	}
+
+	/**
+	 * This is called whenever it is time to update the GUI
+	 */
+	public void display(){
+		mainpanel.repaint();
+	}
+
+	/**
+	 * Returns the key presses made by the Client
+	 * @return 
+	 *          The key presses 
+	 */
+	public boolean[] keyPresses(){
+		return this.keyPresses;
+	}
+
+	/**
+	 * This resets the key presses
+	 */
+	public void resetKeyPresses(){
+		for(int k = 0; k < this.keyPresses.length; k++ )
+			this.keyPresses[k] = false;
+	}
+	/**
+	 * Sets up the data of all of the visible entities
+	 * @param c 
+	 *          The data of the entities
+	 */
+	public void coords(ArrayList<Entity> c){
+		this.coords = c;
+	}
+
+	/**
+	 * Sets up the data
+	 * @param m
+	 * 			
+	 */
+	public void map(String[][] m){
+		this.map = m;
+	}
+
+	/**
+	 * This class represents the panel that the player sees
+	 */
+	private class myJPanel extends JPanel{
+
+		/**
+		 * Paints the panel
+		 * @param g 
+		 *          The graphics being used to draw
+		 */
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			super.setBackground(Color.WHITE);
+
+			ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
+
+			if(map!=null)
+				DrawMap.draw(g, map);
+			if(temp.size()>0)
+				DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+			for(int e = 1; e < temp.size(); e++){
+				DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+			}
+		}
+	}
+
+	/**
+	 * This class represents the button pushes by the client
+	 */
+	private class Push extends myJPanel implements KeyListener{
+
+		/**
+		 * The default constructor (not in use)
+		 */
+		public Push(){}
+
+		/**
+		 * The event that occurs when a key is pressed
+		 * @param e 
+		 *          The event
+		 */
+		public void keyPressed(KeyEvent e) {
+
+			if(canPress) {
+				switch (e.getKeyCode()){
+				//Movement Keys
+				case KeyEvent.VK_A:
+					keyPresses[0] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_W:
+					keyPresses[1] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_D:
+					keyPresses[2] = true; 
+					canPress = false;
+					break;
+				case KeyEvent.VK_S:
+					keyPresses[3] = true;
+					canPress = false;
+					break;
+				case KeyEvent.VK_LEFT:
+					keyPresses[0] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_UP:
+					keyPresses[1] = true; 
+					canPress = false;
+					break;
+				case KeyEvent.VK_RIGHT:
+					keyPresses[2] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_DOWN:
+					keyPresses[3] = true; 
+					canPress = false;
+					break;
+				}
+
+				for (int i : movementKeys) {
+					if (e.getKeyCode() == i) {
+						SFX.MOVE.play();
+					}
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					SFX.SHOOT.play();
+				}
+			}
+		}
+
+		/**
+		 * The event that occurs when a key is typed (not in use)
+		 * @param e 
+		 *          The event
+		 */
+		public void keyTyped(KeyEvent e) {}
+
+		/**
+		 * The event that occurs when a key is released (temporarily in use)
+		 * @param e 
+		 *          The event
+		 */
+		public void keyReleased(KeyEvent e) {
+			switch (e.getKeyCode()){
+			//Movement Keys
+			case KeyEvent.VK_A:
+				keyPresses[0] = false;
+				canPress = true;
+				break;
+			case KeyEvent.VK_W:
+				keyPresses[1] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_D:
+				keyPresses[2] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_S:
+				keyPresses[3] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_LEFT:
+				keyPresses[0] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_UP:
+				keyPresses[1] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_RIGHT:
+				keyPresses[2] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_DOWN:
+				keyPresses[3] = false;
+				canPress = true;    
+				break;
+			}
+
+
+		}
+	}
 }
