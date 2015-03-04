@@ -93,7 +93,7 @@ public class Map {
 	 * 			The height of the map
 	 */
 	public int getHeight(){
-		return this.getHeight();
+		return this.height;
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class Map {
 	 * 			the width of the map
 	 */
 	public int getWidth(){
-		return this.getWidth();
+		return this.width;
 	}
 	
 	/**

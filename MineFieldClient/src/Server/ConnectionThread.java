@@ -20,8 +20,8 @@ import java.util.TimerTask;
  */
 public class ConnectionThread implements Runnable{
 
-    private final int serverPort = 1111;                                //The port for the server
-    private final String ipAddress = "192.168.2.15";                 //The IP Address of the sever
+    private final int serverPort = 1111;
+    private final String ipAddress = "192.168.2.15";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -83,6 +83,8 @@ public class ConnectionThread implements Runnable{
                         this.readData(scan);
                     }else if(flag.equals("MAP")){
                     	this.readMap(scan);
+                    }else if(flag.equals("MODE")){
+                    	this.readMode(scan);
                     }else
                         this.close();
                 }
@@ -99,7 +101,7 @@ public class ConnectionThread implements Runnable{
                 System.out.println("Error getting output from server ("+e.toString()+"): "+inn);
                 this.close();
             }
-            sleep(5);
+            sleep(4);
         }
     }
     
@@ -125,7 +127,7 @@ public class ConnectionThread implements Runnable{
     }
     
     /**
-     * 
+     * Scans the map data for drawing the map
      * @param scan
      */
     public void readMap(Scanner scan){
@@ -140,6 +142,16 @@ public class ConnectionThread implements Runnable{
  	   }
  	   
  	   in.mainGUI().map(ret);
+    }
+    
+    /**
+     * Scans the mode and performs the actions accordingly
+     * @param scan
+     * 			The scanner being used
+     */
+    public void readMode(Scanner scan){
+    	in.mainGUI().setMode(scan.next());
+    	in.mainGUI().setTime(scan.next());
     }
     
     /**

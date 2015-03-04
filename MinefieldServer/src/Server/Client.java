@@ -33,6 +33,10 @@ public class Client implements Runnable{
 	
 	//Modal variables
     private boolean canRace = false;
+    private boolean spectatorMode = true;
+    
+    //Other info to send to client
+    private String time = "n/a";
 
 	/**
 	 * This constructor sets up the client 
@@ -129,6 +133,18 @@ public class Client implements Runnable{
 	public boolean canGetInfo(){
 		return this.canGetInfo;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean inSpectatorMode(){
+		return this.spectatorMode;
+	}
+	
+	public void setSpectatorMode(boolean b){
+		this.spectatorMode = b;
+	}
 
 
 	/**
@@ -149,7 +165,7 @@ public class Client implements Runnable{
 			
 			player.setX(1);
 			// Remove this after debugging
-			System.out.println("You fucked up!!");
+			//System.out.println("You fucked up!!");
 		}
 	}
 	
@@ -173,6 +189,8 @@ public class Client implements Runnable{
 						else                    keys[k] = false;
 					}
 
+					if(!this.spectatorMode){
+					
 					//Movement
 					if(keys[0] && map.validLocation(player.getX()-1, player.getY())) player.moveLeft(1);
 					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
@@ -180,6 +198,10 @@ public class Client implements Runnable{
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
 					
 					mineCollision();
+					}else{
+						this.player.setX(0);
+						this.player.setY(0);
+					}
 				}
 
 				sleep(25);
@@ -218,6 +240,14 @@ public class Client implements Runnable{
 		}
 	}
 
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	/**
 	 * This thread endless sends the prepared data to the client
 	 */
@@ -229,10 +259,17 @@ public class Client implements Runnable{
 		public void run() {
 			while(true){
 				output.println(data);
+				
+				//Send the mode
+				if(spectatorMode){
+					output.println("MODE SPEC "+time);
+				}else{
+					output.println("MODE RACE "+time);
+				}
 				try{
 					output.println(sendMap());
 				}catch(NullPointerException e){}
-				this.sleep(15);
+				this.sleep(20);
 			}
 		}
 
