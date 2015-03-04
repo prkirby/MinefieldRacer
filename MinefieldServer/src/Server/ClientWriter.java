@@ -131,7 +131,7 @@ public class ClientWriter implements Runnable{
                 		clients.get(cl).setCanRace(true);
                 	
                 	//If a client met win Condition
-                	if(!this.haveWinner && this.someoneWon){
+                	if(checkWinCondition(cl) && !this.someoneWon){
                 		this.currentTime = 10*1000; //Ten seconds left
                 		this.haveWinner = true;
                 	}
@@ -217,5 +217,12 @@ public class ClientWriter implements Runnable{
     
     public void mineHit() {
     	// Does mine things
+    }
+    
+    public boolean checkWinCondition(int clientN){
+    	if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
+    		return true;
+    	}
+    	return false;
     }
 }

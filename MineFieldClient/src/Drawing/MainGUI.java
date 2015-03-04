@@ -130,7 +130,7 @@ public class MainGUI {
 		 */
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
-			super.setBackground(Color.WHITE);
+			super.setBackground(new Color(80,90,80));
 
 			 ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
 	            
