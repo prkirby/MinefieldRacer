@@ -56,7 +56,7 @@ public class DrawMap {
      * 			The mapName to draw
      */
     public static void draw(Graphics g, String mapName, int width, int height){
-    	File m = new File("Maps\\"+mapName+".txt");
+    	File m = new File("MAPS/"+mapName+".txt");
     	Scanner s = null;
     	
     	try {

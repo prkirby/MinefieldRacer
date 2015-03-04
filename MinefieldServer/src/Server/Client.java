@@ -30,6 +30,8 @@ public class Client implements Runnable{
 
 	//Map data
 	private Map map;
+	private Map mineLayer;
+	
 	
 	//Modal variables
     private boolean canRace = false;
@@ -153,6 +155,13 @@ public class Client implements Runnable{
 	public void updateMap(Map m){
 		this.map = m;
 	}
+	
+	/**
+	 * This updates the mineLayer for collision detection
+	 */
+	public void updateMineLayer(Map mineLayer) {
+		this.mineLayer = mineLayer;
+	}
 
 	/**
 	 * Currently just moves player back to [1,y] if they share
@@ -160,7 +169,7 @@ public class Client implements Runnable{
 	 * 
 	 */
 	public void mineCollision() {
-		if(map.checkForMine(player.getX(), player.getY())) {
+		if(mineLayer.checkForMine(player.getX(), player.getY())) {
 			// Can do other things here
 			
 			player.setX(1);
@@ -198,7 +207,8 @@ public class Client implements Runnable{
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
 					
 					mineCollision();
-					}else{
+					
+					} else{
 						this.player.setX(0);
 						this.player.setY(0);
 					}

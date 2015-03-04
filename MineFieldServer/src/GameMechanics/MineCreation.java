@@ -1,27 +1,27 @@
 package GameMechanics;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
 
 public class MineCreation {
 	
-	public static void main(String[] args){
-		createMapFile(30,30,200);
-	}
+	private static Map mineLayer = null;
 	
-	private static File mineLayer = new File("MAPS/mineLayer.txt");
-	
-	public static File createMapFile(int width, int height, int numMines){
+	public static Map createMineLayer(String[][] curMap, double minePercent){
 		//quick safety check
-		if(numMines > width * height){
-			System.out.println("Too many mines for the given dimensions");
+		if(minePercent > 1.0){
+			System.out.println("Greater than 100% mines");
 			return null;
 		}
+		
+		// Get number of mines to be placed based on percentage, 
+		// Get width and height of current map
+		int numMines = (int)(minePercent * (curMap.length * curMap[0].length));
+		int width = curMap.length;
+		int height = curMap[0].length;
+		
 		Random xrand = new Random();
 		Random yrand = new Random();
-		int xMineCoor =  xrand.nextInt(width );
+		int xMineCoor =  xrand.nextInt(width - 4) + 4; // no mines on first four columns
 		int yMineCoor =  yrand.nextInt(height);
 		int [][] mineHolder = new int[width][height];
 
@@ -29,14 +29,15 @@ public class MineCreation {
 
 		//places mines first, represented by a -1
 		while(placedMines < numMines){
-			if(mineHolder[(int) xMineCoor][(int) yMineCoor] != -1){
+			if(mineHolder[xMineCoor][yMineCoor] != -1 && 
+					curMap[xMineCoor][yMineCoor].compareTo("0") == 0){
 				mineHolder[(int) xMineCoor][(int) yMineCoor] = -1;
 				placedMines++;
-				xMineCoor =  xrand.nextInt(width);
+				xMineCoor =  xrand.nextInt(width - 4) + 4;
 				yMineCoor =   yrand.nextInt(height);
 			}
 			else{
-				xMineCoor = xrand.nextInt(width);
+				xMineCoor = xrand.nextInt(width - 4) + 4;
 				yMineCoor =   yrand.nextInt(height );
 			}
 		}
@@ -45,59 +46,27 @@ public class MineCreation {
 		for(int i = 0; i < width; i++){
 			for(int j = 0; j < height; j++){
 				if(mineHolder[i][j] == -1){
-					mineHolder = incrementValues(width, height, i, j, mineHolder);
+					mineHolder = incrementValues(width, height, i, j, mineHolder, curMap);
 				}
 			}
 		}
 
-		//writes out minefield
-		//If file doesn't exist, create it
-		if (!mineLayer.exists()) {
-			try {
-				mineLayer.createNewFile();
-			} catch (IOException e) {
-				System.out.println("Could not create mineLayer.txt");
-				e.printStackTrace();
+		// Convert int[][] to string[][]
+		String[][] tempMap = new String[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				tempMap[i][j] = Integer.toString(mineHolder[i][j]);
 			}
 		}
-		//Create FileWriter
-		FileWriter mineWriter = null;
-		try {
-			mineWriter = new FileWriter(mineLayer.getAbsoluteFile());
-		} catch (IOException e) {
-			System.out.println("Could not create mineWriter");
-			e.printStackTrace();
-		}
-		
-		//Write out the mineLayer row by row
-		String row = "";
-		for(int j = 0; j < height; j++){
-			for(int i = 0; i < width; i++){//had to reverse in order to print properly
-				row = row + mineHolder[i][j] + " ";
-			}
-			row += "\n";
-			try {
-				mineWriter.write(row);
-			} catch (IOException e) {
-				System.out.println("Could not write to mineLayer.txt");
-				e.printStackTrace();
-			}
-			row = "";
-		}
-		
-		//Try to close mineWriter
-		try {
-			mineWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		mineLayer = new Map(tempMap);
 		
 		return mineLayer;
 
 	}//end of createMapFile
 
 	//creates the values for tiles to check for surrounding bombs
-	public static int[][] incrementValues(int width, int height, int xCoor, int yCoor, int[][]grid){
+	public static int[][] incrementValues(int width, int height, int xCoor, int yCoor, int[][]grid, String[][] curMap){
 		/* 1  2  3
 		 * 4  x  5
 		 * 6  7  8
@@ -108,7 +77,8 @@ public class MineCreation {
 		//1. Upper Left
 		if(xCoor != 0){
 			if(yCoor != 0){
-				if(grid[xCoor - 1][yCoor -1] >= 0){
+				if(grid[xCoor - 1][yCoor -1] >= 0 &&
+						curMap[xCoor - 1][yCoor - 1].compareTo("0") == 0){
 					grid[xCoor -1][yCoor -1] ++;
 				}
 			}
@@ -116,7 +86,8 @@ public class MineCreation {
 
 		//2. Middle Upper
 		if(yCoor != 0){
-			if(grid[xCoor][yCoor -1] >= 0){
+			if(grid[xCoor][yCoor -1] >= 0 && 
+					curMap[xCoor][yCoor - 1].compareTo("0") == 0){
 				grid[xCoor][yCoor -1] ++;
 			}
 		}
@@ -124,7 +95,8 @@ public class MineCreation {
 		//3. Upper Right
 		if(yCoor != 0){
 			if(xCoor != width - 1){
-				if(grid[xCoor + 1][yCoor -1 ]>= 0){
+				if(grid[xCoor + 1][yCoor -1 ]>= 0 &&
+						curMap[xCoor + 1][yCoor - 1].compareTo("0") == 0){
 					grid[xCoor + 1][yCoor -1]++;
 				}	
 			}
@@ -132,14 +104,16 @@ public class MineCreation {
 		
 		//4. Middle Left
 		if(xCoor != 0){
-			if(grid[xCoor -1][yCoor] >= 0){
+			if(grid[xCoor -1][yCoor] >= 0 && 
+					curMap[xCoor - 1][yCoor].compareTo("0") == 0){
 				grid[xCoor -1][yCoor] ++;
 			}
 		}
 		
 		//5. Middle Right
 		if(xCoor != width -1){
-			if(grid[xCoor + 1][yCoor] >= 0){
+			if(grid[xCoor + 1][yCoor] >= 0 && 
+					curMap[xCoor + 1][yCoor].compareTo("0") == 0){
 				grid[xCoor + 1][yCoor] ++;
 			}
 		}
@@ -147,7 +121,8 @@ public class MineCreation {
 		//6. Bottom Left
 		if(xCoor != 0){
 			if(yCoor != height -1){
-				if(grid[xCoor -1][yCoor+ 1] >= 0){
+				if(grid[xCoor -1][yCoor+ 1] >= 0 && 
+						curMap[xCoor - 1][yCoor + 1].compareTo("0") == 0){
 					grid[xCoor - 1][yCoor + 1] ++;
 				}
 			}
@@ -155,7 +130,8 @@ public class MineCreation {
 		
 		//7.  Middle Bottom
 		if(yCoor != height -1){
-			if(grid[xCoor][yCoor +1] >= 0){
+			if(grid[xCoor][yCoor +1] >= 0 &&
+					curMap[xCoor][yCoor + 1].compareTo("0") == 0){
 				grid[xCoor][yCoor +1]++;
 			}
 		}
@@ -163,7 +139,8 @@ public class MineCreation {
 		//8.  Bottom Right
 		if(xCoor != width -1){
 			if(yCoor != height -1){
-				if(grid[xCoor + 1][yCoor +1] >= 0){
+				if(grid[xCoor + 1][yCoor +1] >= 0 &&
+						curMap[xCoor + 1][yCoor + 1].compareTo("0") == 0){
 					grid[xCoor +1][yCoor +1]++;
 				}
 			}
