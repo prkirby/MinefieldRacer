@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Map {
 
 	public String[][] map;	//The actual map
+	private int width, height;
 	
 	/**
 	 * Default constructor (not in use)
@@ -28,7 +29,9 @@ public class Map {
 	 * 			The height of the map
 	 */
 	public Map(int width, int height){
-		
+		this.width= width;
+		this.height = height;
+
 		//Build the map
 		map = new String[width][height];
 		
@@ -59,12 +62,13 @@ public class Map {
 		try {
 			Scanner s = new Scanner(f);
 			
-			int width = s.nextInt();
-			int height = s.nextInt();
+			width = s.nextInt();
+			height = s.nextInt();
 			map = new String[width][height];
 			
-			for(int w = 0; w < width; w++){
-				for(int h = 0; h < height ; h++){
+			for(int h = 0; h < height ; h++){
+				for(int w = 0; w < width; w++){
+				
 					map[w][h] = s.next();
 				}
 			}
@@ -84,6 +88,24 @@ public class Map {
 	}
 	
 	/**
+	 * Returns the height of the map
+	 * @return
+	 * 			The height of the map
+	 */
+	public int getHeight(){
+		return this.height;
+	}
+	
+	/**
+	 * Returns the width of the map
+	 * @return
+	 * 			the width of the map
+	 */
+	public int getWidth(){
+		return this.width;
+	}
+	
+	/**
 	 * Determines if the given coordinate is a valid location to go to
 	 * @param x
 	 * 			The x coordinate
@@ -98,6 +120,12 @@ public class Map {
 		if(x < 0 || y < 0)
 			return false;
 		if(!map[x][y].equals("W"))
+			return true;
+		return false;
+	}
+	
+	public boolean checkForMine(int x, int y){
+		if(map[x][y].equals("-1"))
 			return true;
 		return false;
 	}
