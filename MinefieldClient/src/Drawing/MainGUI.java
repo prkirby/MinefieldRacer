@@ -30,6 +30,8 @@ public class MainGUI {
     //Drawing data
     private ArrayList<Entity> coords = new ArrayList<Entity>();
     private String[][] map = new String[11][11];
+    private String time;
+    private String mode;
     
     /**
      * Default Constructor: Sets up all of the drawing
@@ -94,7 +96,23 @@ public class MainGUI {
     	this.map = m;
     }
     
-    /**
+    public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	/**
      * This class represents the panel that the player sees
      */
     private class myJPanel extends JPanel{
@@ -106,16 +124,28 @@ public class MainGUI {
          */
         public void paintComponent(Graphics g){
             super.paintComponent(g);
-            super.setBackground(Color.WHITE);
+            super.setBackground(new Color(75,75,180));
             
             ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
             
-            if(map!=null)
-            	DrawMap.draw(g, map);
-            if(temp.size()>0)
-            	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
-            for(int e = 1; e < temp.size(); e++){
-                DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+            if(mode == null) mode = "SPEC";
+            
+            if(mode.equals("SPEC")){
+            	if(map!=null)
+                	DrawMap.draw(g, "test1", mainpanel.getWidth(), mainpanel.getHeight());
+                for(int e = 1; e < temp.size(); e++){
+                    DrawEntity.draw(g, temp.get(e));
+                }
+                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
+            }else if(mode.equals("RACE")){
+            	if(map!=null)
+                	DrawMap.draw(g, map);
+                if(temp.size()>0)
+                	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+                for(int e = 1; e < temp.size(); e++){
+                    DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+                }
+                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
             }
         }
     }

@@ -19,8 +19,8 @@ public class ClientWriter implements Runnable{
     private Map map = new Map(new File("MAPS\\test1.txt"));
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
-    private final int lobbyTime = 60 * 1000;	//1 Minute
-    private int currentTime = 0;				//Time counter
+    private final int lobbyTime = 30 * 1000;	//30 Seconds
+    private int currentTime = lobbyTime;				//Time counter
     private boolean inRace = false;				//Race = true, lobby = false;
     
     private boolean haveWinner = false;			//Temporary variable
@@ -68,27 +68,41 @@ public class ClientWriter implements Runnable{
      * This determines if a mode switch is necessary. If it is, it does it.
      */
     private void switchModes(){
-        currentTime+=5;//5 ms
-    	if(this.currentTime >= this.lobbyTime && !inRace){
+        currentTime-=5;//5 ms
+    	if(this.currentTime <= 0 && !inRace){
+    		System.out.println("STARTING RACE");
     		this.inRace = true;
-    		this.currentTime = 0;
+    		this.currentTime = raceTime;
     		
     		//Start race
     		//Place all current clients at the starting line
     		for(int c = 0; c < this.clients.size(); c++){
     			if(this.clients.get(c).canRace()){
+    				this.clients.get(c).setSpectatorMode(false);
     				this.clients.get(c).player().setX(1);
-    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()));
+    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()-2)+1);
+    				
     			}
     		}
     		
-    	}else if(this.currentTime >= this.raceTime && inRace){
+    	}else if(this.currentTime <= 0 && inRace){
+    		System.out.println("ENTERING LOBBY.");
     		this.inRace = false;
-    		this.currentTime = 0;
+    		this.currentTime = lobbyTime;
     		this.haveWinner = false;
     		this.someoneWon = false;
     		
     		//Start Lobby
+    		for(int c = 0; c < this.clients.size(); c++){
+				this.clients.get(c).setSpectatorMode(true);
+    		}
+    	}
+    	
+    	if(inRace && this.currentTime == 10000){
+    		System.out.println("RETURNING TO LOBBY IN 10 SECONDS.");
+    	}
+    	if(!inRace && this.currentTime == 10000){
+    		System.out.println("STARTING RACE IN 10 SECONDS.");
     	}
     }
     
@@ -105,12 +119,13 @@ public class ClientWriter implements Runnable{
                     cl--;
                 }else{ //If the client exists
                 	clients.get(cl).updateMap(map);
+                	clients.get(cl).setTime(this.formatTime());
                 	if(!this.inRace)
                 		clients.get(cl).setCanRace(true);
                 	
                 	//If a client met win Condition
                 	if(!this.haveWinner && this.someoneWon){
-                		this.currentTime = this.raceTime-10*1000; //Ten seconds left
+                		this.currentTime = 10*1000; //Ten seconds left
                 		this.haveWinner = true;
                 	}
                 }
@@ -118,6 +133,45 @@ public class ClientWriter implements Runnable{
         }catch(NullPointerException e){
             System.out.println("NullPointer in check clients.");
         }
+    }
+    
+    /**
+     * This method takes the current time and converts 
+     * it into a nice string to pass to the client
+     * @return
+     * 			A formatted time string
+     */
+    public String formatTime(){   
+    	String time = "";
+    	int min = this.currentTime/60000;
+    	int sec = this.currentTime/1000 - min*60;
+    	int mil = this.currentTime%1000;
+    	
+    	if(min < 1){
+    		time+="0:";
+    	}else{
+    		time+=""+min+":";
+    	}
+    	
+    	if(sec < 10){
+    		time+="0"+sec+":";
+		}else if(sec==0){
+			time+="00:";
+    	}else{
+    		time+=""+sec+":";
+    	}
+    	
+    	if(mil < 100){
+    		time+="0"+mil;
+		}else if(mil < 10){
+    		time+="00"+mil;
+		}else if(mil==0){
+			time+="000";
+    	}else{
+    		time+=""+mil;
+    	}
+    	
+    	return time.substring(0, time.length()-1);
     }
     
     /**
@@ -130,9 +184,11 @@ public class ClientWriter implements Runnable{
     public String setupData(int clientN){
         String data = "DATA ";
         try{
-            data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " ";
+        	data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " ";
+        	
             for(int d = 0; d < clients.size(); d++){
-                data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
+            	if(!clients.get(d).inSpectatorMode() && d !=clientN)
+            		data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
             }
         }catch (java.lang.NullPointerException e){clients.remove(clientN); System.out.println();}
         
