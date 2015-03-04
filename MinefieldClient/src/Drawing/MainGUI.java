@@ -124,7 +124,7 @@ public class MainGUI {
          */
         public void paintComponent(Graphics g){
             super.paintComponent(g);
-            super.setBackground(new Color(75,75,180));
+            super.setBackground(new Color(90,90,80));
             
             ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
             
@@ -134,7 +134,7 @@ public class MainGUI {
             	if(map!=null)
                 	DrawMap.draw(g, "test1", mainpanel.getWidth(), mainpanel.getHeight());
                 for(int e = 1; e < temp.size(); e++){
-                    DrawEntity.draw(g, temp.get(e));
+                    DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),"test1");
                 }
                 DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
             }else if(mode.equals("RACE")){
