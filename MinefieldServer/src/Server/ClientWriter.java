@@ -26,7 +26,6 @@ public class ClientWriter implements Runnable{
     private int currentTime = lobbyTime;				//Time counter
     private boolean inRace = false;				//Race = true, lobby = false;
     
-    private boolean haveWinner = false;			//Temporary variable
     private boolean someoneWon = false;			//Temporary variable
     
     
@@ -96,7 +95,6 @@ public class ClientWriter implements Runnable{
     		System.out.println("ENTERING LOBBY.");
     		this.inRace = false;
     		this.currentTime = lobbyTime;
-    		this.haveWinner = false;
     		this.someoneWon = false;
     		
     		//Start Lobby
@@ -133,7 +131,7 @@ public class ClientWriter implements Runnable{
                 	//If a client met win Condition
                 	if(checkWinCondition(cl) && !this.someoneWon){
                 		this.currentTime = 10*1000; //Ten seconds left
-                		this.haveWinner = true;
+                		this.someoneWon = true;
                 	}
                 }
             }
@@ -172,7 +170,7 @@ public class ClientWriter implements Runnable{
     		time+="0"+mil;
 		}else if(mil < 10){
     		time+="00"+mil;
-		}else if(mil==0){
+		}else if(mil<=0){
 			time+="000";
     	}else{
     		time+=""+mil;
