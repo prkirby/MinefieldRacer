@@ -14,15 +14,15 @@ import GameMechanics.MineCreation;
  * 
  * @author Joseph Ryan
  */
-public class ClientWriter implements Runnable{
+public class ClientWriter implements Runnable {
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
     private Map map = new Map(new File("MAPS/test1.txt"));
     private Map mineLayer;
-    private int numMines = 30;
+    private double minePercentage = 0.10;
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
-    private final int lobbyTime = 30 * 1000;	//30 Seconds
+    private final int lobbyTime = 10 * 1000;	//30 Seconds
     private int currentTime = lobbyTime;				//Time counter
     private boolean inRace = false;				//Race = true, lobby = false;
     
@@ -76,10 +76,13 @@ public class ClientWriter implements Runnable{
     		this.inRace = true;
     		this.currentTime = raceTime;
     		
+    		System.out.println(map.toString());
+    		
     		//Start race
     		//Populate mineLayer with mines and numbers
-    		mineLayer = new Map(MineCreation.createMapFile(
-    				map.getWidth(), map.getHeight(), numMines));
+    		mineLayer = MineCreation.createMineLayer(map.map, minePercentage);
+    		
+    		System.out.println(mineLayer.toString());
     		
     		//Place all current clients at the starting line
     		for(int c = 0; c < this.clients.size(); c++){
@@ -124,6 +127,7 @@ public class ClientWriter implements Runnable{
                     cl--;
                 }else{ //If the client exists
                 	clients.get(cl).updateMap(map);
+                	clients.get(cl).updateMineLayer(mineLayer);
                 	clients.get(cl).setTime(this.formatTime());
                 	if(!this.inRace)
                 		clients.get(cl).setCanRace(true);
@@ -137,6 +141,7 @@ public class ClientWriter implements Runnable{
             }
         }catch(NullPointerException e){
             System.out.println("NullPointer in check clients.");
+            e.printStackTrace();
         }
     }
     
@@ -195,7 +200,7 @@ public class ClientWriter implements Runnable{
             	if(!clients.get(d).inSpectatorMode() && d !=clientN)
             		data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
             }
-        }catch (java.lang.NullPointerException e){clients.remove(clientN); System.out.println();}
+        }catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
         
         return data;
     }
@@ -210,6 +215,7 @@ public class ClientWriter implements Runnable{
         Thread.sleep(dur);
         }catch(InterruptedException e){
             System.out.println("Room has been interrupted");
+            e.printStackTrace();
         }
     }
     
