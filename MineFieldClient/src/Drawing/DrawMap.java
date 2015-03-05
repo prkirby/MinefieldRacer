@@ -42,6 +42,7 @@ public class DrawMap {
 	    			}
 	    			else if(map[x][y].equals("n") || map[x][y].equals("0")){}
 	    			else{
+	    				g.setColor(Color.white);
 	    				g.drawString(map[x][y],x*scale*5+25, y*scale*5+25);
 	    			}
     			}catch(NullPointerException e){
