@@ -351,7 +351,8 @@ public class Client implements Runnable{
 					if(x < 0 || x > map.map.length-1 || y < 0 || y > map.map[0].length-1)
 						ret += "n ";
 					else if (hasBeen[x][y] && 
-							map.getMap()[x][y].compareTo("c") == 0)
+							map.getMap()[x][y].compareTo("c") == 0 &&
+							mineLayer.getMap()[x][y].compareTo("-1") != 0)
 						ret += mineLayer.getMap()[x][y]+" ";
 					else
 						ret += map.getMap()[x][y] + " ";

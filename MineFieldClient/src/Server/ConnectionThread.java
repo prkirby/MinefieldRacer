@@ -138,9 +138,7 @@ public class ConnectionThread implements Runnable{
  	   for(int x = 0; x < 11; x++){
  		   for(int y = 0; y < 11; y++){
  			   ret[x][y] = scan.next();
-// 			   System.out.print(ret[x][y]+" ");
      	   }
-// 		   System.out.println("");
  	   }
  	   
  	   in.mainGUI().map(ret);

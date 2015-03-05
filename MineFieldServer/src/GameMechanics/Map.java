@@ -136,8 +136,10 @@ public class Map {
 	}
 	
 	public boolean checkForMine(int x, int y){
-		if(map[x][y].equals("-1"))
+		if(map[x][y].equals("-1")){
+			map[x][y] = "m";
 			return true;
+		}
 		return false;
 	}
 	

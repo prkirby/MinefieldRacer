@@ -36,7 +36,7 @@ public class DrawMap {
 	    			}else if(map[x][y].equals("wf")){
 	    				g.setColor(new Color(255,255,255));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
-	    			}else if(map[x][y].equals("-1")){
+	    			}else if(map[x][y].equals("m")){
 	    				g.setColor(new Color(209,134,3));
 	    				g.fillOval(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}
