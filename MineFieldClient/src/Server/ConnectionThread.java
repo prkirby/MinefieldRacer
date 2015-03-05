@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
-    private final String ipAddress = "141.219.211.50";
+    private final String ipAddress = "192.168.2.20";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -78,7 +78,7 @@ public class ConnectionThread implements Runnable{
                     checkDupe = inn;
                     Scanner scan = new Scanner(inn);
                     String flag = scan.next();
-
+                    
                     if(flag.equals("DATA")){
                         this.readData(scan);
                     }else if(flag.equals("MAP")){
@@ -91,14 +91,17 @@ public class ConnectionThread implements Runnable{
                 
             } catch (IOException ex) {
                 System.out.println("Error getting output from server (IOException): "+inn);
+                ex.printStackTrace();
                 this.close();
             } catch (java.lang.NullPointerException e){
                 System.out.println("Error getting output from server (NULL): "+inn);
+                e.printStackTrace();
                 this.close();
             } catch (java.util.NoSuchElementException e){
-                
+                e.printStackTrace();
             } catch (Exception e){
                 System.out.println("Error getting output from server ("+e.toString()+"): "+inn);
+                e.printStackTrace();
                 this.close();
             }
             sleep(4);
@@ -132,13 +135,10 @@ public class ConnectionThread implements Runnable{
      */
     public void readMap(Scanner scan){
  	   String[][] ret = new String[11][11];
- 	   
  	   for(int x = 0; x < 11; x++){
  		   for(int y = 0; y < 11; y++){
  			   ret[x][y] = scan.next();
- 			   //System.out.print(ret[x][y]+" ");
      	   }
- 		   //System.out.println("");
  	   }
  	   
  	   in.mainGUI().map(ret);

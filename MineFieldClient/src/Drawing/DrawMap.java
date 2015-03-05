@@ -24,7 +24,7 @@ public class DrawMap {
 	    			if(map[x][y].equals("W")){
 	    				g.setColor(Color.black);
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
-	    			}else if(map[x][y].equals("0")){
+	    			}else if(map[x][y].equals("c")){
 	    				g.setColor(new Color(154,154,154));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}else if(map[x][y].equals("r")){
@@ -36,8 +36,11 @@ public class DrawMap {
 	    			}else if(map[x][y].equals("wf")){
 	    				g.setColor(new Color(255,255,255));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
+	    			}else if(map[x][y].equals("m")){
+	    				g.setColor(new Color(209,134,3));
+	    				g.fillOval(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}
-	    			else if(map[x][y].equals("n")){}
+	    			else if(map[x][y].equals("n") || map[x][y].equals("0")){}
 	    			else{
 	    				g.drawString(map[x][y],x*scale*5+25, y*scale*5+25);
 	    			}
@@ -56,7 +59,7 @@ public class DrawMap {
      * 			The mapName to draw
      */
     public static void draw(Graphics g, String mapName, int width, int height){
-    	File m = new File("Maps\\"+mapName+".txt");
+    	File m = new File("MAPS/"+mapName+".txt");
     	Scanner s = null;
     	
     	try {
@@ -74,7 +77,7 @@ public class DrawMap {
     			if(block.equals("W")){
     				g.setColor(Color.black);
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
-    			}else if(block.equals("0")){
+    			}else if(block.equals("c")){
     				g.setColor(new Color(154,154,154));
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
     			}else if(block.equals("r")){

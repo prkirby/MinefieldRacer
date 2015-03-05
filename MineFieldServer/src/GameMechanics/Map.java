@@ -44,6 +44,17 @@ public class Map {
 	}
 	
 	/**
+	 * Constructor to take in pre-populated String[][]
+	 * 
+	 * @param map - String[][] containing map data
+	 */
+	public Map(String[][] map) {
+		this.map = map;
+		width = map.length;
+		height = map[0].length;
+	}
+	
+	/**
 	 * Constructor:  Builds a map based on a given text file <br />
 	 * <b>Format:</b><br />
 	 * width height <br />
@@ -125,8 +136,31 @@ public class Map {
 	}
 	
 	public boolean checkForMine(int x, int y){
-		if(map[x][y].equals("-1"))
+		if(map[x][y].equals("-1")){
+			map[x][y] = "m";
 			return true;
+		}
 		return false;
+	}
+	
+	/**
+	 * toString, for debugging purposes
+	 * @return 
+	 */
+	public String toString() {
+		String str = "";
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				String temp = map[j][i];
+				if (temp.length() == 1) {
+					str += " ";
+				}
+				str += " " + temp;
+			}
+			str += "\n";
+		}
+		
+		return str;
 	}
 }
