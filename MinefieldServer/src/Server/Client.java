@@ -31,6 +31,7 @@ public class Client implements Runnable{
 	//Map data
 	private Map map;
 	private Map mineLayer;
+	private boolean[][] hasBeen;
 	
 	
 	//Modal variables
@@ -162,6 +163,44 @@ public class Client implements Runnable{
 	public void updateMineLayer(Map mineLayer) {
 		this.mineLayer = mineLayer;
 	}
+	
+	/**
+	 * This initializes the hasBeen[][]
+	 */
+	public void hasBeenInit() {
+		hasBeen = new boolean[map.getWidth()][map.getHeight()];
+	}
+	
+	/**
+	 * This updates hasBeen based on a view port size
+	 * 
+	 * @param playerX
+	 * 		The players current X position
+	 * @param playerY
+	 * 		The player's current Y position
+	 * @param viewPortSize
+	 * 		The number of grid spaces away from player to reveal.
+	 * 		ie: viewPortSize of 1 would reveal a 3X3 grid with player
+	 * 		in the middle
+	 */
+	public void updateHasBeen(Player player) {
+		int x = player.getX();
+		int y = player.getY();
+		int port = player.getViewPort();
+		
+		//Find view boundaries
+		int leftX = (x - port > 0) ? x - port : 0;
+		int rightX = (x + port < map.getWidth() - 1) ? x + port : map.getWidth() - 1;
+		int topY = (y - port > 0) ? y - port : 0;
+		int botY = (y + port < map.getHeight() - 1) ? y + port : map.getHeight() - 1;
+		
+		//Update hasBeen
+		for (int i = leftX; i <= rightX; i++) {
+			for (int j = topY; j <= botY; j++) {
+				hasBeen[i][j] = true;
+			}
+		}
+	}
 
 	/**
 	 * Currently just moves player back to [1,y] if they share
@@ -195,7 +234,7 @@ public class Client implements Runnable{
 					boolean keys[] = new boolean[4];
 					for(int k = 0; k < keys.length; k++){
 						if(scan.nextInt() == 1) keys[k] = true;
-						else                    keys[k] = false;
+						else 					keys[k] = false;
 					}
 
 					if(!this.spectatorMode){
@@ -205,12 +244,17 @@ public class Client implements Runnable{
 					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
 					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
-					
+					//Update hasBeen array
+					updateHasBeen(player);
+					//Check if mine has been hit
 					mineCollision();
 					
 					} else{
 						this.player.setX(0);
 						this.player.setY(0);
+						// Initialize the hasBeen array
+						hasBeenInit();
+						hasBeen[0][0] = true;
 					}
 				}
 
@@ -305,9 +349,12 @@ public class Client implements Runnable{
 			for(int x=player.getX()-5; x <= player.getX()+5; x++){
 				for(int y=player.getY()-5; y <= player.getY()+5; y++){
 					if(x < 0 || x > map.map.length-1 || y < 0 || y > map.map[0].length-1)
-						ret+="n ";
+						ret += "n ";
+					else if (hasBeen[x][y] && 
+							map.getMap()[x][y].compareTo("c") == 0)
+						ret += mineLayer.getMap()[x][y]+" ";
 					else
-						ret+=map.getMap()[x][y]+" ";
+						ret += map.getMap()[x][y] + " ";
 				}
 			}
 

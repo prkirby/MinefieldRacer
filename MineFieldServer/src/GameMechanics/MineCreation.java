@@ -30,7 +30,7 @@ public class MineCreation {
 		//places mines first, represented by a -1
 		while(placedMines < numMines){
 			if(mineHolder[xMineCoor][yMineCoor] != -1 && 
-					curMap[xMineCoor][yMineCoor].compareTo("0") == 0){
+					curMap[xMineCoor][yMineCoor].compareTo("c") == 0){
 				mineHolder[(int) xMineCoor][(int) yMineCoor] = -1;
 				placedMines++;
 				xMineCoor =  xrand.nextInt(width - 4) + 4;
@@ -78,7 +78,7 @@ public class MineCreation {
 		if(xCoor != 0){
 			if(yCoor != 0){
 				if(grid[xCoor - 1][yCoor -1] >= 0 &&
-						curMap[xCoor - 1][yCoor - 1].compareTo("0") == 0){
+						curMap[xCoor - 1][yCoor - 1].compareTo("c") == 0){
 					grid[xCoor -1][yCoor -1] ++;
 				}
 			}
@@ -87,7 +87,7 @@ public class MineCreation {
 		//2. Middle Upper
 		if(yCoor != 0){
 			if(grid[xCoor][yCoor -1] >= 0 && 
-					curMap[xCoor][yCoor - 1].compareTo("0") == 0){
+					curMap[xCoor][yCoor - 1].compareTo("c") == 0){
 				grid[xCoor][yCoor -1] ++;
 			}
 		}
@@ -96,7 +96,7 @@ public class MineCreation {
 		if(yCoor != 0){
 			if(xCoor != width - 1){
 				if(grid[xCoor + 1][yCoor -1 ]>= 0 &&
-						curMap[xCoor + 1][yCoor - 1].compareTo("0") == 0){
+						curMap[xCoor + 1][yCoor - 1].compareTo("c") == 0){
 					grid[xCoor + 1][yCoor -1]++;
 				}	
 			}
@@ -105,7 +105,7 @@ public class MineCreation {
 		//4. Middle Left
 		if(xCoor != 0){
 			if(grid[xCoor -1][yCoor] >= 0 && 
-					curMap[xCoor - 1][yCoor].compareTo("0") == 0){
+					curMap[xCoor - 1][yCoor].compareTo("c") == 0){
 				grid[xCoor -1][yCoor] ++;
 			}
 		}
@@ -113,7 +113,7 @@ public class MineCreation {
 		//5. Middle Right
 		if(xCoor != width -1){
 			if(grid[xCoor + 1][yCoor] >= 0 && 
-					curMap[xCoor + 1][yCoor].compareTo("0") == 0){
+					curMap[xCoor + 1][yCoor].compareTo("c") == 0){
 				grid[xCoor + 1][yCoor] ++;
 			}
 		}
@@ -122,7 +122,7 @@ public class MineCreation {
 		if(xCoor != 0){
 			if(yCoor != height -1){
 				if(grid[xCoor -1][yCoor+ 1] >= 0 && 
-						curMap[xCoor - 1][yCoor + 1].compareTo("0") == 0){
+						curMap[xCoor - 1][yCoor + 1].compareTo("c") == 0){
 					grid[xCoor - 1][yCoor + 1] ++;
 				}
 			}
@@ -131,7 +131,7 @@ public class MineCreation {
 		//7.  Middle Bottom
 		if(yCoor != height -1){
 			if(grid[xCoor][yCoor +1] >= 0 &&
-					curMap[xCoor][yCoor + 1].compareTo("0") == 0){
+					curMap[xCoor][yCoor + 1].compareTo("c") == 0){
 				grid[xCoor][yCoor +1]++;
 			}
 		}
@@ -140,7 +140,7 @@ public class MineCreation {
 		if(xCoor != width -1){
 			if(yCoor != height -1){
 				if(grid[xCoor + 1][yCoor +1] >= 0 &&
-						curMap[xCoor + 1][yCoor + 1].compareTo("0") == 0){
+						curMap[xCoor + 1][yCoor + 1].compareTo("c") == 0){
 					grid[xCoor +1][yCoor +1]++;
 				}
 			}

@@ -7,6 +7,9 @@ package GameMechanics;
  */
 public class Player extends Entity{
     
+	// Default viewPortSize
+	private int viewPortSize = 1;
+	
     /**
      * Default Constructor (Not in use)
      */
@@ -22,6 +25,24 @@ public class Player extends Entity{
     public Player(int x, int y){
         super.setX(x);
         super.setY(y);
+    }
+    
+    /**
+     * Getter for viewPortSize
+     * @return
+     * 		Player's Viewport size
+     */
+    public int getViewPort() {
+    	return viewPortSize;
+    }
+    
+    /**
+     * Setter for viewPortSize
+     * @param newViewPort
+     * 		Size of new view port (in spaces away from player)
+     */
+    public void setViewPort(int newViewPort) {
+    	viewPortSize = newViewPort;
     }
     
     /**

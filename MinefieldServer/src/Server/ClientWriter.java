@@ -19,10 +19,10 @@ public class ClientWriter implements Runnable {
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
     private Map map = new Map(new File("MAPS/test1.txt"));
     private Map mineLayer;
-    private double minePercentage = 0.20;
+    private double minePercentage = 0.10;
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
-    private final int lobbyTime = 5 * 1000;	//30 Seconds
+    private final int lobbyTime = 10 * 1000;	//30 Seconds
     private int currentTime = lobbyTime;				//Time counter
     private boolean inRace = false;				//Race = true, lobby = false;
     
@@ -141,6 +141,7 @@ public class ClientWriter implements Runnable {
             }
         }catch(NullPointerException e){
             System.out.println("NullPointer in check clients.");
+            e.printStackTrace();
         }
     }
     
@@ -199,7 +200,7 @@ public class ClientWriter implements Runnable {
             	if(!clients.get(d).inSpectatorMode() && d !=clientN)
             		data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
             }
-        }catch (java.lang.NullPointerException e){clients.remove(clientN); System.out.println();}
+        }catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
         
         return data;
     }
@@ -214,6 +215,7 @@ public class ClientWriter implements Runnable {
         Thread.sleep(dur);
         }catch(InterruptedException e){
             System.out.println("Room has been interrupted");
+            e.printStackTrace();
         }
     }
     
