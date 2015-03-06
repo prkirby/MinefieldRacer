@@ -1,0 +1,17 @@
+package Server;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ClientWriterTest {
+
+	// Tests to see if the check clients method returns an arbitrary size
+	// based on the number of open clients.
+	@Test
+	public void clientsTest() {
+		if ()
+		fail("Not yet implemented");
+	}
+
+}
