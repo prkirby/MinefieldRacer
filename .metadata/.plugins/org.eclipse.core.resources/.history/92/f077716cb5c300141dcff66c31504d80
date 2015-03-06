@@ -1,0 +1,23 @@
+package GameMechanics;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class MapTest {
+
+	/**
+	 * mapTest
+	 * 
+	 * Checks to see that empty maps are being created with the
+	 * parametized dimensions.
+	 */
+	@Test
+	public void mapTest() {
+		Map newMap = new Map(40,40);
+		if (newMap.map.length != 40 || newMap.map[0].length != 40) {
+			fail("Map incorrectly sizing with given parameters (40, 40).");
+		}
+	}
+
+}

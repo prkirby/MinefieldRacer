@@ -1,0 +1,14 @@
+package Server;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ClientWriterTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

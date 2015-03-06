@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MineCreationTest" project="MineFieldServer" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="GameMechanics.MineCreationTest" time="0.053">
+    <testcase name="createMineLayerTest" classname="GameMechanics.MineCreationTest" time="0.053"/>
+  </testsuite>
+</testrun>

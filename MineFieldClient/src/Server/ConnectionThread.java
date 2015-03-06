@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
-    private final String ipAddress = "192.168.2.20";
+    private final String ipAddress = "192.168.1.18";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server

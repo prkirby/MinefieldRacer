@@ -1,0 +1,14 @@
+package GameMechanics;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class MineCreationTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}
