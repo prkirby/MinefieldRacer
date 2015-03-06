@@ -21,7 +21,8 @@ public class Client implements Runnable{
 	private BufferedReader input = null;
 	private boolean isActive = true;
 	private boolean canGetInfo = false;
-
+	public String name = "";
+	private boolean win = false;
 	//Data to send to client
 	private String data = "";
 
@@ -56,7 +57,6 @@ public class Client implements Runnable{
 		}
 
 		player = new Player(4,4); //Temp use
-
 		//Start up data Thread
 		DataThread temp = new DataThread();
 		new Thread(temp).start();
@@ -146,6 +146,16 @@ public class Client implements Runnable{
 		this.spectatorMode = b;
 	}
 
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String s){
+		name = s;
+	}
+	public void setWinner(boolean winner){
+		win = winner;
+	}
 
 	/**
 	 * This updates the map for collision detection
@@ -196,6 +206,8 @@ public class Client implements Runnable{
 					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
 					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
+					
+					//update uncover
 					
 					mineCollision();
 					}else{
