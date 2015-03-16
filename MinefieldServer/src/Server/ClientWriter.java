@@ -70,7 +70,9 @@ public class ClientWriter implements Runnable {
      * This determines if a mode switch is necessary. If it is, it does it.
      */
     private void switchModes(){
-        currentTime-=5;//5 ms
+    	if(this.clients().size()>1)
+    		currentTime-=5;//5 ms
+    	
     	if(this.currentTime <= 0 && !inRace){
     		System.out.println("STARTING RACE");
     		this.inRace = true;
@@ -163,20 +165,20 @@ public class ClientWriter implements Runnable {
     		time+=""+min+":";
     	}
     	
-    	if(sec < 10){
-    		time+="0"+sec+":";
-		}else if(sec==0){
-			time+="00:";
+    	if(sec==0){
+    		time+="00:";
+		}else if(sec<0){
+			time+="0"+sec+":";
     	}else{
     		time+=""+sec+":";
     	}
     	
-    	if(mil < 100){
-    		time+="0"+mil;
+    	if(mil <= 0){
+    		time+="000";
 		}else if(mil < 10){
     		time+="00"+mil;
-		}else if(mil<=0){
-			time+="000";
+		}else if(mil<100){
+			time+="0"+mil;
     	}else{
     		time+=""+mil;
     	}
