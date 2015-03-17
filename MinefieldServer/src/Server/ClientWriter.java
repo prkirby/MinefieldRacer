@@ -3,7 +3,6 @@ package Server;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
@@ -18,7 +17,7 @@ import GameMechanics.MineCreation;
 public class ClientWriter implements Runnable {
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(new File("MAPS/funnel.txt"));
+    private Map map = new Map(new File("MAPS/bridges.txt"));
     private Map mineLayer;
     private double minePercentage = 0.10;
     
@@ -168,7 +167,7 @@ public class ClientWriter implements Runnable {
     	
     	if(sec==0){
     		time+="00:";
-		}else if(sec<0){
+		}else if(sec<10){
 			time+="0"+sec+":";
     	}else{
     		time+=""+sec+":";
