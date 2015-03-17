@@ -34,6 +34,7 @@ public class MainGUI {
 	//Drawing data
 	private ArrayList<Entity> coords = new ArrayList<Entity>();
 	private String[][] map = new String[11][11];
+	private String mapName = "test2";
 	private String time;
 	private String mode;
 	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, 
@@ -117,6 +118,10 @@ public class MainGUI {
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
+	
+	public void setMapName(String name){
+		this.mapName = name;
+	}
 
 	/**
 	 * This class represents the panel that the player sees
@@ -138,9 +143,9 @@ public class MainGUI {
 	            
 	            if(mode.equals("SPEC")){
 	            	if(map!=null)
-	                	DrawMap.draw(g, "test1", mainpanel.getWidth(), mainpanel.getHeight());
+	                	DrawMap.draw(g, mapName, mainpanel.getWidth(), mainpanel.getHeight());
 	                for(int e = 1; e < temp.size(); e++){
-	                    DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),"test1");
+	                    DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
 	                }
 	                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
 	            }else if(mode.equals("RACE")){

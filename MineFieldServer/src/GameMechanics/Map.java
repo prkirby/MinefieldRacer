@@ -14,6 +14,7 @@ public class Map {
 
 	public String[][] map;	//The actual map
 	private int width, height;
+	private String mapName = "AUTOMAP";
 	
 	/**
 	 * Default constructor (not in use)
@@ -73,6 +74,8 @@ public class Map {
 		try {
 			Scanner s = new Scanner(f);
 			
+			mapName = f.getName().substring(0, f.getName().length()-4);
+			
 			width = s.nextInt();
 			height = s.nextInt();
 			map = new String[width][height];
@@ -114,6 +117,15 @@ public class Map {
 	 */
 	public int getWidth(){
 		return this.width;
+	}
+	
+	/**
+	 * Returns the map name
+	 * @return
+	 * 			The name of the map
+	 */
+	public String getName(){
+		return this.mapName;
 	}
 	
 	/**

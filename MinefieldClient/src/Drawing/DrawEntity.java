@@ -37,6 +37,7 @@ public abstract class DrawEntity {
      */
     public static void draw(Graphics g, Entity e, int width, int height, String mapName){
     	File m = new File("MAPS/"+mapName+".txt");
+    	System.out.println(mapName);
     	Scanner s = null;
     	
     	try {

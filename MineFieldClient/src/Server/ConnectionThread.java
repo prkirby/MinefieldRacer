@@ -95,13 +95,13 @@ public class ConnectionThread implements Runnable{
                 this.close();
             } catch (java.lang.NullPointerException e){
                 System.out.println("Error getting output from server (NULL): "+inn);
-                e.printStackTrace();
+                //e.printStackTrace(); //pretend this doesn't happen
                 this.close();
             } catch (java.util.NoSuchElementException e){
-                e.printStackTrace();
+                //e.printStackTrace(); //pretend this doesn't happen
             } catch (Exception e){
                 System.out.println("Error getting output from server ("+e.toString()+"): "+inn);
-                e.printStackTrace();
+                //e.printStackTrace(); //pretend this doesn't happen
                 this.close();
             }
             sleep(4);
@@ -152,6 +152,7 @@ public class ConnectionThread implements Runnable{
     public void readMode(Scanner scan){
     	in.mainGUI().setMode(scan.next());
     	in.mainGUI().setTime(scan.next());
+    	in.mainGUI().setMapName(scan.next());
     }
     
     /**

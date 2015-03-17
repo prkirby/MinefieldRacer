@@ -326,14 +326,16 @@ public class Client implements Runnable{
 		public void run() {
 			while(true){
 				output.println(data);
-				
-				//Send the mode
-				if(spectatorMode){
-					output.println("MODE SPEC "+time);
-				}else{
-					output.println("MODE RACE "+time);
-				}
+
 				try{
+					//Send the mode
+					if(spectatorMode){
+						output.println("MODE SPEC "+time+" "+map.getName());
+					}else{
+						output.println("MODE RACE "+time);
+					}
+					
+					//Send the map
 					output.println(sendMap());
 				}catch(NullPointerException e){}
 				this.sleep(20);
