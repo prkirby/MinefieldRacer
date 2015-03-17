@@ -17,7 +17,7 @@ import GameMechanics.MineCreation;
 public class ClientWriter implements Runnable {
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(new File("MAPS/test1.txt"));
+    private Map map = new Map(new File("MAPS/funnel.txt"));
     private Map mineLayer;
     private double minePercentage = 0.10;
     
@@ -78,13 +78,13 @@ public class ClientWriter implements Runnable {
     		this.inRace = true;
     		this.currentTime = raceTime;
     		
-    		System.out.println(map.toString());
+    		//System.out.println(map.toString());
     		
     		//Start race
     		//Populate mineLayer with mines and numbers
     		mineLayer = MineCreation.createMineLayer(map.map, minePercentage);
     		
-    		System.out.println(mineLayer.toString());
+    		//System.out.println(mineLayer.toString());
     		
     		//Place all current clients at the starting line
     		for(int c = 0; c < this.clients.size(); c++){
