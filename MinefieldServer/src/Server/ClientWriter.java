@@ -34,7 +34,7 @@ public class ClientWriter implements Runnable{
      */
     public ClientWriter(){
     	//creates list of maps(put here because it should only run once)
-    	for(int i = 0; i < 10; i ++){
+    	for(int i = 0; i < 1; i ++){
     		MineCreation.createMapFile(50, 50, 10);
     	}
     }
