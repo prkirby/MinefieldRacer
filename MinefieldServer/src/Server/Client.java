@@ -184,14 +184,9 @@ public class Client implements Runnable{
 	/**
 	 * This updates hasBeen based on a view port size
 	 * 
-	 * @param playerX
-	 * 		The players current X position
-	 * @param playerY
-	 * 		The player's current Y position
-	 * @param viewPortSize
-	 * 		The number of grid spaces away from player to reveal.
-	 * 		ie: viewPortSize of 1 would reveal a 3X3 grid with player
-	 * 		in the middle
+	 * @param player
+	 * 
+	 * The player
 	 */
 	public void updateHasBeen(Player player) {
 		int x = player.getX();
@@ -207,7 +202,9 @@ public class Client implements Runnable{
 		//Update hasBeen
 		for (int i = leftX; i <= rightX; i++) {
 			for (int j = topY; j <= botY; j++) {
-				hasBeen[i][j] = true;
+				if (mineLayer.getMap()[i][j] == "0"){
+					hasBeen[i][j] = true;
+				}
 			}
 		}
 	}
