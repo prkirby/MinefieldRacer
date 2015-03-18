@@ -152,7 +152,7 @@ public class MainGUI {
 	            	if(map!=null)
 	                	DrawMap.draw(g, map);
 	                if(temp.size()>0)
-	                	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+	                	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight(), map);
 	                for(int e = 1; e < temp.size(); e++){
 	                    DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 	                }

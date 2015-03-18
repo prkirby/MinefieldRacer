@@ -22,7 +22,7 @@ public class ClientWriter implements Runnable {
     private double minePercentage = 0.10;
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
-    private final int lobbyTime = 30 * 1000;	//30 Seconds
+    private final int lobbyTime = 1000;	//30 Seconds
     private int currentTime = lobbyTime;				//Time counter
     private boolean inRace = false;				//Race = true, lobby = false;
     
