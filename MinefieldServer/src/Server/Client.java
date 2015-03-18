@@ -202,7 +202,9 @@ public class Client implements Runnable{
 		//Update hasBeen
 		for (int i = leftX; i <= rightX; i++) {
 			for (int j = topY; j <= botY; j++) {
-				if (mineLayer.getMap()[i][j] == "0"){
+				if (mineLayer.getMap()[x][y].compareTo("0") == 0 ||
+						mineLayer.getMap()[i][j].compareTo("0") == 0 ||
+						(x == i && y == j)){
 					hasBeen[i][j] = true;
 				}
 			}
