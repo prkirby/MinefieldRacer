@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class MineCreation {
 	public static void main(String[] args){
-		createMapFile(10,10,10);
+		//createMapFile(10,10,10);
 	}
 	public static void createMapFile(int width, int height, int numMines){
 		//quick safety check
