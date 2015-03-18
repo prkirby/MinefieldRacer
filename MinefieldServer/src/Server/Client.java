@@ -41,6 +41,8 @@ public class Client implements Runnable{
     
     //Other info to send to client
     private String time = "n/a";
+    
+    private boolean mineHit = false;
 
 	/**
 	 * This constructor sets up the client 
@@ -213,20 +215,22 @@ public class Client implements Runnable{
 	}
 
 	/**
-	 * Currently just moves player back to [1,y] if they share
-	 * a space with a mine. Gets called whenever a player moves.
+	 * Sets mineHit to true, reset in ClientWriter.
 	 * 
 	 */
 	public void mineCollision() {
 		if(mineLayer.checkForMine(player.getX(), player.getY())) {
-			// Can do other things here
-			
-			player.setX(1);
-			// Remove this after debugging
-			//System.out.println("You fucked up!!");
+			mineHit = true;
 		}
 	}
 	
+	public boolean mineHit() {
+		return mineHit;
+	}
+	
+	public void setMineHit(boolean newHit) {
+		mineHit = newHit;
+	}
 	/**
 	 * The Thread: Reads in data from the client 
 	 * and uses it appropriately

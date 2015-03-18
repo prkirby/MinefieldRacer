@@ -169,66 +169,90 @@ public class ClientWriter implements Runnable {
     		time+="00:";
 		}else if(sec<10){
 			time+="0"+sec+":";
-    	}else{
-    		time+=""+sec+":";
-    	}
-    	
-    	if(mil <= 0){
-    		time+="000";
+		}else{
+			time+=""+sec+":";
+		}
+
+		if(mil <= 0){
+			time+="000";
 		}else if(mil < 10){
-    		time+="00"+mil;
+			time+="00"+mil;
 		}else if(mil<100){
 			time+="0"+mil;
-    	}else{
-    		time+=""+mil;
-    	}
-    	
-    	return time.substring(0, time.length()-1);
-    }
-    
-    /**
-     * Sets up the data for a given client
-     * @param clientN
-     *          The given client to setup data for
-     * @return 
-     *          The formated data to send
-     */
-    public String setupData(int clientN){
-        String data = "DATA ";
-        try{
-        	data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " ";
-        	
-            for(int d = 0; d < clients.size(); d++){
-            	if(!clients.get(d).inSpectatorMode() && d !=clientN)
-            		data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
-            }
-        }catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
-        
-        return data;
-    }
-       
-    /**
-     * Tells the thread to sleep for a set amount of time
-     * @param dur 
-     *          The duration the thread sleeps
-     */
-    public void sleep(int dur){
-        try{
-        Thread.sleep(dur);
-        }catch(InterruptedException e){
-            System.out.println("Room has been interrupted");
-            e.printStackTrace();
-        }
-    }
-    
-    public void mineHit() {
-    	// Does mine things
-    }
-    
-    public boolean checkWinCondition(int clientN){
-    	if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
-    		return true;
-    	}
-    	return false;
-    }
+		}else{
+			time+=""+mil;
+		}
+
+		return time.substring(0, time.length()-1);
+	}
+
+	/**
+	 * Sets up the data for a given client
+	 * @param clientN
+	 *          The given client to setup data for
+	 * @return 
+	 *          The formated data to send
+	 */
+	public String setupData(int clientN){
+		String data = "DATA ";
+		try{
+			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " ";
+
+			for(int d = 0; d < clients.size(); d++){
+				if(!clients.get(d).inSpectatorMode() && d !=clientN)
+					data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
+			}
+		}catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
+
+		return data;
+	}
+
+	/**
+	 * Tells the thread to sleep for a set amount of time
+	 * @param dur 
+	 *          The duration the thread sleeps
+	 */
+	public void sleep(int dur){
+		try{
+			Thread.sleep(dur);
+		}catch(InterruptedException e){
+			System.out.println("Room has been interrupted");
+			e.printStackTrace();
+		}
+	}
+
+	public void mineHit(int ClientNumber) {
+
+		int explosionX = clients.get(ClientNumber).player().getX();
+		int explosionY = clients.get(ClientNumber).player().getY();
+
+		// Sets the radius of the explosion.
+		int explosionRadius = 2;
+
+		int explosionXmin = explosionX - explosionRadius;
+		int explosionYmin = explosionY + explosionRadius;
+
+		int explosionXmax = explosionX + explosionRadius;
+		int explosionYmax = explosionY - explosionRadius;
+
+
+		for (int k = 0; k < clients.size(); k++) {
+			// Checks if players are in this radius
+			if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
+					&& clients.get(k).player().getY() <= explosionYmin && clients.get(k).player().getY() >= explosionYmax) {
+				
+				// Sets players back to start and resets the mineHit variable in Client.
+				// Currently just returns player to x = 1, remove when fixed.
+				clients.get(k).player().setX(1);
+				clients.get(k).setMineHit(false);
+			}
+		}
+	}
+
+	public boolean checkWinCondition(int clientN){
+		if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
+			return true;
+		}
+		return false;
+	}
 }
