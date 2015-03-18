@@ -6,11 +6,12 @@ public class MineCreation {
 	public static void main(String[] args){
 		//createMapFile(10,10,10);
 	}
-	public static void createMapFile(int width, int height, int numMines){
+	public static Map createMapFile(int width, int height, int numMines){
+		Map output = new Map(width, height);
 		//quick safety check
 		if(numMines > width * height){
 			System.out.println("Too many mines for the given dimensions");
-			return;
+			return null;
 		}
 		Random xrand = new Random();
 		Random yrand = new Random();
@@ -44,15 +45,16 @@ public class MineCreation {
 		}
 
 		//prints out minefield
-		String row = "";
+		String row = "";	
 		for(int j = 0; j < height; j++){
 			for(int i = 0; i < width; i++){//had to reverse in order to print properly
 				row = row + mineHolder[i][j] + " ";
 			}
-			System.out.println(row);
+			//System.out.println(row);
 			row = "";
 		}
 
+		return output;
 	}//end of createMapFile
 
 	//creates the values for tiles to check for surrounding bombs
