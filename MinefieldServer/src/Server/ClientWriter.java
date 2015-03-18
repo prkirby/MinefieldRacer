@@ -19,6 +19,7 @@ public class ClientWriter implements Runnable{
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
     private Map arrayOfMaps [];
     private Map map = new Map(new File("MAPS\\test1.txt"));
+    private int mapCount = 0;
     
     private final int raceTime = 5 * 60 * 1000; //5 Minutes
     private final int lobbyTime = 30 * 1000;	//30 Seconds
@@ -34,8 +35,9 @@ public class ClientWriter implements Runnable{
      */
     public ClientWriter(){
     	//creates list of maps(put here because it should only run once)
-    	for(int i = 0; i < 1; i ++){
-    		MineCreation.createMapFile(50, 50, 10);
+    	arrayOfMaps = new Map[10];
+    	for(int i = 0; i < 10; i ++){
+    		arrayOfMaps[i] = MineCreation.createMapFile(20, 20, 20);
     	}
     }
     
@@ -80,14 +82,15 @@ public class ClientWriter implements Runnable{
     		System.out.println("STARTING RACE");
     		this.inRace = true;
     		this.currentTime = raceTime;
-    		
+    		mapCount = (mapCount + 1) % 10;//increment map rotation
+    		System.out.println("mapCount is " + mapCount);
     		//Start race
     		//Place all current clients at the starting line
     		for(int c = 0; c < this.clients.size(); c++){
     			if(this.clients.get(c).canRace()){
     				this.clients.get(c).setSpectatorMode(false);
     				this.clients.get(c).player().setX(1);
-    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()-2)+1);
+    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.arrayOfMaps[mapCount].getHeight()-2) +1);//map.getHeight()-2)+1);
     				
     			}
     		}
@@ -125,7 +128,8 @@ public class ClientWriter implements Runnable{
                     clients.remove(cl);
                     cl--;
                 }else{ //If the client exists
-                	clients.get(cl).updateMap(map);
+                	//clients.get(cl).updateMap(map);
+                	clients.get(cl).updateMap(arrayOfMaps[mapCount]);
                 	clients.get(cl).setTime(this.formatTime());
                 	if(!this.inRace)
                 		clients.get(cl).setCanRace(true);
