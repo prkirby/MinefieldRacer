@@ -156,6 +156,8 @@ public class MainGUI {
 	                for(int e = 1; e < temp.size(); e++){
 	                    DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 	                }
+	                if(map!=null)
+	                	DrawMap.drawNumbers(g, map);
 	                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
 	            }
 		}
