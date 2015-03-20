@@ -253,10 +253,17 @@ public class ClientWriter implements Runnable {
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
 
 				// Sets players back to start and resets the mineHit variable in Client.
-				// Currently just returns player to x = 1, remove when fixed.
-				clients.get(k).player().setX(1);
+				// If the player is past the checkpoint, it moves them back to the checkpoint.
+				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
+					clients.get(k).player().setX(map.getWidth() / 2);
+				}
+				else {
+					clients.get(k).player().setX(1);
+				}
+				// The y is randomized.
 				clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 				clients.get(k).setMineHit(false);
+
 			}
 		}
 	}
