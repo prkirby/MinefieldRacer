@@ -25,7 +25,7 @@ public abstract class DrawEntity {
     	int startX = e.getX() * 50 + (width / 2 - 25) - p.getX() * 50;
     	int startY = (height / 2 - 25) - (p.getY() * 50 - e.getY() * 50);
         g.setColor(e.getColor());
-        g.fillRect(startX, startY, e.getSize()*10, e.getSize()*10);
+        g.fillOval(startX, startY, e.getSize()*10, e.getSize()*10);
     }
     
     /**
@@ -48,7 +48,7 @@ public abstract class DrawEntity {
     	
     	int startX=width/2-wid*5/2, startY=height/2-hei*5/2;
     	g.setColor(e.getColor());
-    	g.fillRect(startX+e.getX()*5, startY+e.getY()*5, 5, 5);
+    	g.fillOval(startX+e.getX()*5, startY+e.getY()*5, 5, 5);
     	
     	s.close(); 
     }

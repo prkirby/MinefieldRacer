@@ -21,7 +21,7 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
-    private final String ipAddress = "141.219.222.188";
+    private final String ipAddress = "141.219.209.183";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -91,7 +91,7 @@ public class ConnectionThread implements Runnable{
                 
             } catch (IOException ex) {
                 System.out.println("Error getting output from server (IOException): "+inn);
-                ex.printStackTrace();
+                //ex.printStackTrace(); //pretend this doesn't happen
                 this.close();
             } catch (java.lang.NullPointerException e){
                 System.out.println("Error getting output from server (NULL): "+inn);

@@ -61,7 +61,7 @@ public class ClientWriter implements Runnable {
                 }catch(IndexOutOfBoundsException e){}
             }
             checkClients();
-            sleep(5); //5 ms
+            sleep(2); //5 ms
             switchModes();
         }
     }
@@ -71,7 +71,7 @@ public class ClientWriter implements Runnable {
      */
     private void switchModes(){
     	if(this.clients().size()>1 || inRace)
-    		currentTime-=5;//5 ms
+    		currentTime-=2;//5 ms
     	if(this.clients().size() == 0){
     		this.inRace = false;
     		this.currentTime = lobbyTime;
@@ -96,7 +96,7 @@ public class ClientWriter implements Runnable {
     			if(this.clients.get(c).canRace()){
     				this.clients.get(c).setSpectatorMode(false);
     				this.clients.get(c).player().setX(1);
-    				this.clients.get(c).player().setY(((int)((Math.random()*100)%this.map.getHeight()-2))+2);
+    				this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
     				
     			}
     		}
@@ -143,6 +143,11 @@ public class ClientWriter implements Runnable {
                 	if(checkWinCondition(cl) && !this.someoneWon){
                 		this.currentTime = 10*1000; //Ten seconds left
                 		this.someoneWon = true;
+                	}
+                	
+                	//Check to see if client has hit a mine
+                	if(clients.get(cl).mineHit()){
+                		this.mineHit(cl);
                 	}
                 }
             }
@@ -227,7 +232,7 @@ public class ClientWriter implements Runnable {
 	}
 
 	public void mineHit(int ClientNumber) {
-
+		
 		int explosionX = clients.get(ClientNumber).player().getX();
 		int explosionY = clients.get(ClientNumber).player().getY();
 
@@ -235,21 +240,22 @@ public class ClientWriter implements Runnable {
 		int explosionRadius = 2;
 
 		int explosionXmin = explosionX - explosionRadius;
-		int explosionYmin = explosionY + explosionRadius;
+		int explosionYmin = explosionY - explosionRadius;
 
 		int explosionXmax = explosionX + explosionRadius;
-		int explosionYmax = explosionY - explosionRadius;
+		int explosionYmax = explosionY + explosionRadius;
 
 
 		for (int k = 0; k < clients.size(); k++) {
 			// Checks if players are in this radius
 			if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
-					&& clients.get(k).player().getY() <= explosionYmin && clients.get(k).player().getY() >= explosionYmax) {
+			 && clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
 				
 				// Sets players back to start and resets the mineHit variable in Client.
 				// Currently just returns player to x = 1, remove when fixed.
 				clients.get(k).player().setX(1);
-				clients.get(k).setMineHit(false);
+				clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
+        		clients.get(k).setMineHit(false);
 			}
 		}
 	}

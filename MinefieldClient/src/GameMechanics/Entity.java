@@ -28,7 +28,7 @@ public class Entity {
     public Entity(int x, int y){
         this.x = x;
         this.y = y;
-        this.color = Color.BLUE;
+        this.color = Color.yellow;
     }
     
     /**
