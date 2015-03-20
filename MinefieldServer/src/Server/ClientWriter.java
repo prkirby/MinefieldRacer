@@ -70,8 +70,13 @@ public class ClientWriter implements Runnable {
      * This determines if a mode switch is necessary. If it is, it does it.
      */
     private void switchModes(){
-    	if(this.clients().size()>1)
+    	if(this.clients().size()>1 || inRace)
     		currentTime-=5;//5 ms
+    	if(this.clients().size() == 0){
+    		this.inRace = false;
+    		this.currentTime = lobbyTime;
+    		this.someoneWon = false;
+    	}
     	
     	if(this.currentTime <= 0 && !inRace){
     		System.out.println("STARTING RACE");
@@ -91,7 +96,7 @@ public class ClientWriter implements Runnable {
     			if(this.clients.get(c).canRace()){
     				this.clients.get(c).setSpectatorMode(false);
     				this.clients.get(c).player().setX(1);
-    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()-2)+1);
+    				this.clients.get(c).player().setY(((int)((Math.random()*100)%this.map.getHeight()-2))+2);
     				
     			}
     		}
