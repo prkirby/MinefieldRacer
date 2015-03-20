@@ -1,14 +1,10 @@
-
 package Server;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Random;
 
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
-import Main.FileReading;
 
 /**
  * This class sets up all of the appropriate data 
@@ -20,9 +16,8 @@ import Main.FileReading;
 public class ClientWriter implements Runnable {
 
 	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-	private Map map = new Map(new File("MAPS/bridges.txt"));
+	private Map map = new Map(new File("MAPS/funnel.txt"));
 	private Map mineLayer;
-	private static Map mapArray[];
 	private double minePercentage = 0.10;
 
 	private final int raceTime = 5 * 60 * 1000; //5 Minutes
@@ -36,21 +31,7 @@ public class ClientWriter implements Runnable {
 	/**
 	 * The default constructor (not in use)
 	 */
-	public ClientWriter(){
-		FileReading temp = new FileReading();
-		File f  [] = temp.getMaps();
-		mapArray = new Map[f.length];
-		for(int i = 0; i < 12; i++){
-			mapArray[i] = new Map(f[i]);
-		}
-		//create random number
-		int rndm = getRandomNumber();
-		System.out.println(rndm);
-		//choose random map
-		map = mapArray[rndm];
-	}
-
-
+	public ClientWriter(){}
 
 	/**
 	 * Returns the list of clients in this thread
@@ -99,6 +80,7 @@ public class ClientWriter implements Runnable {
 		if(this.currentTime <= 0 && !inRace){
 			System.out.println("STARTING RACE");
 			this.inRace = true;
+			this.someoneWon = false;
 			this.currentTime = raceTime;
 
 			//System.out.println(map.toString());
@@ -121,12 +103,6 @@ public class ClientWriter implements Runnable {
 
 		}else if(this.currentTime <= 0 && inRace){
 			System.out.println("ENTERING LOBBY.");
-			//create random number
-			int rndm = getRandomNumber();
-			System.out.println(rndm);
-			//choose random map
-			map = mapArray[rndm];
-
 			this.inRace = false;
 			this.currentTime = lobbyTime;
 			this.someoneWon = false;
@@ -150,16 +126,6 @@ public class ClientWriter implements Runnable {
 	 * in the client list are still there. 
 	 * Removes them as necessary
 	 */
-
-	public static int getRandomNumber(){
-		Random rand = new Random();
-
-		// nextInt is normally exclusive of the top value,
-		// so add 1 to make it inclusive
-		int randomNum = rand.nextInt((mapArray.length -1 ));
-
-		return randomNum;
-	}
 	public void checkClients(){
 		try{
 			for(int cl = 0; cl < clients.size(); cl++){
@@ -286,14 +252,28 @@ public class ClientWriter implements Runnable {
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
 
 				// Sets players back to start and resets the mineHit variable in Client.
-				// Currently just returns player to x = 1, remove when fixed.
-				clients.get(k).player().setX(1);
+				// If the player is past the checkpoint, it moves them back to the checkpoint.
+				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
+					clients.get(k).player().setX(map.getWidth() / 2);
+				}
+				else {
+					clients.get(k).player().setX(1);
+				}
+				// The y is randomized.
 				clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 				clients.get(k).setMineHit(false);
+
 			}
 		}
 	}
 
+	/**
+	 * The win condition of the game (reach the finish)
+	 * @param clientN
+	 * 			The current client to check
+	 * @return
+	 * 			If the condition was met
+	 */
 	public boolean checkWinCondition(int clientN){
 		if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
 			return true;
