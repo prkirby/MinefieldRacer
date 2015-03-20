@@ -17,7 +17,7 @@ import GameMechanics.MineCreation;
 public class ClientWriter implements Runnable {
 
 	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-	private Map map = new Map(new File("MAPS/bridges.txt"));
+	private Map map = new Map(new File("MAPS/funnel.txt"));
 	private Map mineLayer;
 	private double minePercentage = 0.10;
 
@@ -81,6 +81,7 @@ public class ClientWriter implements Runnable {
 		if(this.currentTime <= 0 && !inRace){
 			System.out.println("STARTING RACE");
 			this.inRace = true;
+			this.someoneWon = false;
 			this.currentTime = raceTime;
 
 			//System.out.println(map.toString());
@@ -252,21 +253,21 @@ public class ClientWriter implements Runnable {
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
 
 				// Sets players back to start and resets the mineHit variable in Client.
-				// If the player is past the checkpoint, it moves them back to the checkpoint.
-				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
-					clients.get(k).player().setX(map.getWidth() / 2);
-				}
-				else {
-					clients.get(k).player().setX(1);
-				}
-				// The y is randomized.
+				// Currently just returns player to x = 1, remove when fixed.
+				clients.get(k).player().setX(1);
 				clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 				clients.get(k).setMineHit(false);
-
 			}
 		}
 	}
 
+	/**
+	 * The win condition of the game (reach the finish)
+	 * @param clientN
+	 * 			The current client to check
+	 * @return
+	 * 			If the condition was met
+	 */
 	public boolean checkWinCondition(int clientN){
 		if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
 			return true;
