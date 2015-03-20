@@ -275,7 +275,7 @@ public class Client implements Runnable{
 					}
 				}
 
-				sleep(25);
+				sleep(15);//25
 			} catch (Exception e){
 				System.out.println(""+clientSocket+" disconnnected.");
 				this.close();
@@ -342,7 +342,7 @@ public class Client implements Runnable{
 					//Send the map
 					output.println(sendMap());
 				}catch(NullPointerException e){}
-				this.sleep(20);
+				this.sleep(15);
 			}
 		}
 

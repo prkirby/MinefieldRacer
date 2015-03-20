@@ -53,11 +53,13 @@ public class DrawMap {
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    				g.setColor(Color.black);
 	    				g.fillOval(x*scale*5+10*scale/12, y*scale*5+10*scale/12, 10*scale/3, 10*scale/3);
-	    				g.fillRect(x*scale*5+10*scale/12-5, y*scale*5+5*scale/2-2, 5*scale-5, scale/3);
-	    				g.fillRect(x*scale*5+5*scale/2-2, y*scale*5+10*scale/12-5, scale/3, 5*scale-5);
+	    				g.fillRect(x*scale*5+10*scale/12-5, y*scale*5+5*scale/2-2, 5*scale-7, scale/3);
+	    				g.fillRect(x*scale*5+5*scale/2-2, y*scale*5+10*scale/12-5, scale/3, 5*scale-7);
 	    				Graphics2D g2d = (Graphics2D)g;
-	    				g2d.setStroke(new BasicStroke(scale/3));
-	    				g.drawLine(x*scale*5+7, y*scale*5+7, x*scale*5+scale*5-7, y*scale*5+scale*5-7);
+	    				g2d.setStroke(new BasicStroke(4*scale/9));
+	    				g.drawLine(x*scale*5+10, y*scale*5+10, x*scale*5+scale*5-10, y*scale*5+scale*5-10);
+	    				g.drawLine(x*scale*5+10, y*scale*5+scale*5-10, x*scale*5+scale*5-10, y*scale*5+10);
+	    				g2d.setStroke(new BasicStroke(1));
 	    				g.setColor(Color.white);
 	    				g.fillOval(x*scale*5+10*scale/6, y*scale*5+10*scale/6, 3*scale/4, 3*scale/4);
 	    			}
@@ -149,8 +151,14 @@ public class DrawMap {
     				g.setColor(new Color(222,222,0));
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
     			}else if(block.equals("c")){
-    				g.setColor(new Color(154,154,154));
+    				g.setColor(new Color(193,193,193));
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
+//    				g.setColor(new Color(254,254,254));
+//    				g.fillRect(startX+x*5, startY+y*5, 5, 1);
+//    				g.fillRect(startX+x*5, startY+y*5, 1, 5);
+//    				g.setColor(new Color(125,125,125));
+//    				g.fillRect(startX+x*5, startY+y*5+5-1, 5, 1);
+//    				g.fillRect(startX+x*5+5-1, startY+y*5, 1, 5);
     			}else if(block.equals("r")){
     				g.setColor(new Color(255,0,0));
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
