@@ -17,7 +17,7 @@ import GameMechanics.MineCreation;
 public class ClientWriter implements Runnable {
 
     private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(new File("MAPS/bridges.txt"));
+    private Map map = new Map(new File("MAPS/funnel.txt"));
     private Map mineLayer;
     private double minePercentage = 0.10;
     
@@ -81,6 +81,7 @@ public class ClientWriter implements Runnable {
     	if(this.currentTime <= 0 && !inRace){
     		System.out.println("STARTING RACE");
     		this.inRace = true;
+    		this.someoneWon = false;
     		this.currentTime = raceTime;
     		
     		//System.out.println(map.toString());
@@ -260,6 +261,13 @@ public class ClientWriter implements Runnable {
 		}
 	}
 
+	/**
+	 * The win condition of the game (reach the finish)
+	 * @param clientN
+	 * 			The current client to check
+	 * @return
+	 * 			If the condition was met
+	 */
 	public boolean checkWinCondition(int clientN){
 		if(clients.get(clientN).player().getX()>=this.map.getWidth()-3){
 			return true;
