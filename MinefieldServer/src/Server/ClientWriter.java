@@ -38,12 +38,11 @@ public class ClientWriter implements Runnable {
 		FileReading temp = new FileReading();
 		File f  [] = temp.getMaps();
 		mapArray = new Map[f.length];
-		for(int i = 0; i < 12; i++){
+		for(int i = 0; i < mapArray.length; i++){
 			mapArray[i] = new Map(f[i]);
 		}
 		//create random number
 		int rndm = getRandomNumber();
-		System.out.println(rndm);
 		//choose random map
 		map = mapArray[rndm];
 	}
@@ -120,7 +119,6 @@ public class ClientWriter implements Runnable {
 			System.out.println("ENTERING LOBBY.");
 			//create random number
 			int rndm = getRandomNumber();
-			System.out.println(rndm);
 			//choose random map
 			map = mapArray[rndm];
 			this.inRace = false;

@@ -15,9 +15,6 @@ public class FileReading {
 			}
 		};
 		File[] files = f.listFiles(textFilter);
-		for (File file : files) {
-			System.out.println(file);
-		}
 		return files;
 	}
 }
