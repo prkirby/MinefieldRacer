@@ -353,7 +353,11 @@ public class Client implements Runnable{
 					
 					//Send the map
 					output.println(sendMap());
-				}catch(NullPointerException e){}
+				}catch(NullPointerException e){
+				}catch(ArrayIndexOutOfBoundsException e){
+					output.println(sendMap());
+				}
+				
 				this.sleep(15);
 			}
 		}
@@ -375,7 +379,7 @@ public class Client implements Runnable{
 		 * 
 		 * @return
 		 */
-		public String sendMap() throws NullPointerException{
+		public String sendMap() throws NullPointerException, ArrayIndexOutOfBoundsException{
 			String ret = "MAP ";
 			for(int x=player.getX()-5; x <= player.getX()+5; x++){
 				for(int y=player.getY()-5; y <= player.getY()+5; y++){
