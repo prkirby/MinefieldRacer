@@ -236,13 +236,25 @@ public class Client implements Runnable{
 	 * and uses it appropriately
 	 */
 	public void run() {
+		
+		//Get initial info (name and color)
+		String prints = "";
+		try {
+			prints = input.readLine();
+		} catch (IOException e1) {}
+		Scanner scan = new Scanner(prints);
+		
+		player.setName(scan.next());
+		player.setColor(scan.next());
+		
+		
 		this.canGetInfo = true;
 		while(true){
 			try{
-				String prints = input.readLine();
+				prints = input.readLine();
 
 				//Setup data
-				Scanner scan = new Scanner(prints);
+				scan = new Scanner(prints);
 				String flag = scan.next();
 				if(flag.equals("KEYS")){
 					boolean keys[] = new boolean[4];
