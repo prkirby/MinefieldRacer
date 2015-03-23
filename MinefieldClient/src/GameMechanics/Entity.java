@@ -11,7 +11,8 @@ public class Entity {
     
     private int x, y;           //Coordinate locations in relation to the grid
     private final int size = 5; //The size of the entity
-    private Color color;        //The color of the entity (maybe used later)
+    private Color color;        //The color of the entity
+    private boolean winner;		//Determines if the player needs a crown
     
     /**
      * Default Constructor (Not in use)
@@ -24,11 +25,43 @@ public class Entity {
      *          The x coordinate
      * @param y 
      *          The y coordinate
+     * @param color
+     * 			The color of the entity
      */
-    public Entity(int x, int y){
+    public Entity(int x, int y, String color, boolean winner){
         this.x = x;
         this.y = y;
-        this.color = Color.BLUE;
+        this.setColor(color);
+        this.winner = winner;
+    }
+    
+    /**
+     * Sets the color based on the received string
+     * @param color
+     * 			The color to change too
+     */
+    private void setColor(String color){
+    	if(color.equals("red")){
+    		this.color = Color.red;
+    	}else if(color.equals("orange")){
+    		this.color = new Color(255,128,64);
+    	}else if(color.equals("lime")){
+    		this.color = new Color(0,255,0);
+    	}else if(color.equals("green")){
+    		this.color = new Color(0,128,0);
+    	}else if(color.equals("cyan")){
+    		this.color = new Color(0,255,255);
+    	}else if(color.equals("blue")){
+    		this.color = new Color(0,0,255);
+    	}else if(color.equals("purple")){
+    		this.color = new Color(64,0,64);
+    	}else if(color.equals("pink")){
+    		this.color = new Color(255,0,255);
+    	}else if(color.equals("white")){
+    		this.color = new Color(255,255,255);
+    	}else{
+    		this.color = Color.yellow;
+    	}
     }
     
     /**
@@ -98,6 +131,15 @@ public class Entity {
      */
     public void setColor(Color color) {
         this.color = color;
+    }
+    
+    /**
+     * Determines if a crown is needed
+     * @return
+     * 			Crown entity?
+     */
+    public boolean isWinner(){
+    	return this.winner;
     }
 
     /**

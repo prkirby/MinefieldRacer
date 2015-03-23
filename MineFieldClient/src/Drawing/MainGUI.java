@@ -6,6 +6,7 @@ import GameMechanics.Entity;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class MainGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setSize(Width, Height);
+		frame.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-Width/2, 
+				Toolkit.getDefaultToolkit().getScreenSize().height/2-Height/2);
 
 		mainpanel.setPreferredSize(new Dimension(Width, Height));
 		mainpanel.setLayout(null);
@@ -156,6 +159,8 @@ public class MainGUI {
 	                for(int e = 1; e < temp.size(); e++){
 	                    DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 	                }
+	                if(map!=null)
+	                	DrawMap.drawNumbers(g, map);
 	                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
 	            }
 		}

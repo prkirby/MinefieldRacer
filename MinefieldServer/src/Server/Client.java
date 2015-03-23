@@ -235,13 +235,25 @@ public class Client implements Runnable{
 	 * and uses it appropriately
 	 */
 	public void run() {
+		
+		//Get initial info (name and color)
+		String prints = "";
+		try {
+			prints = input.readLine();
+		} catch (IOException e1) {}
+		Scanner scan = new Scanner(prints);
+		
+		player.setName(scan.next());
+		player.setColor(scan.next());
+		
+		
 		this.canGetInfo = true;
 		while(true){
 			try{
-				String prints = input.readLine();
+				prints = input.readLine();
 
 				//Setup data
-				Scanner scan = new Scanner(prints);
+				scan = new Scanner(prints);
 				String flag = scan.next();
 				if(flag.equals("KEYS")){
 					boolean keys[] = new boolean[4];
@@ -274,7 +286,7 @@ public class Client implements Runnable{
 					}
 				}
 
-				sleep(25);
+				sleep(15);//25
 			} catch (Exception e){
 				System.out.println(""+clientSocket+" disconnnected.");
 				this.close();
@@ -341,7 +353,7 @@ public class Client implements Runnable{
 					//Send the map
 					output.println(sendMap());
 				}catch(NullPointerException e){}
-				this.sleep(20);
+				this.sleep(15);
 			}
 		}
 

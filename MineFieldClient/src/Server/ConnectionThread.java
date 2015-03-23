@@ -1,5 +1,6 @@
 package Server;
 
+import Drawing.StartupGUI;
 import GameMechanics.Entity;
 
 import java.io.BufferedReader;
@@ -21,7 +22,7 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
-    private final String ipAddress = "141.219.207.88";
+    private final String ipAddress = "141.219.220.141";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -38,9 +39,21 @@ public class ConnectionThread implements Runnable{
      * to the server. If connection fails, timeout and 
      * close occurs. If connection succeeds threads are 
      * set up
+     * @throws InterruptedException 
      */
     public ConnectionThread(){
         
+    	//Get data from user
+    	StartupGUI s = new StartupGUI();
+    	int c = 0;
+    	while(true){
+    		if(s.dataReady()){ break;}
+    		System.out.checkError(); //Used to slow down loop
+    	};
+    	String name = s.getName();
+    	String color = s.getColor();
+    	s = null;
+    	
         while(true){
             try{
                 if(tryC){
@@ -51,7 +64,7 @@ public class ConnectionThread implements Runnable{
                     output = new PrintWriter(socket.getOutputStream(), true);
                     
                     connected = true;
-                    in = new InputThread(input, output);
+                    in = new InputThread(input, output, name, color);
                     new Thread(in).start();
                     break;
                 }
@@ -91,7 +104,7 @@ public class ConnectionThread implements Runnable{
                 
             } catch (IOException ex) {
                 System.out.println("Error getting output from server (IOException): "+inn);
-                ex.printStackTrace();
+                //ex.printStackTrace(); //pretend this doesn't happen
                 this.close();
             } catch (java.lang.NullPointerException e){
                 System.out.println("Error getting output from server (NULL): "+inn);
@@ -116,14 +129,19 @@ public class ConnectionThread implements Runnable{
      */
     public void readData(Scanner scan){
         ArrayList<Entity> data = new ArrayList<Entity>();
-        int x, y;
+        int x, y, crown;
+        String color;
         x = scan.nextInt();
         y = scan.nextInt();
-        data.add(new Entity(x, y));
+        color = scan.next();
+        crown = scan.nextInt();
+        data.add(new Entity(x, y, color, crown == 1));
         while(scan.hasNext()){
             x = scan.nextInt();
             y = scan.nextInt();
-            data.add(new Entity(x, y));
+            color = scan.next();
+            crown = scan.nextInt();
+            data.add(new Entity(x, y, color, crown == 1));
         }        
         in.mainGUI().coords(data);
         in.mainGUI().display();

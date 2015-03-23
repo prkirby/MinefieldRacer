@@ -25,9 +25,13 @@ public class InputThread implements Runnable{
      * @param output 
      *          The output writer to the server
      */
-    public InputThread(BufferedReader input, PrintWriter output){
+    public InputThread(BufferedReader input, PrintWriter output, String name, String color){
         this.input = input;
-        this.output = output;        
+        this.output = output;  
+        
+        //initial data send
+        this.output.println(name + " " +color);
+        
         mainGUI = new MainGUI();
     }
 

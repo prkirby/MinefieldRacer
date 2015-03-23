@@ -1,15 +1,16 @@
 package GameMechanics;
 
+
 /**
  * This class represents the basic entity
  * @author Joseph Ryan
  */
 public class Entity {
     
-    private int x, y;           //Entity Coordinates
-    private final int size = 5; //The size of the entity
-    
-    /**
+    private int x, y;           		//Entity Coordinates
+    private final int size = 5; 		//The size of the entity
+
+	/**
      * Default Constructor (Not in use)
      */
     public Entity(){}
