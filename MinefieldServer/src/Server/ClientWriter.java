@@ -6,6 +6,7 @@ import java.util.Random;
 
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
+import GameMechanics.Player;
 import Main.FileReading;
 
 /**
@@ -29,6 +30,8 @@ public class ClientWriter implements Runnable {
 	private boolean inRace = false;				//Race = true, lobby = false;
 
 	private boolean someoneWon = false;			//Temporary variable
+	
+	private Player previousWinner = null;		//Pointer to previous winner
 
 
 	/**
@@ -173,6 +176,14 @@ public class ClientWriter implements Runnable {
 					if(checkWinCondition(cl) && !this.someoneWon){
 						this.currentTime = 10*1000; //Ten seconds left
 						this.someoneWon = true;
+						
+						//Crown the winner
+						if(previousWinner!=null)
+							previousWinner.setPreviousWinner(false);
+						clients.get(cl).player().setPreviousWinner(true);
+						previousWinner = clients.get(cl).player();
+					}else if(this.someoneWon && !clients.get(cl).player().isPreviousWinner()){
+						clients.get(cl).player().setPreviousWinner(false);
 					}
 
 					//Check to see if client has hit a mine
@@ -236,11 +247,11 @@ public class ClientWriter implements Runnable {
 	public String setupData(int clientN){
 		String data = "DATA ";
 		try{
-			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " ";
+			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() + " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " ;
 
 			for(int d = 0; d < clients.size(); d++){
 				if(!clients.get(d).inSpectatorMode() && d !=clientN)
-					data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " ";
+					data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + " " ;
 			}
 		}catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
 
@@ -261,6 +272,11 @@ public class ClientWriter implements Runnable {
 		}
 	}
 
+	/**
+	 * The code to run when a mine is hit
+	 * @param ClientNumber
+	 * 			The player that hit a mine
+	 */
 	public void mineHit(int ClientNumber) {
 
 		int explosionX = clients.get(ClientNumber).player().getX();
@@ -284,13 +300,14 @@ public class ClientWriter implements Runnable {
 				// Sets players back to start and resets the mineHit variable in Client.
 				// If the player is past the checkpoint, it moves them back to the checkpoint.
 				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
+					clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()/3)))+this.map.getHeight()/3);
 					clients.get(k).player().setX(map.getWidth() / 2);
 				}
 				else {
+					clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 					clients.get(k).player().setX(1);
 				}
 				// The y is randomized.
-				clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 				clients.get(k).setMineHit(false);
 
 			}
