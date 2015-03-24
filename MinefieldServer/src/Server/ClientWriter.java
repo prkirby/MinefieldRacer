@@ -18,96 +18,6 @@ import Main.FileReading;
  */
 public class ClientWriter implements Runnable {
 
-<<<<<<< HEAD
-    private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-    private Map map = new Map(new File("MAPS/bridges.txt"));
-    private Map mineLayer;
-    private double minePercentage = 0.10;
-    
-    private final int raceTime = 5 * 60 * 1000; //5 Minutes
-    private final int lobbyTime = 1000;	//30 Seconds
-    private int currentTime = lobbyTime;				//Time counter
-    private boolean inRace = false;				//Race = true, lobby = false;
-    
-    private boolean someoneWon = false;			//Temporary variable
-    
-    
-    /**
-     * The default constructor (not in use)
-     */
-    public ClientWriter(){}
-    
-    /**
-     * Returns the list of clients in this thread
-     * @return 
-     *          The list of clients in this thread
-     */
-    public ArrayList<Client> clients(){
-        return this.clients;
-    }
-    
-    /**
-     * The thread: Compiles all the 
-     * necessary data and sends it to 
-     * all current clients.
-     */
-    public void run() {
-        while(true){
-            
-            checkClients();
-            ArrayList<Client> temp = clients;
-            
-            for(int w = 0; w < temp.size(); w++){
-                try{
-                    if(temp.get(w).canGetInfo())
-                        temp.get(w).setData(setupData(w));
-                }catch(IndexOutOfBoundsException e){}
-            }
-            checkClients();
-            sleep(5); //5 ms
-            switchModes();
-        }
-    }
-    
-    /**
-     * This determines if a mode switch is necessary. If it is, it does it.
-     */
-    private void switchModes(){
-    	if(this.clients().size()>1)
-    		currentTime-=5;//5 ms
-    	
-    	if(this.currentTime <= 0 && !inRace){
-    		System.out.println("STARTING RACE");
-    		this.inRace = true;
-    		this.currentTime = raceTime;
-    		
-    		//System.out.println(map.toString());
-    		
-    		//Start race
-    		//Populate mineLayer with mines and numbers
-    		mineLayer = MineCreation.createMineLayer(map.map, minePercentage);
-    		
-    		//System.out.println(mineLayer.toString());
-    		
-    		//Place all current clients at the starting line
-    		for(int c = 0; c < this.clients.size(); c++){
-    			if(this.clients.get(c).canRace()){
-    				this.clients.get(c).setSpectatorMode(false);
-    				this.clients.get(c).player().setX(1);
-    				this.clients.get(c).player().setY((int)((Math.random()*100)%this.map.getHeight()-2)+1);
-    				
-    			}
-    		}
-    		
-    	}else if(this.currentTime <= 0 && inRace){
-    		System.out.println("ENTERING LOBBY.");
-    		this.inRace = false;
-    		this.currentTime = lobbyTime;
-    		this.someoneWon = false;
-    		
-    		//Start Lobby
-    		for(int c = 0; c < this.clients.size(); c++){
-=======
 	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
 	private Map map = new Map(new File("MAPS/funnel.txt"));
 	private Map mineLayer;
@@ -220,7 +130,6 @@ public class ClientWriter implements Runnable {
 
 			//Start Lobby
 			for(int c = 0; c < this.clients.size(); c++){
->>>>>>> origin/master
 				this.clients.get(c).setSpectatorMode(true);
 			}
 		}
