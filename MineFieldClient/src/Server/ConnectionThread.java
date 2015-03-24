@@ -2,6 +2,8 @@ package Server;
 
 import Drawing.StartupGUI;
 import GameMechanics.Entity;
+import audio.SFX;
+import audio.SongPlayer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,12 +24,14 @@ import java.util.TimerTask;
 public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
-    private final String ipAddress = "141.219.211.111";
+    private final String ipAddress = "192.168.2.27";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
     
     private InputThread in;                                             //The client input thread
+    private SongPlayer songPlayer = new SongPlayer("lobby");			//The clients music player
+    private Thread musicThread = new Thread(songPlayer);				//The music thread
     
     //Timeout Timer Variables
     private Timer t = new Timer();                                      //The timer for connection timeout
@@ -66,6 +70,8 @@ public class ConnectionThread implements Runnable{
                     connected = true;
                     in = new InputThread(input, output, name, color);
                     new Thread(in).start();
+                    // Start lobby music
+                    musicThread.start();
                     break;
                 }
             }catch(Exception e){
@@ -98,6 +104,8 @@ public class ConnectionThread implements Runnable{
                     	this.readMap(scan);
                     }else if(flag.equals("MODE")){
                     	this.readMode(scan);
+                    }else if(flag.equals("AUDIO")){
+                    	this.readAudio(scan);
                     }else
                         this.close();
                 }
@@ -171,6 +179,33 @@ public class ConnectionThread implements Runnable{
     	in.mainGUI().setMode(scan.next());
     	in.mainGUI().setTime(scan.next());
     	in.mainGUI().setMapName(scan.next());
+    }
+    
+    public void readAudio(Scanner scan) throws InterruptedException {
+    	String tag = scan.next();
+    	
+    	if (tag.equals("SFX")){
+    		String sfxName = scan.next();
+    		if (sfxName.compareTo("mineHit") == 0) {
+    			SFX.EXPLODE.play();
+    		}
+    	} else if (tag.equals("MUSIC")) {
+    		String songName = scan.next();
+    		if (songName.compareTo("lobby") == 0) {
+    			songPlayer.stop();
+    			musicThread.join();
+    			songPlayer = new SongPlayer("lobby");
+    			musicThread = new Thread(songPlayer);
+    			musicThread.start();
+    		}
+    		if (songName.compareTo("bg1") == 0) {
+    			songPlayer.stop();
+    			musicThread.join();
+    			songPlayer = new SongPlayer("bg1");
+    			musicThread = new Thread(songPlayer);
+    			musicThread.start();
+    		}
+    	}
     }
     
     /**

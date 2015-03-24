@@ -42,7 +42,7 @@ public class MainGUI {
 			KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
 
 	/**
-	 * Default Constructor: Sets up all of the drawing
+	 * Default Constructor: Sets up all of the drawing and audio
 	 */
 	public MainGUI(){
 		frame = new JFrame("SURVIVE!");

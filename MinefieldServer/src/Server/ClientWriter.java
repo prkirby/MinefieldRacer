@@ -112,6 +112,7 @@ public class ClientWriter implements Runnable {
 			for(int c = 0; c < this.clients.size(); c++){
 				if(this.clients.get(c).canRace()){
 					this.clients.get(c).setSpectatorMode(false);
+					this.clients.get(c).music("bg1");
 					this.clients.get(c).player().setX(1);
 					this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 
@@ -130,6 +131,7 @@ public class ClientWriter implements Runnable {
 			//Start Lobby
 			for(int c = 0; c < this.clients.size(); c++){
 				this.clients.get(c).setSpectatorMode(true);
+				this.clients.get(c).music("lobby");
 			}
 		}
 
@@ -295,7 +297,10 @@ public class ClientWriter implements Runnable {
 			// Checks if players are in this radius
 			if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
-
+				
+				// Fire Mine SFX
+				clients.get(k).soundEffect("mineHit");
+				
 				// Sets players back to start and resets the mineHit variable in Client.
 				// If the player is past the checkpoint, it moves them back to the checkpoint.
 				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
