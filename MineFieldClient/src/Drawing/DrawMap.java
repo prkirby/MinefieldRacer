@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class DrawMap {
+public abstract class DrawMap {
 	
 	private static final int scale = 10;
 	
@@ -29,11 +29,11 @@ public class DrawMap {
 	    				g.setColor(Color.black);
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    				g.setColor(new Color(150,150,150));
-	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, scale/2);
-	    				g.fillRect(x*scale*5, y*scale*5, scale/2, 5*scale);
+	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, scale/4);
+	    				g.fillRect(x*scale*5, y*scale*5, scale/4, 5*scale);
 	    				g.setColor(new Color(40,40,40));
-	    				g.fillRect(x*scale*5, y*scale*5+scale*5-scale/2, scale*5, scale/2);
-	    				g.fillRect(x*scale*5+scale*5-scale/2, y*scale*5, scale/2, scale*5);
+	    				g.fillRect(x*scale*5, y*scale*5+scale*5-scale/4, scale*5, scale/4);
+	    				g.fillRect(x*scale*5+scale*5-scale/4, y*scale*5, scale/4, scale*5);
 	    			}else if(map[x][y].equals("c")){
 	    				g.setColor(new Color(193,193,193));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
@@ -44,7 +44,7 @@ public class DrawMap {
 	    				g.fillRect(x*scale*5, y*scale*5+scale*5-scale/2, scale*5, scale/2);
 	    				g.fillRect(x*scale*5+scale*5-scale/2, y*scale*5, scale/2, scale*5);
 	    			}else if(map[x][y].equals("r")){
-	    				g.setColor(new Color(225,0,0));
+	    				g.setColor(new Color(200,0,0));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}else if(map[x][y].equals("bf")){
 	    				g.setColor(new Color(30,30,30));
@@ -53,7 +53,7 @@ public class DrawMap {
 	    				g.setColor(new Color(255,255,255));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}else if(map[x][y].equals("y")){
-	    				g.setColor(new Color(222,222,0));
+	    				g.setColor(new Color(216,220,0));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}else if(map[x][y].equals("m")){
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);

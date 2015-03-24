@@ -216,7 +216,6 @@ public class ClientWriter implements Runnable {
 			map = mapArray[rndm];
 			this.inRace = false;
 			this.currentTime = lobbyTime;
-			this.someoneWon = false;
 
 			//Start Lobby
 			for(int c = 0; c < this.clients.size(); c++){
