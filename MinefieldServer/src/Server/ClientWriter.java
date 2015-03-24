@@ -26,7 +26,7 @@ public class ClientWriter implements Runnable {
 
 	private final int raceTime = 5 * 60 * 1000; //5 Minutes
 	private final int lobbyTime = 5*1000;//30 * 1000;	//30 Seconds
-	private int currentTime = lobbyTime;				//Time counter
+	private int currentTime = lobbyTime;		//Time counter
 	private boolean inRace = false;				//Race = true, lobby = false;
 
 	private boolean someoneWon = false;			//Temporary variable
@@ -77,7 +77,7 @@ public class ClientWriter implements Runnable {
 				}catch(IndexOutOfBoundsException e){}
 			}
 			checkClients();
-			sleep(2); //5 ms
+			sleep(2); //2 ms
 			switchModes();
 		}
 	}
@@ -87,7 +87,7 @@ public class ClientWriter implements Runnable {
 	 */
 	private void switchModes(){
 		if(this.clients().size()>1 || inRace)
-			currentTime-=2;//5 ms
+			currentTime-=2;//2 ms
 		if(this.clients().size() == 0){
 			this.inRace = false;
 			this.currentTime = lobbyTime;

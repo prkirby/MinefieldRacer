@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public abstract class DrawTips {
 	
 	private static final int scale = 10;
-	
+										 //---------------------------------------|---------------------------------------|---------------------------------------|
 	private static final String[] tips = {"Have fun.",
 										  "Being a kamikaze is not only a viable   strategy; it's also fun.",
 										  "Your K/D ratio doesn't matter. Just get to the finish line. What is this? Call  of Duty?",
@@ -43,14 +43,14 @@ public abstract class DrawTips {
 										  "The clock at the top of the screen is   not just for show. It also tells you howmuch time you have left.",
 										  "Don't worry. We disabled permadeath.",
 										  "Remember: mines blow up in a radius. Usethis knowledge wisely.",
-										  "Joey: Write Protips here.",
+										  "Joey: Write \"Pro Tips\" here.",
 										  "Hello World!",
 										  "James Walker is awesome.",
 										  "Always get consent before you descent."};
 	private static int index = ((int)(Math.random()*100)%tips.length);
 	private static Timer timer;
 	private static final int chars = 40;
-	private static final int sec = 5;
+	private static final int sec = 7;
 	
 	/**
 	 * Draws the "pro" tips

@@ -62,10 +62,10 @@ public class Map {
 	 * map data...<br /><br />
 	 * <b>Example:</b><br />
 	 * 4 5<br />
-	 * w w w w<br />
-	 * 0 0 0 0<br />
-	 * 0 0 0 0<br />
-	 * w w 0 w
+	 * w w w w w<br />
+	 * 0 0 0 0 w<br />
+	 * 0 0 0 0 w<br />
+	 * w w 0 w w
 	 * @param f
 	 * 			The file to read from
 	 */

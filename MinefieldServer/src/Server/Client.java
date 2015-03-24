@@ -181,6 +181,11 @@ public class Client implements Runnable{
 	 */
 	public void hasBeenInit() {
 		hasBeen = new boolean[map.getWidth()][map.getHeight()];
+		for(int x = 0; x < map.getWidth(); x++){
+			for(int y = 0; y < map.getHeight(); y++){
+				hasBeen[x][y] = false;
+			}
+		}
 	}
 	
 	/**
@@ -204,13 +209,46 @@ public class Client implements Runnable{
 		//Update hasBeen
 		for (int i = leftX; i <= rightX; i++) {
 			for (int j = topY; j <= botY; j++) {
-				if (mineLayer.getMap()[x][y].compareTo("0") == 0 ||
-						mineLayer.getMap()[i][j].compareTo("0") == 0 ||
-						(x == i && y == j)){
+				if (((mineLayer.getMap()[i][j].compareTo("m") == 0 ||
+					mineLayer.getMap()[i][j].compareTo("0") == 0) && 
+					surroundingRevealed(i,j)>0) ||
+					mineLayer.getMap()[x][y].compareTo("m") == 0 ||
+					mineLayer.getMap()[x][y].compareTo("0") == 0 ||
+					(x == i && y == j)){
 					hasBeen[i][j] = true;
+				}
+				//Test code (reveal some surrounding tiles)
+				else if(mineLayer.getMap()[x][y].compareTo("0") != 0 && 
+						mineLayer.getMap()[x][y].compareTo("m") != 0 &&
+						surroundingRevealed(x,y)<2){
+					hasBeen[leftX][topY] = true;
+					hasBeen[rightX][topY] = true;
+					hasBeen[leftX][botY] = true;
+					hasBeen[rightX][botY] = true;
 				}
 			}
 		}
+	}
+	
+	private int surroundingRevealed(int x, int y){
+		int count = 0;
+		
+		try{
+			if(x>0)
+				if(hasBeen[x-1][y]) count++;
+			if(y>0)
+				if(hasBeen[x][y-1]) count++;
+			if(x<map.getWidth()-1)
+				if(hasBeen[x+1][y]) count++;
+			if(y<map.getHeight()-1)
+				if(hasBeen[x][y+1]) count++;
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("ERROR: "+x+", "+y);
+		}catch(NullPointerException e){
+			System.out.println("ERROR: null");
+		}
+		
+		return count;
 	}
 
 	/**
