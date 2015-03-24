@@ -268,6 +268,17 @@ public class Client implements Runnable{
 	public void setMineHit(boolean newHit) {
 		mineHit = newHit;
 	}
+	
+	public void soundEffect(String sfx) {
+		String str = "AUDIO SFX " + sfx;
+		output.println(str);
+	}
+	
+	public void music(String song) {
+		String str = "AUDIO MUSIC " + song;
+		output.println(str);	
+	}
+	
 	/**
 	 * The Thread: Reads in data from the client 
 	 * and uses it appropriately
@@ -307,12 +318,11 @@ public class Client implements Runnable{
 					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
 					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
+					
 					//Update hasBeen array
 					updateHasBeen(player);
+					
 					//Check if mine has been hit
-
-					//update uncover
-
 					mineCollision();
 					
 					} else{
@@ -390,6 +400,8 @@ public class Client implements Runnable{
 					
 					//Send the map
 					output.println(sendMap());
+					
+					
 				}catch(NullPointerException e){
 				}catch(ArrayIndexOutOfBoundsException e){
 					output.println(sendMap());
