@@ -193,7 +193,7 @@ public class StartupGUI {
 				PrintWriter writer = new PrintWriter("Username", "UTF-8");
 				writer.println(name);
 				writer.close();
-				System.out.println("successful?");
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

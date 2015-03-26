@@ -184,7 +184,7 @@ public class MainGUI {
 					DrawMap.drawNumbers(g, map);
 				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
 				//draw the winner
-				//if(thereIsAWinner){
+				if(thereIsAWinner){
 					String name = "";
 					try {
 						Scanner fileScanner = new Scanner(new File("Username"));
@@ -198,7 +198,7 @@ public class MainGUI {
 						e.printStackTrace();
 					}
 					DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + "WINS!", temp.get(winnerLocation).getColor());
-				//}
+				}
 			}
 		}
 	}
