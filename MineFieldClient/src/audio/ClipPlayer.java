@@ -10,7 +10,7 @@ public class ClipPlayer extends Thread implements LineListener, Runnable{
 	private Clip clip;
 	private String filename;
 	boolean playCompleted = false;
-	
+
 
 	public ClipPlayer(String filename) {
 		this.filename = filename;
@@ -19,11 +19,11 @@ public class ClipPlayer extends Thread implements LineListener, Runnable{
 	void play() {
 		run();
 	}
-	
+
 	public boolean getPlayCompleted() {
 		return playCompleted;
 	}
-	
+
 	public void run() {
 		try {
 			// Get URL of audio resource
@@ -41,16 +41,17 @@ public class ClipPlayer extends Thread implements LineListener, Runnable{
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		
-		clip.start();
 
-		while (clip.isActive()) {
-			// Wait for playback to complete
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		clip.start();
+		try {
+			Thread.sleep(100);
+
+			while (clip.isActive()) {
+				// Wait for playback to complete
+				Thread.sleep(100);
 			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 
 		clip.close();

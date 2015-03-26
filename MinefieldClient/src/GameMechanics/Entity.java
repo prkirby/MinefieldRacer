@@ -13,7 +13,7 @@ public class Entity {
     private final int size = 5; //The size of the entity
     private Color color;        //The color of the entity
     private boolean winner;		//Determines if the player needs a crown
-    
+
     /**
      * Default Constructor (Not in use)
      */
@@ -114,6 +114,8 @@ public class Entity {
     public void setY(int y) {
         this.y = y;
     }
+    
+   
 
     /**
      * Returns the entity's color

@@ -256,7 +256,8 @@ public class Client implements Runnable{
 	 * 
 	 */
 	public void mineCollision() {
-		if(mineLayer.checkForMine(player.getX(), player.getY())) {
+		if(!player.checkForFlag(player.getX(), player.getY())
+				&& mineLayer.checkForMine(player.getX(), player.getY())) {
 			mineHit = true;
 		}
 	}
@@ -305,7 +306,7 @@ public class Client implements Runnable{
 				scan = new Scanner(prints);
 				String flag = scan.next();
 				if(flag.equals("KEYS")){
-					boolean keys[] = new boolean[4];
+					boolean keys[] = new boolean[8];
 					for(int k = 0; k < keys.length; k++){
 						if(scan.nextInt() == 1) keys[k] = true;
 						else 					keys[k] = false;
@@ -318,6 +319,24 @@ public class Client implements Runnable{
 					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
 					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
+					
+					//Flag Setting
+					if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
+							!hasBeen[player.getX()-1][player.getY()]) {
+						player.setFlag(player.getX()-1, player.getY());
+					}
+					if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
+							!hasBeen[player.getX()][player.getY()-1]) {
+						player.setFlag(player.getX(), player.getY()-1);
+					}
+					if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
+							!hasBeen[player.getX()+1][player.getY()]) {
+						player.setFlag(player.getX()+1, player.getY());
+					}
+					if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
+							!hasBeen[player.getX()][player.getY()+1]){
+						player.setFlag(player.getX(), player.getY()+1);
+					}
 					
 					//Update hasBeen array
 					updateHasBeen(player);
@@ -334,7 +353,7 @@ public class Client implements Runnable{
 					}
 				}
 
-				sleep(15);//25
+				sleep(15);//15ms
 			} catch (Exception e){
 				System.out.println(""+clientSocket+" disconnnected.");
 				this.close();
@@ -434,6 +453,8 @@ public class Client implements Runnable{
 				for(int y=player.getY()-5; y <= player.getY()+5; y++){
 					if(x < 0 || x > map.map.length-1 || y < 0 || y > map.map[0].length-1)
 						ret += "n ";
+					else if (player.checkForFlag(x, y))
+						ret += "f ";
 					else if (hasBeen[x][y] && 
 							map.getMap()[x][y].compareTo("c") == 0 &&
 							mineLayer.getMap()[x][y].compareTo("-1") != 0)
