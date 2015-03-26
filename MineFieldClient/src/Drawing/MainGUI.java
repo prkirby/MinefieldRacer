@@ -9,7 +9,10 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,11 +30,11 @@ public class MainGUI {
 	private int Height = 550;
 	private JFrame frame = new JFrame();
 	private myJPanel mainpanel = new myJPanel();
-	
+
 	//Player interation vars
 	private boolean[] keyPresses = {false,false,false,false};
 	private boolean canPress = true;
-	
+
 	//Drawing data
 	private ArrayList<Entity> coords = new ArrayList<Entity>();
 	private String[][] map = new String[11][11];
@@ -105,7 +108,7 @@ public class MainGUI {
 	public void map(String[][] m){
 		this.map = m;
 	}
-	
+
 	public String getTime() {
 		return time;
 	}
@@ -121,7 +124,7 @@ public class MainGUI {
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
-	
+
 	public void setMapName(String name){
 		this.mapName = name;
 	}
@@ -140,30 +143,61 @@ public class MainGUI {
 			super.paintComponent(g);
 			super.setBackground(new Color(80,80,80));
 
-			 ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
-	            
-	            if(mode == null) mode = "SPEC";
-	            
-	            if(mode.equals("SPEC")){
-	            	if(map!=null)
-	                	DrawMap.draw(g, mapName, mainpanel.getWidth(), mainpanel.getHeight());
-	                for(int e = 1; e < temp.size(); e++){
-	                    DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
-	                }
-	                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
-	                DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
-	            }else if(mode.equals("RACE")){
-	            	if(map!=null)
-	                	DrawMap.draw(g, map);
-	                if(temp.size()>0)
-	                	DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
-	                for(int e = 1; e < temp.size(); e++){
-	                    DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
-	                }
-	                if(map!=null)
-	                	DrawMap.drawNumbers(g, map);
-	                DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
-	            }
+			ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
+
+			//check for winner inefficiently
+			boolean thereIsAWinner = false;
+			int winnerLocation = 0;
+			for(int i = 0; i < temp.size(); i++){
+				if(temp.get(i).isWinner() == true){
+					if(temp.get(i).getX() >= 97){//bad fix due to map size and lack of passing info
+						thereIsAWinner = true;
+						winnerLocation = i;
+						break;
+					}
+
+				}
+			}
+
+			if(mode == null) mode = "SPEC";
+
+			if(mode.equals("SPEC")){
+				if(map!=null)
+					DrawMap.draw(g, mapName, mainpanel.getWidth(), mainpanel.getHeight());
+				for(int e = 1; e < temp.size(); e++){
+					DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
+
+				}
+				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
+				DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
+			}else if(mode.equals("RACE")){
+				if(map!=null)
+					DrawMap.draw(g, map);
+				if(temp.size()>0)
+					DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+				for(int e = 1; e < temp.size(); e++){
+					DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+				}
+				if(map!=null)
+					DrawMap.drawNumbers(g, map);
+				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
+				//draw the winner
+				//if(thereIsAWinner){
+					String name = "";
+					try {
+						Scanner fileScanner = new Scanner(new File("Username"));
+						while(fileScanner.hasNext()){
+							name = name + fileScanner.next() + " ";
+						}
+					} catch (FileNotFoundException e) {
+						System.out.println("failed");
+						name = "couldn'tread";
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + "WINS!", temp.get(winnerLocation).getColor());
+				//}
+			}
 		}
 	}
 

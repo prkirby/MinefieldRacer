@@ -187,6 +187,7 @@ public class ClientWriter implements Runnable {
 						clients.get(cl).player().setPreviousWinner(false);
 					}
 
+					
 					//Check to see if client has hit a mine
 					if(clients.get(cl).mineHit()){
 						this.mineHit(cl);

@@ -7,6 +7,9 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -183,6 +186,25 @@ public class StartupGUI {
 		public void actionPerformed(ActionEvent arg0) {
 			dataReady = true;
 			name = namer.getText();
+			
+			
+			
+			try {
+				PrintWriter writer = new PrintWriter("Username", "UTF-8");
+				writer.println(name);
+				writer.close();
+				System.out.println("successful?");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
 			frame.dispose();
 		}
 	}
