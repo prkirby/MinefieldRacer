@@ -13,8 +13,10 @@ public enum SFX {
 
 	// Play or Re-play the sound effect from the beginning, by rewinding.
 	public void play() {
-		Thread t = new Thread(new ClipPlayer(filename));
+		ClipPlayer clip = new ClipPlayer(filename);
+		Thread t = new Thread(clip);
 		t.start();
+
 	}
 	
 	// Static initializer method for the enum
