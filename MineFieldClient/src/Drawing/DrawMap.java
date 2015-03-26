@@ -71,6 +71,19 @@ public abstract class DrawMap {
 	    				g.setColor(Color.BLACK);
 	        			g.drawRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}
+	    			else if(map[x][y].equals("f")) {
+	    				g.setColor(new Color(193,193,193));
+	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
+	    				g.setColor(new Color(254,254,254));
+	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, scale/2);
+	    				g.fillRect(x*scale*5, y*scale*5, scale/2, 5*scale);
+	    				g.setColor(new Color(125,125,125));
+	    				g.fillRect(x*scale*5, y*scale*5+scale*5-scale/2, scale*5, scale/2);
+	    				g.fillRect(x*scale*5+scale*5-scale/2, y*scale*5, scale/2, scale*5);
+	    				g.setColor(Color.RED);
+	    				g.setFont(new Font("Courier",Font.BOLD,40));
+	    				g.drawString("F", x*scale*5+10, y*scale*5+35);
+	    			}
 	    			else if(map[x][y].equals("n")){}
 	    			else{
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);

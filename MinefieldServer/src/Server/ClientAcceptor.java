@@ -23,7 +23,7 @@ public class ClientAcceptor implements Runnable{
     private ClientWriter cl;                    //The Client writer thread
     
     /**
-     * The default constructor (not in use)
+     * The default constructor 
      */
     public ClientAcceptor(){
         //Attempt to get the host address

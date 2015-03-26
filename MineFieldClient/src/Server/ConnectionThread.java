@@ -25,7 +25,7 @@ public class ConnectionThread implements Runnable{
 
     private final int serverPort = 1111;
 
-    private final String ipAddress = "141.219.220.141";
+    private final String ipAddress = "192.168.2.12";
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
     private PrintWriter output = null;                                  //Output to server
@@ -117,7 +117,7 @@ public class ConnectionThread implements Runnable{
                 this.close();
             } catch (java.lang.NullPointerException e){
                 System.out.println("Error getting output from server (NULL): "+inn);
-                //e.printStackTrace(); //pretend this doesn't happen
+                e.printStackTrace(); //pretend this doesn't happen
                 this.close();
             } catch (java.util.NoSuchElementException e){
                 //e.printStackTrace(); //pretend this doesn't happen
@@ -189,6 +189,8 @@ public class ConnectionThread implements Runnable{
     		String sfxName = scan.next();
     		if (sfxName.compareTo("mineHit") == 0) {
     			SFX.EXPLODE.play();
+    		} else if (sfxName.compareTo("flag") == 0) {
+    			SFX.FLAG.play();
     		}
     	} else if (tag.equals("MUSIC")) {
     		String songName = scan.next();
