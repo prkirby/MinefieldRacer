@@ -31,8 +31,10 @@ public class MainGUI {
 	private JFrame frame = new JFrame();
 	private myJPanel mainpanel = new myJPanel();
 
-	//Player interation vars
-	private boolean[] keyPresses = {false,false,false,false};
+	
+	//Player interaction vars
+	private boolean[] keyPresses = {false,false,false,false,false,false,false,false};
+
 	private boolean canPress = true;
 
 	//Drawing data
@@ -41,8 +43,8 @@ public class MainGUI {
 	private String mapName = "test2";
 	private String time;
 	private String mode;
-	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, 
-			KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
+	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
+	private int[] flagKeys = {KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
 
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
@@ -221,22 +223,6 @@ public class MainGUI {
 			if(canPress) {
 				switch (e.getKeyCode()){
 				//Movement Keys
-				case KeyEvent.VK_A:
-					keyPresses[0] = true;  
-					canPress = false;
-					break;
-				case KeyEvent.VK_W:
-					keyPresses[1] = true;  
-					canPress = false;
-					break;
-				case KeyEvent.VK_D:
-					keyPresses[2] = true; 
-					canPress = false;
-					break;
-				case KeyEvent.VK_S:
-					keyPresses[3] = true;
-					canPress = false;
-					break;
 				case KeyEvent.VK_LEFT:
 					keyPresses[0] = true;  
 					canPress = false;
@@ -253,6 +239,24 @@ public class MainGUI {
 					keyPresses[3] = true; 
 					canPress = false;
 					break;
+					
+				//Flag laying keys
+				case KeyEvent.VK_A:
+					keyPresses[4] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_W:
+					keyPresses[5] = true;  
+					canPress = false;
+					break;
+				case KeyEvent.VK_D:
+					keyPresses[6] = true; 
+					canPress = false;
+					break;
+				case KeyEvent.VK_S:
+					keyPresses[7] = true;
+					canPress = false;
+					break;
 				}
 
 				for (int i : movementKeys) {
@@ -260,7 +264,7 @@ public class MainGUI {
 						SFX.MOVE.play();
 					}
 				}
-
+				
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					SFX.SHOOT.play();
 				}
@@ -282,22 +286,6 @@ public class MainGUI {
 		public void keyReleased(KeyEvent e) {
 			switch (e.getKeyCode()){
 			//Movement Keys
-			case KeyEvent.VK_A:
-				keyPresses[0] = false;
-				canPress = true;
-				break;
-			case KeyEvent.VK_W:
-				keyPresses[1] = false;
-				canPress = true;    
-				break;
-			case KeyEvent.VK_D:
-				keyPresses[2] = false;
-				canPress = true;    
-				break;
-			case KeyEvent.VK_S:
-				keyPresses[3] = false;
-				canPress = true;    
-				break;
 			case KeyEvent.VK_LEFT:
 				keyPresses[0] = false;
 				canPress = true;    
@@ -312,6 +300,24 @@ public class MainGUI {
 				break;
 			case KeyEvent.VK_DOWN:
 				keyPresses[3] = false;
+				canPress = true;    
+				break;
+			
+			//Flag laying keys
+			case KeyEvent.VK_A:
+				keyPresses[4] = false;
+				canPress = true;
+				break;
+			case KeyEvent.VK_W:
+				keyPresses[5] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_D:
+				keyPresses[6] = false;
+				canPress = true;    
+				break;
+			case KeyEvent.VK_S:
+				keyPresses[7] = false;
 				canPress = true;    
 				break;
 			}
