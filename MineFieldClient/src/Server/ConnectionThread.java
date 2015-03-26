@@ -189,6 +189,8 @@ public class ConnectionThread implements Runnable{
     		String sfxName = scan.next();
     		if (sfxName.compareTo("mineHit") == 0) {
     			SFX.EXPLODE.play();
+    		} else if (sfxName.compareTo("flag") == 0) {
+    			SFX.FLAG.play();
     		}
     	} else if (tag.equals("MUSIC")) {
     		String songName = scan.next();

@@ -320,22 +320,28 @@ public class Client implements Runnable{
 					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
 					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
 					
+					boolean setFlag = false;
+					
 					//Flag Setting
 					if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
 							!hasBeen[player.getX()-1][player.getY()]) {
-						player.setFlag(player.getX()-1, player.getY());
+						setFlag = player.setFlag(player.getX()-1, player.getY());
 					}
 					if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
 							!hasBeen[player.getX()][player.getY()-1]) {
-						player.setFlag(player.getX(), player.getY()-1);
+						setFlag = player.setFlag(player.getX(), player.getY()-1);
 					}
 					if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
 							!hasBeen[player.getX()+1][player.getY()]) {
-						player.setFlag(player.getX()+1, player.getY());
+						setFlag = player.setFlag(player.getX()+1, player.getY());
 					}
 					if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
 							!hasBeen[player.getX()][player.getY()+1]){
-						player.setFlag(player.getX(), player.getY()+1);
+						setFlag =player.setFlag(player.getX(), player.getY()+1);
+					}
+					
+					if(setFlag) {
+						soundEffect("flag");
 					}
 					
 					//Update hasBeen array

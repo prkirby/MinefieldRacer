@@ -117,20 +117,24 @@ public class Player extends Entity{
 	}
 
 	/**
+	 * This method places a flag at a given x,y location
 	 * 
-	 * @param x
+	 * @param x  Locations for the flag
 	 * @param y
+	 * 
+	 * @return Whether or not a flag was placed
 	 */
-	public void setFlag(int x, int y) {
+	public boolean setFlag(int x, int y) {
 		//Initialize flag[] if needed
 		if (flagIndex <= 0) {
 			for (int i = 0; i < flags.length; i++){
 				flags[i] = new Flag();
 			}
 		}
+		
 		//See if there are flags left
 		if (flagIndex > 4) {
-			return;
+			return false;
 		}
 
 		//See if a flag already exists at this location
@@ -138,7 +142,7 @@ public class Player extends Entity{
 			if (flags[i].getX() == x && 
 					flags[i].getY() == y &&
 					flags[i].getIsPlaced()) {
-				return;
+				return false;
 			}
 		}
 
@@ -147,6 +151,7 @@ public class Player extends Entity{
 		flags[flagIndex].setY(y);
 		flags[flagIndex].setIsPlaced(true);
 		flagIndex++;
+		return true;
 	}
 
 	/**
