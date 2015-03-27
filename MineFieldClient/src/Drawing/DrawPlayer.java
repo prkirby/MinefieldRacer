@@ -88,21 +88,22 @@ public abstract class DrawPlayer {
 	        g.drawLine(startX+scale*5-4, startY+scale*2, startX+scale*4-4, startY+scale+3);
 	        g2d.setStroke(new BasicStroke(1));
         }
-       //draw name
-        String name = "";
-        try {
-			Scanner fileScanner = new Scanner(new File("Username"));
-			while(fileScanner.hasNext()){
-				name = name + fileScanner.next() + " ";
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("failed");
-			name = "couldn'tread";
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        g.setFont(new Font("Helvetica",Font.BOLD,15));
-		g.setColor(p.getColor());
-        g2d.drawString(name, startX, startY);
+        
+        //draw name
+//        String name = "";
+//        try {
+//			Scanner fileScanner = new Scanner(new File("Username"));
+//			while(fileScanner.hasNext()){
+//				name = name + fileScanner.next() + " ";
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("failed");
+//			name = "couldn'tread";
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        g.setFont(new Font("Helvetica",Font.BOLD,15));
+//		g.setColor(p.getColor());
+//        g2d.drawString(name, startX, startY);
     }
 }

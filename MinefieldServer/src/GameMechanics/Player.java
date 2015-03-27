@@ -8,11 +8,12 @@ package GameMechanics;
 public class Player extends Entity{
 
 	// Default viewPortSize
-	private int viewPortSize = 1;			//The radius of view
-	private String name = "NO_NAME";		//The name of the player
-	private String color = "yellow"; 		//The color of the entity
-	private Flag[] flags = new Flag[5]; //Flags that the player has
-	private int flagIndex = 0;	//Index of the flag they are on
+	private int viewPortSize = 1;				//The radius of view
+	private String name = "NO_NAME";			//The name of the player
+	private String color = "yellow"; 			//The color of the entity
+	private final int numFlags = 10;			//The number of flags
+	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
+	private int flagIndex = 0;					//Index of the flag they are on
 
 
 	//Crowning a player
@@ -115,6 +116,16 @@ public class Player extends Entity{
 	public Flag[] getFlags() {
 		return flags;
 	}
+	
+	/**
+	 * Initializes the flags at the beginning of a race
+	 */
+	public void resetFlags(){
+		for (int i = 0; i < flags.length; i++){
+			flags[i] = new Flag();
+		}
+		flagIndex = 0;
+	}
 
 	/**
 	 * This method places a flag at a given x,y location
@@ -125,15 +136,9 @@ public class Player extends Entity{
 	 * @return Whether or not a flag was placed
 	 */
 	public boolean setFlag(int x, int y) {
-		//Initialize flag[] if needed
-		if (flagIndex <= 0) {
-			for (int i = 0; i < flags.length; i++){
-				flags[i] = new Flag();
-			}
-		}
 		
 		//See if there are flags left
-		if (flagIndex > 4) {
+		if (flagIndex > numFlags-1) {
 			return false;
 		}
 
@@ -174,8 +179,14 @@ public class Player extends Entity{
 	}
 
 	/**
-	 * 
+	 * Returns the remaining flags that the player has
+	 * @return
+	 * 			The number of flags left
 	 */
+	public int flagsLeft(){
+		return flags.length-flagIndex;
+	}
+	
 
 	/**
 	 * Returns if this player was the last winner

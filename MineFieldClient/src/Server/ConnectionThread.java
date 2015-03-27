@@ -26,7 +26,7 @@ public class ConnectionThread implements Runnable{
     private final int serverPort = 1111;
 
 
-    private final String ipAddress = "192.168.1.76";
+    private final String ipAddress = "141.219.222.134";
 
     private Socket socket = null;                                       //The client's socket
     private BufferedReader input = null;                                //Input from server
@@ -109,6 +109,8 @@ public class ConnectionThread implements Runnable{
                     	this.readMode(scan);
                     }else if(flag.equals("AUDIO")){
                     	this.readAudio(scan);
+                    }else if(flag.equals("WINNER")){
+                    	this.readWinner(scan);
                     }else
                         this.close();
                 }
@@ -128,7 +130,7 @@ public class ConnectionThread implements Runnable{
                 //e.printStackTrace(); //pretend this doesn't happen
                 this.close();
             }
-            sleep(4);
+            sleep(3);
         }
     }
     
@@ -140,12 +142,13 @@ public class ConnectionThread implements Runnable{
      */
     public void readData(Scanner scan){
         ArrayList<Entity> data = new ArrayList<Entity>();
-        int x, y, crown;
+        int x, y, crown, flags;
         String color;
         x = scan.nextInt();
         y = scan.nextInt();
         color = scan.next();
         crown = scan.nextInt();
+        in.mainGUI().setFlags(scan.nextInt());
         data.add(new Entity(x, y, color, crown == 1));
         while(scan.hasNext()){
             x = scan.nextInt();
@@ -182,6 +185,14 @@ public class ConnectionThread implements Runnable{
     	in.mainGUI().setMode(scan.next());
     	in.mainGUI().setTime(scan.next());
     	in.mainGUI().setMapName(scan.next());
+    }
+    
+    public void readWinner(Scanner scan){
+    	boolean winner = scan.nextInt()==1;
+    	if(winner)
+    		in.mainGUI().setWinner(winner, scan.next(), scan.next());
+    	else
+    		in.mainGUI().setWinner(winner, "", "");
     }
     
     public void readAudio(Scanner scan) throws InterruptedException {

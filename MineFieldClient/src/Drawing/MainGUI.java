@@ -42,7 +42,11 @@ public class MainGUI {
 	private String[][] map = new String[11][11];
 	private String mapName = "test2";
 	private String time;
+	private int flags;
 	private String mode;
+	private String name ="";
+	private Color winColor = Color.yellow;
+	private boolean winner = false; 
 	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 	private int[] flagKeys = {KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
 
@@ -114,9 +118,44 @@ public class MainGUI {
 	public String getTime() {
 		return time;
 	}
+	
+	public void setWinner(boolean win, String name, String color){
+		this.winner = win;
+		if(win){
+			if(name.length() < 12)
+				this.name = name;
+			else
+				this.name = name.substring(0, 12);
+			if(color.equals("red")){
+	    		this.winColor = Color.red;
+	    	}else if(color.equals("orange")){
+	    		this.winColor = new Color(255,128,64);
+	    	}else if(color.equals("lime")){
+	    		this.winColor = new Color(0,255,0);
+	    	}else if(color.equals("green")){
+	    		this.winColor = new Color(0,128,0);
+	    	}else if(color.equals("cyan")){
+	    		this.winColor = new Color(0,255,255);
+	    	}else if(color.equals("blue")){
+	    		this.winColor = new Color(0,0,255);
+	    	}else if(color.equals("purple")){
+	    		this.winColor = new Color(64,0,64);
+	    	}else if(color.equals("pink")){
+	    		this.winColor = new Color(255,0,255);
+	    	}else if(color.equals("white")){
+	    		this.winColor = new Color(255,255,255);
+	    	}else{
+	    		this.winColor = Color.yellow;
+	    	}
+		}
+	}
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+	
+	public void setFlags(int flags) {
+		this.flags = flags;
 	}
 
 	public String getMode() {
@@ -147,19 +186,19 @@ public class MainGUI {
 
 			ArrayList<Entity> temp = coords; //So data is not affected when coords is changed
 
-			//check for winner inefficiently
-			boolean thereIsAWinner = false;
-			int winnerLocation = 0;
-			for(int i = 0; i < temp.size(); i++){
-				if(temp.get(i).isWinner() == true){
-					if(temp.get(i).getX() >= 97){//bad fix due to map size and lack of passing info
-						thereIsAWinner = true;
-						winnerLocation = i;
-						break;
-					}
-
-				}
-			}
+//			//check for winner inefficiently
+//			boolean thereIsAWinner = false;
+//			int winnerLocation = 0;
+//			for(int i = 0; i < temp.size(); i++){
+//				if(temp.get(i).isWinner() == true){
+//					if(temp.get(i).getX() >= 97){//bad fix due to map size and lack of passing info
+//						thereIsAWinner = true;
+//						winnerLocation = i;
+//						break;
+//					}
+//
+//				}
+//			}
 
 			if(mode == null) mode = "SPEC";
 
@@ -174,7 +213,7 @@ public class MainGUI {
 				DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
 			}else if(mode.equals("RACE")){
 				if(map!=null)
-					DrawMap.draw(g, map);
+					DrawMap.draw(g, map,temp.get(0).getColor());
 				if(temp.size()>0)
 					DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
 				for(int e = 1; e < temp.size(); e++){
@@ -182,23 +221,13 @@ public class MainGUI {
 				}
 				if(map!=null)
 					DrawMap.drawNumbers(g, map);
-				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time);
-				//draw the winner
-				if(thereIsAWinner){
-					String name = "";
-					try {
-						Scanner fileScanner = new Scanner(new File("Username"));
-						while(fileScanner.hasNext()){
-							name = name + fileScanner.next() + " ";
-						}
-					} catch (FileNotFoundException e) {
-						System.out.println("failed");
-						name = "couldn'tread";
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + "WINS!", temp.get(winnerLocation).getColor());
-				}
+				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor());
+				
+			}
+			
+			//draw the winner
+			if(winner){
+				DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + " WINS!", winColor);
 			}
 		}
 	}

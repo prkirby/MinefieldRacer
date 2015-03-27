@@ -23,6 +23,8 @@ public class Client implements Runnable{
 	private boolean canGetInfo = false;
 	public String name = "";
 	private boolean win = false;
+    private boolean mineHit = false;
+    
 	//Data to send to client
 	private String data = "";
 
@@ -41,8 +43,7 @@ public class Client implements Runnable{
     
     //Other info to send to client
     private String time = "n/a";
-    
-    private boolean mineHit = false;
+    private String winMsg = null;
 
 	/**
 	 * This constructor sets up the client 
@@ -119,6 +120,15 @@ public class Client implements Runnable{
 	 */
 	public void setData(String data){
 		this.data = data;
+	}
+	
+	/**
+	 * Sets up the winner message to send to client
+	 * @param msg 
+	 *          The winner message
+	 */
+	public void setWinMsg(String msg){
+		this.winMsg = msg;
 	}
 
 	/**
@@ -426,13 +436,21 @@ public class Client implements Runnable{
 					//Send the map
 					output.println(sendMap());
 					
+					//Send if winner applicable
+					if(winMsg==null){
+						output.println("WINNER 0");
+					}else{
+						output.println("WINNER 1 "+winMsg);
+					}
+					
 					
 				}catch(NullPointerException e){
-				}catch(ArrayIndexOutOfBoundsException e){
-					output.println(sendMap());
+				}catch(java.lang.ArrayIndexOutOfBoundsException e){
+					
+//					output.println(sendMap());
 				}
 				
-				this.sleep(15);
+				this.sleep(16);
 			}
 		}
 
