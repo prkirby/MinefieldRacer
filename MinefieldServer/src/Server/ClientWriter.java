@@ -44,10 +44,10 @@ public class ClientWriter implements Runnable {
 		for(int i = 0; i < mapArray.length; i++){
 			mapArray[i] = new Map(f[i]);
 		}
-		//create random number
-		int rndm = getRandomNumber();
+		
 		//choose random map
-		map = mapArray[rndm];
+//		map = mapArray[getRandomNumber()];
+		map = mapArray[7];
 	}
 
 	/**
@@ -100,13 +100,9 @@ public class ClientWriter implements Runnable {
 			this.someoneWon = false;
 			this.currentTime = raceTime;
 
-			//System.out.println(map.toString());
-
 			//Start race
 			//Populate mineLayer with mines and numbers
 			mineLayer = MineCreation.createMineLayer(map.map, minePercentage);
-
-			//System.out.println(mineLayer.toString());
 
 			//Place all current clients at the starting line
 			for(int c = 0; c < this.clients.size(); c++){
@@ -114,8 +110,9 @@ public class ClientWriter implements Runnable {
 					this.clients.get(c).setSpectatorMode(false);
 					this.clients.get(c).music("bg1");
 					this.clients.get(c).player().setX(1);
-					this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
-
+					this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-3)))+1);
+					this.clients.get(c).player().resetFlags();
+					this.clients.get(c).setWinMsg(null);
 				}
 			}
 
@@ -132,6 +129,7 @@ public class ClientWriter implements Runnable {
 			for(int c = 0; c < this.clients.size(); c++){
 				this.clients.get(c).setSpectatorMode(true);
 				this.clients.get(c).music("lobby");
+				this.clients.get(c).setWinMsg(null);
 			}
 		}
 
@@ -186,7 +184,10 @@ public class ClientWriter implements Runnable {
 					}else if(this.someoneWon && !clients.get(cl).player().isPreviousWinner()){
 						clients.get(cl).player().setPreviousWinner(false);
 					}
-
+					
+					//Setup winner message
+					if(this.someoneWon)
+						clients.get(cl).setWinMsg(""+previousWinner.getName()+ " "+previousWinner.getColor());
 					
 					//Check to see if client has hit a mine
 					if(clients.get(cl).mineHit()){
@@ -249,7 +250,8 @@ public class ClientWriter implements Runnable {
 	public String setupData(int clientN){
 		String data = "DATA ";
 		try{
-			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() + " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " ;
+			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() 
+					+ " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " +clients.get(clientN).player().flagsLeft() + " ";
 
 			for(int d = 0; d < clients.size(); d++){
 				if(!clients.get(d).inSpectatorMode() && d !=clientN)

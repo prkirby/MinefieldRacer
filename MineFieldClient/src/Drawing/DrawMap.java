@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public abstract class DrawMap {
      * @param e 
      *          The entity to draw
      */
-    public static void draw(Graphics g, String[][] map){
+    public static void draw(Graphics g, String[][] map, Color pColor){
     	for(int x = 0; x < 11; x++){
     		for(int y =0; y < 11; y++){
     			g.setColor(new Color(193,193,193));
@@ -72,6 +73,7 @@ public abstract class DrawMap {
 	        			g.drawRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    			}
 	    			else if(map[x][y].equals("f")) {
+	    				//Tile
 	    				g.setColor(new Color(193,193,193));
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    				g.setColor(new Color(254,254,254));
@@ -80,9 +82,20 @@ public abstract class DrawMap {
 	    				g.setColor(new Color(125,125,125));
 	    				g.fillRect(x*scale*5, y*scale*5+scale*5-scale/2, scale*5, scale/2);
 	    				g.fillRect(x*scale*5+scale*5-scale/2, y*scale*5, scale/2, scale*5);
-	    				g.setColor(Color.RED);
-	    				g.setFont(new Font("Courier",Font.BOLD,40));
-	    				g.drawString("F", x*scale*5+10, y*scale*5+35);
+	    				
+	    				//Flag
+	    				g.setColor(Color.BLACK);
+	    				g.fillRect(x*scale*5+10, y*scale*5+35, 25, 7);
+	    				g.fillRect(x*scale*5+14, y*scale*5+31, 18, 7);
+	    				g.fillRect(x*scale*5+5*scale/2-4, y*scale*5+10, 4, 30);
+	    				if(pColor.equals(Color.yellow))
+	    					g.setColor(Color.red);
+	    				else
+	    					g.setColor(pColor);
+	    				int[] xx = {x*scale*5+10,x*scale*5+5*scale/2,x*scale*5+5*scale/2,x*scale*5+10};
+	    				int[] yy = {y*scale*5+15,y*scale*5+7,y*scale*5+23,y*scale*5+15};
+	    				Polygon flag = new Polygon(xx,yy,xx.length);
+	    				g.fillPolygon(flag);
 	    			}
 	    			else if(map[x][y].equals("n")){}
 	    			else{
