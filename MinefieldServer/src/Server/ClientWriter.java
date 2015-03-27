@@ -46,8 +46,7 @@ public class ClientWriter implements Runnable {
 		}
 		
 		//choose random map
-//		map = mapArray[getRandomNumber()];
-		map = mapArray[7];
+		map = mapArray[getRandomNumber()];
 	}
 
 	/**
