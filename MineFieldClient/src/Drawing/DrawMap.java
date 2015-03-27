@@ -71,6 +71,13 @@ public abstract class DrawMap {
 	    				g.fillOval(x*scale*5+10*scale/6, y*scale*5+10*scale/6, 3*scale/4, 3*scale/4);
 	    				g.setColor(Color.BLACK);
 	        			g.drawRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
+	        			
+	        			//The red x
+	        			g.setColor(new Color(199,14,20));
+	    				g2d.setStroke(new BasicStroke(2));
+	    				g.drawLine(x*scale*5+5, y*scale*5+5, x*scale*5+scale*5-5, y*scale*5+scale*5-5);
+	    				g.drawLine(x*scale*5+5, y*scale*5+scale*5-5, x*scale*5+scale*5-5, y*scale*5+5);
+	    				g2d.setStroke(new BasicStroke(1));
 	    			}
 	    			else if(map[x][y].equals("f")) {
 	    				//Tile
@@ -176,6 +183,11 @@ public abstract class DrawMap {
     	int hei = s.nextInt();
     	
     	int startX=width/2-wid*5/2, startY=height/2-hei*5/2;
+    	
+    	//Map name
+    	g.setColor(Color.white);
+    	g.setFont(new Font("Helvetica",Font.BOLD,28));
+    	g.drawString(mapName, width/2-mapName.length()*7, startY-8);
     	
     	for(int y = 0; y < hei; y++){
     		for(int x = 0; x < wid; x++){
