@@ -215,15 +215,34 @@ public class Client implements Runnable{
 					mineLayer.getMap()[x][y].compareTo("m") == 0 ||
 					mineLayer.getMap()[x][y].compareTo("0") == 0 ||
 					(x == i && y == j)){
+					
+					if (changeHasBeen(hasBeen[i][j])) {
+						player.addAPoint();
+					}
 					hasBeen[i][j] = true;
 				}
 				//Test code (reveal some surrounding tiles)
 				else if(mineLayer.getMap()[x][y].compareTo("0") != 0 && 
 						mineLayer.getMap()[x][y].compareTo("m") != 0 &&
 						surroundingRevealed(x,y)<2){
+					if (changeHasBeen(hasBeen[leftX][topY])) {
+						player.addAPoint();
+					}
 					hasBeen[leftX][topY] = true;
+
+					if (changeHasBeen(hasBeen[rightX][topY])) {
+						player.addAPoint();
+					}
 					hasBeen[rightX][topY] = true;
+
+					if (changeHasBeen(hasBeen[leftX][botY])) {
+						player.addAPoint();
+					}
 					hasBeen[leftX][botY] = true;
+
+					if (changeHasBeen(hasBeen[rightX][botY])) {
+						player.addAPoint();
+					}
 					hasBeen[rightX][botY] = true;
 				}
 			}
@@ -249,6 +268,21 @@ public class Client implements Runnable{
 		}
 		
 		return count;
+	}
+	
+	/**
+	 * changeHasBeen
+	 * 
+	 * @param currVal - the a boolean value of the hasBeen array
+	 * @return true if hasBeen is currently false, this is used to
+	 * 		increment points
+	 */
+	private boolean changeHasBeen(boolean currVal) {
+		if (currVal == false) {
+			System.out.println("Player's points: " + player.getPoints());
+			return true;
+		}
+		return false;
 	}
 
 	/**
