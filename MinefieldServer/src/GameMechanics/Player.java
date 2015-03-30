@@ -11,6 +11,8 @@ public class Player extends Entity{
 	private int viewPortSize = 1;			//The radius of view
 	private String name = "NO_NAME";		//The name of the player
     private String color = "yellow"; 		//The color of the entity
+    private int points = 0;
+    private int highestStreak = 0;
     
     //Crowning a player
     private boolean previousWinner = false;	//Denotes if this player won the last race
@@ -161,5 +163,25 @@ public class Player extends Entity{
      */
     public void moveRight(int amt){
         super.setX(super.getX()+amt);
+    }
+    
+    public int getPoints() {
+    	return points;
+    }
+    
+    public void setPoints(int newPoints) {
+    	points = newPoints;
+    }
+    
+    // Resets points and updates highestStreak
+    public void resetPoints() {
+    	if (points > highestStreak) {
+    		highestStreak = points;
+    	}
+    	points = 0;
+    }
+    
+    public void addAPoint() {
+    	points += 1;
     }
 }

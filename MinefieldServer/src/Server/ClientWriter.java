@@ -301,6 +301,9 @@ public class ClientWriter implements Runnable {
 				// Fire Mine SFX
 				clients.get(k).soundEffect("mineHit");
 				
+				// Resets points if you get blown up
+				clients.get(k).player().resetPoints();
+				
 				// Sets players back to start and resets the mineHit variable in Client.
 				// If the player is past the checkpoint, it moves them back to the checkpoint.
 				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
@@ -311,9 +314,9 @@ public class ClientWriter implements Runnable {
 					clients.get(k).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 					clients.get(k).player().setX(1);
 				}
-				// The y is randomized.
+				
+				// Deactivating the mine.
 				clients.get(k).setMineHit(false);
-
 			}
 		}
 	}
