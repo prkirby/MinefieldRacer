@@ -23,8 +23,8 @@ public class Client implements Runnable{
 	private boolean canGetInfo = false;
 	public String name = "";
 	private boolean win = false;
-    private boolean mineHit = false;
-    
+	private boolean mineHit = false;
+
 	//Data to send to client
 	private String data = "";
 
@@ -35,15 +35,15 @@ public class Client implements Runnable{
 	private Map map;
 	private Map mineLayer;
 	private boolean[][] hasBeen;
-	
-	
+
+
 	//Modal variables
-    private boolean canRace = false;
-    private boolean spectatorMode = true;
-    
-    //Other info to send to client
-    private String time = "n/a";
-    private String winMsg = null;
+	private boolean canRace = false;
+	private boolean spectatorMode = true;
+
+	//Other info to send to client
+	private String time = "n/a";
+	private String winMsg = null;
 
 	/**
 	 * This constructor sets up the client 
@@ -94,24 +94,24 @@ public class Client implements Runnable{
 	public Player player(){
 		return this.player;
 	}
-	
+
 	/**
-     * Returns if the client is allowed to race
-     * @return
-     * 			If the client can race
-     */
-    public boolean canRace(){
-    	return this.canRace;
-    }
-    
-    /**
-     * Sets the client's race allowance
-     * @param b
-     * 			If the client can or cannot race
-     */
-    public void setCanRace(boolean b){
-    	this.canRace = b;
-    }
+	 * Returns if the client is allowed to race
+	 * @return
+	 * 			If the client can race
+	 */
+	public boolean canRace(){
+		return this.canRace;
+	}
+
+	/**
+	 * Sets the client's race allowance
+	 * @param b
+	 * 			If the client can or cannot race
+	 */
+	public void setCanRace(boolean b){
+		this.canRace = b;
+	}
 
 	/**
 	 * Sets up the data that will be sent to the client
@@ -121,7 +121,7 @@ public class Client implements Runnable{
 	public void setData(String data){
 		this.data = data;
 	}
-	
+
 	/**
 	 * Sets up the winner message to send to client
 	 * @param msg 
@@ -148,7 +148,7 @@ public class Client implements Runnable{
 	public boolean canGetInfo(){
 		return this.canGetInfo;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -156,7 +156,7 @@ public class Client implements Runnable{
 	public boolean inSpectatorMode(){
 		return this.spectatorMode;
 	}
-	
+
 	public void setSpectatorMode(boolean b){
 		this.spectatorMode = b;
 	}
@@ -164,7 +164,7 @@ public class Client implements Runnable{
 	public String getName(){
 		return name;
 	}
-	
+
 	public void setName(String s){
 		name = s;
 	}
@@ -178,14 +178,14 @@ public class Client implements Runnable{
 	public void updateMap(Map m){
 		this.map = m;
 	}
-	
+
 	/**
 	 * This updates the mineLayer for collision detection
 	 */
 	public void updateMineLayer(Map mineLayer) {
 		this.mineLayer = mineLayer;
 	}
-	
+
 	/**
 	 * This initializes the hasBeen[][]
 	 */
@@ -197,7 +197,7 @@ public class Client implements Runnable{
 			}
 		}
 	}
-	
+
 	/**
 	 * This updates hasBeen based on a view port size
 	 * 
@@ -209,40 +209,75 @@ public class Client implements Runnable{
 		int x = player.getX();
 		int y = player.getY();
 		int port = player.getViewPort();
-		
+
 		//Find view boundaries
 		int leftX = (x - port > 0) ? x - port : 0;
 		int rightX = (x + port < map.getWidth() - 1) ? x + port : map.getWidth() - 1;
 		int topY = (y - port > 0) ? y - port : 0;
 		int botY = (y + port < map.getHeight() - 1) ? y + port : map.getHeight() - 1;
-		
+
 		//Update hasBeen
 		for (int i = leftX; i <= rightX; i++) {
 			for (int j = topY; j <= botY; j++) {
 				if (((mineLayer.getMap()[i][j].compareTo("m") == 0 ||
-					mineLayer.getMap()[i][j].compareTo("0") == 0) && 
-					surroundingRevealed(i,j)>0) ||
-					mineLayer.getMap()[x][y].compareTo("m") == 0 ||
-					mineLayer.getMap()[x][y].compareTo("0") == 0 ||
-					(x == i && y == j)){
+						mineLayer.getMap()[i][j].compareTo("0") == 0) && 
+						surroundingRevealed(i,j)>0) ||
+						mineLayer.getMap()[x][y].compareTo("m") == 0 ||
+						mineLayer.getMap()[x][y].compareTo("0") == 0 ||
+						(x == i && y == j)){
+					if (changeHasBeen(hasBeen[i][j])) {
+						player.addAPoint();
+					}
 					hasBeen[i][j] = true;
 				}
 				//Test code (reveal some surrounding tiles)
 				else if(mineLayer.getMap()[x][y].compareTo("0") != 0 && 
 						mineLayer.getMap()[x][y].compareTo("m") != 0 &&
 						surroundingRevealed(x,y)<2){
+					
+					if (changeHasBeen(hasBeen[leftX][topY])) {
+						player.addAPoint();
+					}
 					hasBeen[leftX][topY] = true;
+					
+					if (changeHasBeen(hasBeen[rightX][topY])) {
+						player.addAPoint();
+					}
 					hasBeen[rightX][topY] = true;
+					
+					if (changeHasBeen(hasBeen[leftX][botY])) {
+						player.addAPoint();
+					}
 					hasBeen[leftX][botY] = true;
+					
+					if (changeHasBeen(hasBeen[rightX][botY])) {
+						player.addAPoint();
+					}
 					hasBeen[rightX][botY] = true;
 				}
 			}
 		}
 	}
-	
+
+
+	/**
+	 * changeHasBeen
+	 * 
+	 * @param currVal - the a boolean value of the hasBeen array
+	 * @return true if hasBeen is currently false, this is used to
+	 * 		increment points
+	 */
+	private boolean changeHasBeen(boolean currVal) {
+		if (currVal == false) {
+			System.out.println("Player's points: " + player.getPoints());
+			return true;
+		}
+		return false;
+	}
+
 	private int surroundingRevealed(int x, int y){
 		int count = 0;
-		
+
 		try{
 			if(x>0)
 				if(hasBeen[x-1][y]) count++;
@@ -257,7 +292,7 @@ public class Client implements Runnable{
 		}catch(NullPointerException e){
 			System.out.println("ERROR: null");
 		}
-		
+
 		return count;
 	}
 
@@ -271,42 +306,42 @@ public class Client implements Runnable{
 			mineHit = true;
 		}
 	}
-	
+
 	public boolean mineHit() {
 		return mineHit;
 	}
-	
+
 	public void setMineHit(boolean newHit) {
 		mineHit = newHit;
 	}
-	
+
 	public void soundEffect(String sfx) {
 		String str = "AUDIO SFX " + sfx;
 		output.println(str);
 	}
-	
+
 	public void music(String song) {
 		String str = "AUDIO MUSIC " + song;
 		output.println(str);	
 	}
-	
+
 	/**
 	 * The Thread: Reads in data from the client 
 	 * and uses it appropriately
 	 */
 	public void run() {
-		
+
 		//Get initial info (name and color)
 		String prints = "";
 		try {
 			prints = input.readLine();
 		} catch (IOException e1) {}
 		Scanner scan = new Scanner(prints);
-		
+
 		player.setName(scan.next());
 		player.setColor(scan.next());
-		
-		
+
+
 		this.canGetInfo = true;
 		while(true){
 			try{
@@ -323,43 +358,43 @@ public class Client implements Runnable{
 					}
 
 					if(!this.spectatorMode){
-					
-					//Movement
-					if(keys[0] && map.validLocation(player.getX()-1, player.getY())) player.moveLeft(1);
-					if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
-					if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
-					if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
-					
-					boolean setFlag = false;
-					
-					//Flag Setting
-					if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
-							!hasBeen[player.getX()-1][player.getY()]) {
-						setFlag = player.setFlag(player.getX()-1, player.getY());
-					}
-					if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
-							!hasBeen[player.getX()][player.getY()-1]) {
-						setFlag = player.setFlag(player.getX(), player.getY()-1);
-					}
-					if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
-							!hasBeen[player.getX()+1][player.getY()]) {
-						setFlag = player.setFlag(player.getX()+1, player.getY());
-					}
-					if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
-							!hasBeen[player.getX()][player.getY()+1]){
-						setFlag =player.setFlag(player.getX(), player.getY()+1);
-					}
-					
-					if(setFlag) {
-						soundEffect("flag");
-					}
-					
-					//Update hasBeen array
-					updateHasBeen(player);
-					
-					//Check if mine has been hit
-					mineCollision();
-					
+
+						//Movement
+						if(keys[0] && map.validLocation(player.getX()-1, player.getY())) player.moveLeft(1);
+						if(keys[1] && map.validLocation(player.getX(), player.getY()-1)) player.moveUp(1);
+						if(keys[2] && map.validLocation(player.getX()+1, player.getY())) player.moveRight(1);
+						if(keys[3] && map.validLocation(player.getX(), player.getY()+1)) player.moveDown(1);
+
+						boolean setFlag = false;
+
+						//Flag Setting
+						if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
+								!hasBeen[player.getX()-1][player.getY()]) {
+							setFlag = player.setFlag(player.getX()-1, player.getY());
+						}
+						if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
+								!hasBeen[player.getX()][player.getY()-1]) {
+							setFlag = player.setFlag(player.getX(), player.getY()-1);
+						}
+						if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
+								!hasBeen[player.getX()+1][player.getY()]) {
+							setFlag = player.setFlag(player.getX()+1, player.getY());
+						}
+						if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
+								!hasBeen[player.getX()][player.getY()+1]){
+							setFlag =player.setFlag(player.getX(), player.getY()+1);
+						}
+
+						if(setFlag) {
+							soundEffect("flag");
+						}
+
+						//Update hasBeen array
+						updateHasBeen(player);
+
+						//Check if mine has been hit
+						mineCollision();
+
 					} else{
 						this.player.setX(0);
 						this.player.setY(0);
@@ -432,24 +467,24 @@ public class Client implements Runnable{
 					}else{
 						output.println("MODE RACE "+time);
 					}
-					
+
 					//Send the map
 					output.println(sendMap());
-					
+
 					//Send if winner applicable
 					if(winMsg==null){
 						output.println("WINNER 0");
 					}else{
 						output.println("WINNER 1 "+winMsg);
 					}
-					
-					
+
+
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
-					
-//					output.println(sendMap());
+
+					//					output.println(sendMap());
 				}
-				
+
 				this.sleep(16);
 			}
 		}
