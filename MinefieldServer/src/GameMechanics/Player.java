@@ -15,6 +15,9 @@ public class Player extends Entity{
 	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
 	private int flagIndex = 0;					//Index of the flag they are on
 
+	private int points = 0;
+	private int highestStreak = 0;
+
 
 	//Crowning a player
 	private boolean previousWinner = false;	//Denotes if this player won the last race
@@ -116,7 +119,7 @@ public class Player extends Entity{
 	public Flag[] getFlags() {
 		return flags;
 	}
-	
+
 	/**
 	 * Initializes the flags at the beginning of a race
 	 */
@@ -136,7 +139,7 @@ public class Player extends Entity{
 	 * @return Whether or not a flag was placed
 	 */
 	public boolean setFlag(int x, int y) {
-		
+
 		//See if there are flags left
 		if (flagIndex > numFlags-1) {
 			return false;
@@ -186,7 +189,7 @@ public class Player extends Entity{
 	public int flagsLeft(){
 		return flags.length-flagIndex;
 	}
-	
+
 
 	/**
 	 * Returns if this player was the last winner
@@ -244,5 +247,26 @@ public class Player extends Entity{
 	 */
 	public void moveRight(int amt){
 		super.setX(super.getX()+amt);
+	}
+
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int newPoints) {
+		points = newPoints;
+	}
+
+	// Resets points and updates highestStreak
+	public void resetPoints() {
+		if (points > highestStreak) {
+			highestStreak = points;
+		}
+		points = 0;
+	}
+
+	public void addAPoint() {
+		points += 1;
 	}
 }
