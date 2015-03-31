@@ -172,12 +172,16 @@ public abstract class DrawMap {
      * 			The mapName to draw
      */
     public static void draw(Graphics g, String mapName, int width, int height){
-    	File m = new File("MAPS/"+mapName+".txt");
+   
+    	File m = new File(DrawMap.class.getResource("/MAPS/"+mapName+".txt").getFile());
     	Scanner s = null;
     	
     	try {
 			s = new Scanner(m);
-		} catch (FileNotFoundException e) {}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.toString());
+		}
     	
     	int wid = s.nextInt();
     	int hei = s.nextInt();
