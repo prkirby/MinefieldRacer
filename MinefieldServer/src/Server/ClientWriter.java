@@ -30,7 +30,7 @@ public class ClientWriter implements Runnable {
 	private boolean inRace = false;				//Race = true, lobby = false;
 
 	private boolean someoneWon = false;			//Temporary variable
-	
+
 	private Player previousWinner = null;		//Pointer to previous winner
 
 
@@ -44,7 +44,7 @@ public class ClientWriter implements Runnable {
 		for(int i = 0; i < mapArray.length; i++){
 			mapArray[i] = new Map(f[i]);
 		}
-		
+
 		//choose random map
 		map = mapArray[getRandomNumber()];
 	}
@@ -140,7 +140,7 @@ public class ClientWriter implements Runnable {
 		}
 	}
 
-	
+
 	public static int getRandomNumber(){
 		Random rand = new Random();
 
@@ -150,8 +150,8 @@ public class ClientWriter implements Runnable {
 
 		return randomNum;
 	}
-	
-	
+
+
 	/**
 	 * Double checks to see if all clients 
 	 * in the client list are still there. 
@@ -174,7 +174,7 @@ public class ClientWriter implements Runnable {
 					if(checkWinCondition(cl) && !this.someoneWon){
 						this.currentTime = 10*1000; //Ten seconds left
 						this.someoneWon = true;
-						
+
 						//Crown the winner
 						if(previousWinner!=null)
 							previousWinner.setPreviousWinner(false);
@@ -183,11 +183,11 @@ public class ClientWriter implements Runnable {
 					}else if(this.someoneWon && !clients.get(cl).player().isPreviousWinner()){
 						clients.get(cl).player().setPreviousWinner(false);
 					}
-					
+
 					//Setup winner message
 					if(this.someoneWon)
 						clients.get(cl).setWinMsg(""+previousWinner.getName()+ " "+previousWinner.getColor());
-					
+
 					//Check to see if client has hit a mine
 					if(clients.get(cl).mineHit()){
 						this.mineHit(cl);
@@ -299,10 +299,13 @@ public class ClientWriter implements Runnable {
 			// Checks if players are in this radius
 			if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
-				
+
 				// Fire Mine SFX
 				clients.get(k).soundEffect("mineHit");
-				
+
+				// Resets points if you get blown up
+				clients.get(k).player().resetPoints();
+
 				// Sets players back to start and resets the mineHit variable in Client.
 				// If the player is past the checkpoint, it moves them back to the checkpoint.
 				if (clients.get(k).player().getX() > (map.getWidth() / 2)) {
