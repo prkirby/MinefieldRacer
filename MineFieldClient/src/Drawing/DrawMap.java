@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public abstract class DrawMap {
@@ -173,15 +174,10 @@ public abstract class DrawMap {
      */
     public static void draw(Graphics g, String mapName, int width, int height){
    
-    	File m = new File(DrawMap.class.getResource("/MAPS/"+mapName+".txt").getFile());
+    	InputStream m = DrawMap.class.getResourceAsStream("/MAPS/"+mapName+".txt");
     	Scanner s = null;
     	
-    	try {
-			s = new Scanner(m);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println(e.toString());
-		}
+    	s = new Scanner(m);
     	
     	int wid = s.nextInt();
     	int hei = s.nextInt();
