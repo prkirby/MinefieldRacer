@@ -3,6 +3,8 @@ package Server;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
@@ -25,13 +27,19 @@ public class ClientWriter implements Runnable {
 	private double minePercentage = 0.10;
 
 	private final int raceTime = 5 * 60 * 1000; //5 Minutes
-	private final int lobbyTime = 5*1000;//30 * 1000;	//30 Seconds
+	private final int lobbyTime = 5*1000;		//30 Seconds
 	private int currentTime = lobbyTime;		//Time counter
 	private boolean inRace = false;				//Race = true, lobby = false;
 
 	private boolean someoneWon = false;			//Temporary variable
 
 	private Player previousWinner = null;		//Pointer to previous winner
+	
+	//Powerup vars
+	private Timer powerupTimer = new Timer();   //The timer to when powerups go online
+	private final int powerupCheck = 10;		//The interval for powerup checks
+	private final int powerupWait = 30;			//The initial wait time in seconds
+	private final double powerupRatio = 250;    //The number to divide points by to see powerup chance (assumes a cap at 150 = 60%)
 
 
 	/**
@@ -98,6 +106,7 @@ public class ClientWriter implements Runnable {
 			this.inRace = true;
 			this.someoneWon = false;
 			this.currentTime = raceTime;
+			powerupTimer.schedule(new PowerupRemindTask(), powerupWait*1000);
 
 			//Start race
 			//Populate mineLayer with mines and numbers
@@ -335,5 +344,26 @@ public class ClientWriter implements Runnable {
 			return true;
 		}
 		return false;
+	}
+	
+	public class PowerupRemindTask extends TimerTask{
+		public void run() {
+			
+			//Check to see if the race is still on
+			if(inRace && !someoneWon){
+				for(int c = 0; c < clients.size(); c++){
+					double chance = clients.get(c).player().getPoints()/powerupRatio;
+					if(Math.random() < chance){
+						//Give them a powerup
+						
+						//Reset points?
+					}
+				}
+				powerupTimer.schedule(new PowerupRemindTask(), powerupCheck*1000);
+				
+			}
+			
+		}
+		
 	}
 }
