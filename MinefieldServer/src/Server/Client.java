@@ -269,7 +269,7 @@ public class Client implements Runnable{
 	 */
 	private boolean changeHasBeen(boolean currVal) {
 		if (currVal == false) {
-			System.out.println("Player's points: " + player.getPoints());
+			//System.out.println("Player's points: " + player.getPoints());
 			return true;
 		}
 		return false;
@@ -369,19 +369,19 @@ public class Client implements Runnable{
 
 						//Flag Setting
 						if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
-								!hasBeen[player.getX()-1][player.getY()]) {
+								map.map[player.getX()-1][player.getY()].equals("c")) {
 							setFlag = player.setFlag(player.getX()-1, player.getY());
 						}
 						if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
-								!hasBeen[player.getX()][player.getY()-1]) {
+								map.map[player.getX()][player.getY()-1].equals("c")) {
 							setFlag = player.setFlag(player.getX(), player.getY()-1);
 						}
 						if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
-								!hasBeen[player.getX()+1][player.getY()]) {
+								map.map[player.getX()+1][player.getY()].equals("c")) {
 							setFlag = player.setFlag(player.getX()+1, player.getY());
 						}
 						if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
-								!hasBeen[player.getX()][player.getY()+1]){
+								map.map[player.getX()][player.getY()+1].equals("c")){
 							setFlag =player.setFlag(player.getX(), player.getY()+1);
 						}
 

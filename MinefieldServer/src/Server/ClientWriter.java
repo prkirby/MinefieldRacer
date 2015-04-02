@@ -3,6 +3,8 @@ package Server;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
@@ -32,6 +34,8 @@ public class ClientWriter implements Runnable {
 	private boolean someoneWon = false;			//Temporary variable
 
 	private Player previousWinner = null;		//Pointer to previous winner
+	
+	private Timer powerupTimer = new Timer();
 
 
 	/**
@@ -335,5 +339,16 @@ public class ClientWriter implements Runnable {
 			return true;
 		}
 		return false;
+	}
+	
+	public class PowerupRemindTask extends TimerTask{
+
+		public void run() {
+			if(inRace){
+				
+			}
+			
+		}
+		
 	}
 }

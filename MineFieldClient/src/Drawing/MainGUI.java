@@ -40,6 +40,7 @@ public class MainGUI {
 	//Drawing data
 	private ArrayList<Entity> coords = new ArrayList<Entity>();
 	private String[][] map = new String[11][11];
+	private String[][] fullMap;
 	private String mapName = "test2";
 	private String time;
 	private int flags;
@@ -167,7 +168,26 @@ public class MainGUI {
 	}
 
 	public void setMapName(String name){
+		String temp = mapName;
 		this.mapName = name;
+		
+		if(!temp.equals(mapName)){
+			File m = new File("MAPS/"+mapName+".txt");
+	    	Scanner s = null;
+	    	try {
+				s = new Scanner(m);
+			} catch (FileNotFoundException e) {}
+	    	
+	    	int wid = s.nextInt();
+	    	int hei = s.nextInt();
+	    	fullMap = new String[wid][hei];
+	    	for(int y = 0; y < hei; y++){
+	    		for(int x = 0; x < wid; x++){
+	    			fullMap[x][y] = s.next();
+	    		}
+	    	}
+	    	s.close(); 
+		}
 	}
 
 	/**
@@ -203,8 +223,8 @@ public class MainGUI {
 			if(mode == null) mode = "SPEC";
 
 			if(mode.equals("SPEC")){
-				if(map!=null)
-					DrawMap.draw(g, mapName, mainpanel.getWidth(), mainpanel.getHeight());
+				if(fullMap!=null)
+					DrawMap.draw(g, mapName, fullMap, mainpanel.getWidth(), mainpanel.getHeight());
 				for(int e = 1; e < temp.size(); e++){
 					DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
 
@@ -221,7 +241,7 @@ public class MainGUI {
 				}
 				if(map!=null)
 					DrawMap.drawNumbers(g, map);
-				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor());
+				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor(), fullMap, temp.get(0).getX(), temp.get(0).getY());
 				
 			}
 			

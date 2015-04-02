@@ -171,16 +171,9 @@ public abstract class DrawMap {
      * @param mapName
      * 			The mapName to draw
      */
-    public static void draw(Graphics g, String mapName, int width, int height){
-    	File m = new File("MAPS/"+mapName+".txt");
-    	Scanner s = null;
-    	
-    	try {
-			s = new Scanner(m);
-		} catch (FileNotFoundException e) {}
-    	
-    	int wid = s.nextInt();
-    	int hei = s.nextInt();
+    public static void draw(Graphics g, String mapName, String[][] map, int width, int height){    	
+    	int wid = map.length;
+    	int hei = map[0].length;
     	
     	int startX=width/2-wid*5/2, startY=height/2-hei*5/2;
     	
@@ -191,7 +184,7 @@ public abstract class DrawMap {
     	
     	for(int y = 0; y < hei; y++){
     		for(int x = 0; x < wid; x++){
-    			String block = s.next();
+    			String block = map[x][y];
     			if(block.equals("W")){
     				g.setColor(Color.black);
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
@@ -219,7 +212,6 @@ public abstract class DrawMap {
     			}else if(block.equals("n")){}
     		}
     	}
-    	
-    	s.close();    	
+    	   	
     }
 }
