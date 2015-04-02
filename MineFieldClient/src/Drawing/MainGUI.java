@@ -232,12 +232,21 @@ public class MainGUI {
 				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
 				DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
 			}else if(mode.equals("RACE")){
-				if(map!=null)
+				if(map!=null){
 					DrawMap.draw(g, map,temp.get(0).getColor());
-				if(temp.size()>0)
+				}
+				if(temp.size()>0){
 					DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+				}
 				for(int e = 1; e < temp.size(); e++){
 					DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
+				}
+				
+				DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
+				DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
+				for(int e = 1; e < temp.size(); e++){
+					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 				}
 				if(map!=null)
 					DrawMap.drawNumbers(g, map);

@@ -222,9 +222,10 @@ public class Client implements Runnable{
 				if (((mineLayer.getMap()[i][j].compareTo("m") == 0 ||
 						mineLayer.getMap()[i][j].compareTo("0") == 0) && 
 						surroundingRevealed(i,j)>0) ||
-						mineLayer.getMap()[x][y].compareTo("m") == 0 ||
-						mineLayer.getMap()[x][y].compareTo("0") == 0 ||
-						(x == i && y == j)){
+						(surroundingRevealed(i,j)>0 && (mineLayer.getMap()[x][y].compareTo("m") == 0 ||
+								mineLayer.getMap()[x][y].compareTo("0") == 0) && !mineLayer.getMap()[i][j].equals("-1"))
+						
+						||(x == i && y == j)){
 					if (changeHasBeen(hasBeen[i][j])) {
 						player.addAPoint();
 					}
@@ -235,25 +236,33 @@ public class Client implements Runnable{
 						mineLayer.getMap()[x][y].compareTo("m") != 0 &&
 						surroundingRevealed(x,y)<2){
 					
-					if (changeHasBeen(hasBeen[leftX][topY])) {
-						player.addAPoint();
+					if(!mineLayer.getMap()[leftX][topY].equals("-1")){
+						if (changeHasBeen(hasBeen[leftX][topY])) {
+							player.addAPoint();
+						}
+						hasBeen[leftX][topY] = true;
 					}
-					hasBeen[leftX][topY] = true;
 					
-					if (changeHasBeen(hasBeen[rightX][topY])) {
-						player.addAPoint();
+					if(!mineLayer.getMap()[rightX][topY].equals("-1")){
+						if (changeHasBeen(hasBeen[rightX][topY])) {
+							player.addAPoint();
+						}
+						hasBeen[rightX][topY] = true;
 					}
-					hasBeen[rightX][topY] = true;
 					
-					if (changeHasBeen(hasBeen[leftX][botY])) {
-						player.addAPoint();
+					if(!mineLayer.getMap()[leftX][botY].equals("-1")){
+						if (changeHasBeen(hasBeen[leftX][botY])) {
+							player.addAPoint();
+						}
+						hasBeen[leftX][botY] = true;
 					}
-					hasBeen[leftX][botY] = true;
 					
-					if (changeHasBeen(hasBeen[rightX][botY])) {
-						player.addAPoint();
+					if(!mineLayer.getMap()[rightX][botY].equals("-1")){
+						if (changeHasBeen(hasBeen[rightX][botY])) {
+							player.addAPoint();
+						}
+						hasBeen[rightX][botY] = true;
 					}
-					hasBeen[rightX][botY] = true;
 				}
 			}
 		}
@@ -369,19 +378,19 @@ public class Client implements Runnable{
 
 						//Flag Setting
 						if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
-								map.map[player.getX()-1][player.getY()].equals("c")) {
+								!hasBeen[player.getX()-1][player.getY()]) {
 							setFlag = player.setFlag(player.getX()-1, player.getY());
 						}
 						if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
-								map.map[player.getX()][player.getY()-1].equals("c")) {
+								!hasBeen[player.getX()][player.getY()-1]) {
 							setFlag = player.setFlag(player.getX(), player.getY()-1);
 						}
 						if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
-								map.map[player.getX()+1][player.getY()].equals("c")) {
+								!hasBeen[player.getX()+1][player.getY()]) {
 							setFlag = player.setFlag(player.getX()+1, player.getY());
 						}
 						if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
-								map.map[player.getX()][player.getY()+1].equals("c")){
+								!hasBeen[player.getX()][player.getY()+1]){
 							setFlag =player.setFlag(player.getX(), player.getY()+1);
 						}
 
@@ -515,8 +524,9 @@ public class Client implements Runnable{
 					else if (player.checkForFlag(x, y))
 						ret += "f ";
 					else if (hasBeen[x][y] && 
-							map.getMap()[x][y].compareTo("c") == 0 &&
-							mineLayer.getMap()[x][y].compareTo("-1") != 0)
+							map.getMap()[x][y].compareTo("c") == 0 
+							//&& mineLayer.getMap()[x][y].compareTo("-1") != 0
+							)
 						ret += mineLayer.getMap()[x][y]+" ";
 					else
 						ret += map.getMap()[x][y] + " ";

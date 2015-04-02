@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import GameMechanics.Entity;
 
 public abstract class DrawHUD {
 	
@@ -25,9 +28,9 @@ public abstract class DrawHUD {
 		//Time
 		g.setColor(Color.black);
 		g.setFont(new Font("Helvetica",Font.BOLD,24));
-		g.drawString(time, width/2-(7*time.length())-2, 35);
+		g.drawString(time, width/2-(6*time.length())-2, 50);
 		g.setColor(Color.white);
-		g.drawString(time, width/2-(7*time.length()), 33);
+		g.drawString(time, width/2-(6*time.length()), 48);
 		
 	}
 	
@@ -50,9 +53,9 @@ public abstract class DrawHUD {
 		//Time
 		g.setColor(Color.black);
 		g.setFont(new Font("Helvetica",Font.BOLD,24));
-		g.drawString(time, width/2-(7*time.length())-2, 35);
+		g.drawString(time, width/2-(6*time.length())-2, 50);
 		g.setColor(Color.white);
-		g.drawString(time, width/2-(7*time.length()), 33);
+		g.drawString(time, width/2-(6*time.length()), 48);
 		
 		//Flag count Outline
 		g.setColor(Color.BLACK);
@@ -91,44 +94,67 @@ public abstract class DrawHUD {
 		Polygon flag2 = new Polygon(xx2,yy2,xx2.length);
 		g.fillPolygon(flag);
 		
-		//Mini map
-    	int wid = map.length;
-    	int hei = map[0].length;
-    	
-    	g.setColor(Color.black);
-		int scale = 4;
-		
-		int dx = 0, dy = 0;
-		
-		for(int h = py-7; h <= py+7; h++){
-			dx = 0;
-			for(int w = px-10; w <= px+10; w++){
-				if(h < 0 || h >= hei || w < 0 || w >= wid){
-					g.setColor(new Color(80,80,80));
-				}else{
-					String block = map[w][h];
-					if(block.equals("W")){
-	    				g.setColor(Color.black);
-	    			}else if(block.equals("y")){
-	    				g.setColor(new Color(222,222,0));
-	    			}else if(block.equals("c")){
-	    				g.setColor(new Color(193,193,193));
-	    			}else if(block.equals("r")){
-	    				g.setColor(new Color(255,0,0));
-	    			}else if(block.equals("bf")){
-	    				g.setColor(new Color(30,30,30));
-	    			}else if(block.equals("wf")){
-	    				g.setColor(new Color(255,255,255));
-	    			}
-				}
-				g.fillRect(10+dx*scale, height-70+dy*scale, scale, scale);
-				dx++;
-			}
-			dy++;
-		}
+		//Mini map (option 1)
+//    	int wid = map.length;
+//    	int hei = map[0].length;
+//    	
+//    	g.setColor(Color.black);
+//		int scale = 4;
+//		
+//		int dx = 0, dy = 0;
+//		
+//		for(int h = py-7; h <= py+7; h++){
+//			dx = 0;
+//			for(int w = px-10; w <= px+10; w++){
+//				if(h < 0 || h >= hei || w < 0 || w >= wid){
+//					g.setColor(new Color(80,80,80));
+//				}else{
+//					String block = map[w][h];
+//					if(block.equals("W")){
+//	    				g.setColor(Color.black);
+//	    			}else if(block.equals("y")){
+//	    				g.setColor(new Color(222,222,0));
+//	    			}else if(block.equals("c")){
+//	    				g.setColor(new Color(193,193,193));
+//	    			}else if(block.equals("r")){
+//	    				g.setColor(new Color(255,0,0));
+//	    			}else if(block.equals("bf")){
+//	    				g.setColor(new Color(30,30,30));
+//	    			}else if(block.equals("wf")){
+//	    				g.setColor(new Color(255,255,255));
+//	    			}
+//				}
+//				g.fillRect(10+dx*scale, height-70+dy*scale, scale, scale);
+//				dx++;
+//			}
+//			dy++;
+//		}
+//		g.setColor(Color.black);
+//		g.drawRect(10,height-70, 21*scale, 15*scale);
+//		g.setColor(pColor);
+//		g.fillRect(10+10*scale, height-70+7*scale, scale, scale);
+	}
+	
+	public static void drawProgressBar(Graphics g, int width, int mapLength){
+		//Map Progress bar (option 2)
+		int scale = 5;
+		//Track
 		g.setColor(Color.black);
-		g.drawRect(10,height-70, 21*scale, 15*scale);
-		g.setColor(pColor);
-		g.fillRect(10+10*scale, height-70+7*scale, scale, scale);
+		g.fillRect(width/2-scale*mapLength/2-1+scale, 4, scale*mapLength+2-scale*2, 14);
+		g.setColor(new Color(193,193,193));
+		g.fillRect(width/2-scale*mapLength/2+scale, 5, scale*mapLength-scale*2, 12);
+		g.setColor(new Color(255,0,0));
+		g.fillRect(width/2-scale*mapLength/2+scale, 5, scale*2, 12);
+		g.setColor(new Color(222,222,0));
+		g.fillRect(width/2-scale, 5, scale*2, 12);
+		g.setColor(new Color(255,255,255));
+		g.fillRect(width/2-scale*mapLength/2+scale*mapLength-scale*3, 5, scale*2, 12);
+	}
+	
+	public static void drawSpotOnBar(Graphics g, Color c, int width, int mapLength, int x){
+		int scale = 5;
+		g.setColor(c);
+		g.fillRect(width/2-scale*mapLength/2+x*scale, 8, scale, scale);
+		
 	}
 }

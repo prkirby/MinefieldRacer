@@ -105,6 +105,7 @@ public abstract class DrawMap {
 	    				g.fillPolygon(flag);
 	    			}
 	    			else if(map[x][y].equals("n")){}
+	    			else if(map[x][y].equals("-1")){g.setColor(Color.magenta);}
 	    			else{
 	    				g.fillRect(x*scale*5, y*scale*5, 5*scale, 5*scale);
 	    				g.setColor(Color.BLACK);
@@ -174,6 +175,9 @@ public abstract class DrawMap {
     public static void draw(Graphics g, String mapName, String[][] map, int width, int height){    	
     	int wid = map.length;
     	int hei = map[0].length;
+    	
+    	if(wid  < 1 || hei < 1)
+    		return;
     	
     	int startX=width/2-wid*5/2, startY=height/2-hei*5/2;
     	
