@@ -14,9 +14,10 @@ public class Player extends Entity{
 	private final int numFlags = 10;			//The number of flags
 	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
 	private int flagIndex = 0;					//Index of the flag they are on
-
+	private Powerup p = new Invisibility(5);
 	private int points = 0;
 	private int highestStreak = 0;
+	private boolean amIVisible = true;
 
 
 	//Crowning a player
@@ -268,5 +269,31 @@ public class Player extends Entity{
 
 	public void addAPoint() {
 		points += 1;
+	}
+	
+	public void setPowerup(Powerup power){
+		p = power;
+	}
+	
+	public void usePowerup(){
+		p.useAbility(this);
+	}
+	
+	public Powerup getPowerup(){
+		return p;
+	}
+	
+	public boolean getVisibility(){
+		return amIVisible;
+	}
+	//swaps visibility
+	public void switchVisibility(){
+		if(amIVisible){
+			amIVisible = false;
+		}
+		else{
+			amIVisible = true;
+		}
+			
 	}
 }

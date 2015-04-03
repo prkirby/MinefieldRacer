@@ -33,7 +33,7 @@ public class MainGUI {
 
 	
 	//Player interaction vars
-	private boolean[] keyPresses = {false,false,false,false,false,false,false,false};
+	private boolean[] keyPresses = {false,false,false,false,false,false,false,false,false};
 
 	private boolean canPress = true;
 
@@ -50,7 +50,7 @@ public class MainGUI {
 	private boolean winner = false; 
 	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 	private int[] flagKeys = {KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
-
+	private String powerupName = "";
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
 	 */
@@ -119,7 +119,9 @@ public class MainGUI {
 	public String getTime() {
 		return time;
 	}
-	
+	public void setPowerup(String s){
+		powerupName = s;
+	}
 	public void setWinner(boolean win, String name, String color){
 		this.winner = win;
 		if(win){
@@ -237,11 +239,14 @@ public class MainGUI {
 				}
 				if(temp.size()>0){
 					DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+					
 				}
 				for(int e = 1; e < temp.size(); e++){
 					DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 				}
+				//draw powerup
+				DrawPowerup.draw(g, 0, mainpanel.getHeight()/2, powerupName);
 				
 				DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
 				DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
@@ -315,6 +320,13 @@ public class MainGUI {
 					keyPresses[7] = true;
 					canPress = false;
 					break;
+					
+				//PowerupKey
+				case KeyEvent.VK_M:
+					keyPresses[8] = true;
+					canPress = false;
+					System.out.println("pressed m in mainGUI");
+					break;
 				}
 
 				for (int i : movementKeys) {
@@ -378,7 +390,15 @@ public class MainGUI {
 				keyPresses[7] = false;
 				canPress = true;    
 				break;
+				
+			//Powerup key
+			case KeyEvent.VK_M:
+				keyPresses[8] = false;
+				canPress = true;
+				break;
 			}
+			
+			
 
 
 		}

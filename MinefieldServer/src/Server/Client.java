@@ -333,6 +333,12 @@ public class Client implements Runnable{
 		String str = "AUDIO MUSIC " + song;
 		output.println(str);	
 	}
+	
+	//powerups
+	public String power(){
+		String str = "POWERUP ";
+		return str + player.getPowerup().getPowerupName() + " ";
+	}
 
 	/**
 	 * The Thread: Reads in data from the client 
@@ -360,7 +366,7 @@ public class Client implements Runnable{
 				scan = new Scanner(prints);
 				String flag = scan.next();
 				if(flag.equals("KEYS")){
-					boolean keys[] = new boolean[8];
+					boolean keys[] = new boolean[9];
 					for(int k = 0; k < keys.length; k++){
 						if(scan.nextInt() == 1) keys[k] = true;
 						else 					keys[k] = false;
@@ -398,6 +404,12 @@ public class Client implements Runnable{
 							soundEffect("flag");
 						}
 
+						//usedPoweurp
+						if(keys[8]){
+							player.usePowerup();
+						}
+						
+						
 						//Update hasBeen array
 						updateHasBeen(player);
 
@@ -480,6 +492,10 @@ public class Client implements Runnable{
 					//Send the map
 					output.println(sendMap());
 
+					//write powerups
+					output.println(power());
+					
+					
 					//Send if winner applicable
 					if(winMsg==null){
 						output.println("WINNER 0");
@@ -487,7 +503,8 @@ public class Client implements Runnable{
 						output.println("WINNER 1 "+winMsg);
 					}
 
-
+					
+					
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
 

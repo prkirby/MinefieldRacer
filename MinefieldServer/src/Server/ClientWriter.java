@@ -34,7 +34,7 @@ public class ClientWriter implements Runnable {
 	private boolean someoneWon = false;			//Temporary variable
 
 	private Player previousWinner = null;		//Pointer to previous winner
-	
+
 	//Powerup vars
 	private Timer powerupTimer = new Timer();   //The timer to when powerups go online
 	private final int powerupCheck = 10;		//The interval for powerup checks
@@ -261,10 +261,16 @@ public class ClientWriter implements Runnable {
 			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() 
 					+ " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " +clients.get(clientN).player().flagsLeft() + " ";
 
+
 			for(int d = 0; d < clients.size(); d++){
 				if(!clients.get(d).inSpectatorMode() && d !=clientN)
-					data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + " " ;
+					if(clients.get(d).player().getVisibility())
+						data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + " " ;
 			}
+
+			//try adding a powerup
+			//data += clients.get(clientN).player().getPowerup().getPowerupName()  + " ";
+
 		}catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
 
 		return data;
@@ -345,25 +351,25 @@ public class ClientWriter implements Runnable {
 		}
 		return false;
 	}
-	
+
 	public class PowerupRemindTask extends TimerTask{
 		public void run() {
-			
+
 			//Check to see if the race is still on
 			if(inRace && !someoneWon){
 				for(int c = 0; c < clients.size(); c++){
 					double chance = clients.get(c).player().getPoints()/powerupRatio;
 					if(Math.random() < chance){
 						//Give them a powerup
-						
+
 						//Reset points?
 					}
 				}
 				powerupTimer.schedule(new PowerupRemindTask(), powerupCheck*1000);
-				
+
 			}
-			
+
 		}
-		
+
 	}
 }
