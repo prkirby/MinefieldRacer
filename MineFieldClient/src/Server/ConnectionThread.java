@@ -115,6 +115,9 @@ public class ConnectionThread implements Runnable{
 					else if(flag.equals("MINESHIELD")){
 						this.readMineShieldDrawing(scan);
 					}
+					else if(flag.equals("GODMODE")){
+						this.readGodModeDrawing(scan);
+					}
 					else if(flag.equals("WINNER")){
 						this.readWinner(scan);
 					}else
@@ -211,6 +214,9 @@ public class ConnectionThread implements Runnable{
 		else if(currentPowerup.equals("MineShield")){
 			in.mainGUI().setPowerup("MineShield");
 		}
+		else if(currentPowerup.equals("GodMode")){
+			in.mainGUI().setPowerup("GodMode");
+		}
 	}
 	public void readMineShieldDrawing(Scanner scan){
 		if(scan.next().equals("true")){
@@ -218,6 +224,15 @@ public class ConnectionThread implements Runnable{
 		}
 		else{
 			in.mainGUI().doWeHaveAShield(false);
+		}
+	}
+	
+	public void readGodModeDrawing(Scanner scan){
+		if(scan.next().equals("true")){
+			in.mainGUI().areWeAGod(true);
+		}
+		else{
+			in.mainGUI().areWeAGod(false);
 		}
 	}
 	public void readAudio(Scanner scan) throws InterruptedException {

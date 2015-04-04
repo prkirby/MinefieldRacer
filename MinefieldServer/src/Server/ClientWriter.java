@@ -121,6 +121,10 @@ public class ClientWriter implements Runnable {
 					this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-3)))+1);
 					this.clients.get(c).player().resetFlags();
 					this.clients.get(c).setWinMsg(null);
+					//reset godmode
+					if(this.clients.get(c).player().godStatus()){
+						this.clients.get(c).player().makeMortal();
+					}
 				}
 			}
 
@@ -194,9 +198,9 @@ public class ClientWriter implements Runnable {
 					}
 
 					//Setup winner message
-					if(this.someoneWon)
+					if(this.someoneWon){
 						clients.get(cl).setWinMsg(""+previousWinner.getName()+ " "+previousWinner.getColor());
-
+					}
 					//Check to see if client has hit a mine
 					if(clients.get(cl).mineHit()){
 						this.mineHit(cl);
@@ -312,10 +316,13 @@ public class ClientWriter implements Runnable {
 
 		for (int k = 0; k < clients.size(); k++) {
 			// Checks if players are in this radius
-			if(clients.get(k).player().getAmIShielded()){
+			
+			if(clients.get(k).player().godStatus()){//If I'm a god
+				//nothing
+			}
+			else if(clients.get(k).player().getAmIShielded()){//handles mineShield
 				clients.get(k).player().switchShield();
-				System.out.println(clients.get(k).player().getAmIShielded());
-				clients.get(k).setMineHit(false);
+				clients.get(k).setMineHit(false);//if we don't set this variable == godmode
 			}
 			else if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {

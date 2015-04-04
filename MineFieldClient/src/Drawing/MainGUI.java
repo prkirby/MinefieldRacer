@@ -52,6 +52,7 @@ public class MainGUI {
 	private int[] flagKeys = {KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
 	private String powerupName = "";
 	private boolean shield = false;
+	private boolean god = false;
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
 	 */
@@ -126,6 +127,9 @@ public class MainGUI {
 	
 	public void doWeHaveAShield(boolean b){
 		shield = b;
+	}
+	public void areWeAGod(boolean b){
+		god = b;
 	}
 	public void setWinner(boolean win, String name, String color){
 		this.winner = win;
@@ -243,8 +247,12 @@ public class MainGUI {
 					DrawMap.draw(g, map,temp.get(0).getColor());
 				}
 				if(temp.size()>0){
-					DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
-					
+					if(god){
+						DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+					}
+					else{
+						DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+					}
 				}
 				for(int e = 1; e < temp.size(); e++){
 					DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());

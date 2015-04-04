@@ -55,6 +55,12 @@ public abstract class DrawPlayer {
         g.drawArc(startX+scale+6, startY+scale*2+5, scale*2, scale, 200, 140); //Smile
         g2d.setStroke(new BasicStroke(1));
         
+        //draw name
+       /* g.setFont(new Font("Helvetica",Font.BOLD,15));
+		g.setColor(p.getColor());
+        g2d.drawString("BLragh", startX + 6, startY + 6);
+        */
+        
       //Crown
         if(p.isWinner()){
         	//Crown

@@ -14,7 +14,7 @@ public class DrawMineShield {
     	
     	 Graphics2D g2d = (Graphics2D)g;
      	//body
-         g.setColor(Color.white);
+         g.setColor(Color.magenta);
          g.drawOval(startX+4, startY+4,  p.getSize()*scale-7,  p.getSize()*scale-7);
 	}
 }

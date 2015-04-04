@@ -24,6 +24,10 @@ private static final int scale = 10;
 		}
 		
 		else if(name.equals("MineShield")){
+			g.setColor(Color.magenta);
+			g.fillOval(0, height, 100, 100);
+		}
+		else if(name.equals("GodMode")){
 			g.setColor(Color.white);
 			g.fillOval(0, height, 100, 100);
 		}

@@ -345,6 +345,10 @@ public class Client implements Runnable{
 		return str + " " + player.getAmIShielded();
 	}
 	
+	public String sendGodMode(){
+		String str = "GODMODE";
+		return str + " " + player.godStatus();
+	}
 	/**
 	 * The Thread: Reads in data from the client 
 	 * and uses it appropriately
@@ -496,9 +500,13 @@ public class Client implements Runnable{
 
 					//Send the map
 					output.println(sendMap());
-					 
+					
+					//draw mineshield
 					output.println(sendShield());
 
+					//draw godmode
+					output.println(sendGodMode());
+					
 					//write powerups
 					output.println(power());
 					
