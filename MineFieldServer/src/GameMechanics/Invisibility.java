@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 public class Invisibility extends Powerup{
 
-	Player pl;
+	Player pl; //stores the player, so that we can change their visibility
 	public Invisibility(int d) {
 		super(d);
 		// TODO Auto-generated constructor stub
@@ -16,6 +16,8 @@ public class Invisibility extends Powerup{
 		System.out.println("I am invisible");
 		Timer t = new Timer();
 		t.schedule(new makeVisible(), duration * 1000);//after duration seconds
+		Powerup deleteInvisibility = new NoPowerup(0);
+		pl.setPowerup(deleteInvisibility); //uses up the powerup, not sure how garbage collection on this works though
 	}
 
 	public String getPowerupName(){

@@ -51,6 +51,7 @@ public class MainGUI {
 	private int[] movementKeys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 	private int[] flagKeys = {KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_W};
 	private String powerupName = "";
+	private boolean shield = false;
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
 	 */
@@ -121,6 +122,10 @@ public class MainGUI {
 	}
 	public void setPowerup(String s){
 		powerupName = s;
+	}
+	
+	public void doWeHaveAShield(boolean b){
+		shield = b;
 	}
 	public void setWinner(boolean win, String name, String color){
 		this.winner = win;
@@ -247,6 +252,9 @@ public class MainGUI {
 				}
 				//draw powerup
 				DrawPowerup.draw(g, 0, mainpanel.getHeight()/2, powerupName);
+				//draw MineShield
+				if(shield)
+					DrawMineShield.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
 				
 				DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
 				DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
@@ -325,7 +333,6 @@ public class MainGUI {
 				case KeyEvent.VK_M:
 					keyPresses[8] = true;
 					canPress = false;
-					System.out.println("pressed m in mainGUI");
 					break;
 				}
 

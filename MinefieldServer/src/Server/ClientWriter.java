@@ -312,7 +312,12 @@ public class ClientWriter implements Runnable {
 
 		for (int k = 0; k < clients.size(); k++) {
 			// Checks if players are in this radius
-			if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
+			if(clients.get(k).player().getAmIShielded()){
+				clients.get(k).player().switchShield();
+				System.out.println(clients.get(k).player().getAmIShielded());
+				clients.get(k).setMineHit(false);
+			}
+			else if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {
 
 				// Fire Mine SFX

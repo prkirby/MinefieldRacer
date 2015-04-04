@@ -22,5 +22,10 @@ private static final int scale = 10;
 			 g.setColor(Color.blue);
 		     g.fillOval(0, height, 100, 100);
 		}
+		
+		else if(name.equals("MineShield")){
+			g.setColor(Color.white);
+			g.fillOval(0, height, 100, 100);
+		}
 	}
 }

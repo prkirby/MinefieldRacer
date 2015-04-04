@@ -14,10 +14,11 @@ public class Player extends Entity{
 	private final int numFlags = 10;			//The number of flags
 	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
 	private int flagIndex = 0;					//Index of the flag they are on
-	private Powerup p = new Invisibility(5);
+	private Powerup p = new MineShield(5);
 	private int points = 0;
 	private int highestStreak = 0;
 	private boolean amIVisible = true;
+	private boolean amIShielded = false;
 
 
 	//Crowning a player
@@ -295,5 +296,17 @@ public class Player extends Entity{
 			amIVisible = true;
 		}
 			
+	}
+	
+	public boolean getAmIShielded(){
+		return amIShielded;
+	}
+	public void switchShield(){
+		if(amIShielded){
+			amIShielded = false;
+		}
+		else{
+			amIShielded = true;
+		}
 	}
 }

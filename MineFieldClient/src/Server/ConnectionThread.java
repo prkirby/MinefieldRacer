@@ -112,6 +112,9 @@ public class ConnectionThread implements Runnable{
 					}else if (flag.equals("POWERUP")){
 						this.readPowerup(scan);
 					}
+					else if(flag.equals("MINESHIELD")){
+						this.readMineShieldDrawing(scan);
+					}
 					else if(flag.equals("WINNER")){
 						this.readWinner(scan);
 					}else
@@ -199,12 +202,22 @@ public class ConnectionThread implements Runnable{
 	}
 	public void readPowerup(Scanner scan){
 		String currentPowerup = scan.next();
-		System.out.println(currentPowerup);
 		if(currentPowerup.equals("noPowerup")){
 			in.mainGUI().setPowerup("noPowerup");
 		}
 		else if(currentPowerup.equals( "Invisibility")){
 			in.mainGUI().setPowerup("Invisibility");
+		}
+		else if(currentPowerup.equals("MineShield")){
+			in.mainGUI().setPowerup("MineShield");
+		}
+	}
+	public void readMineShieldDrawing(Scanner scan){
+		if(scan.next().equals("true")){
+			in.mainGUI().doWeHaveAShield(true);
+		}
+		else{
+			in.mainGUI().doWeHaveAShield(false);
 		}
 	}
 	public void readAudio(Scanner scan) throws InterruptedException {

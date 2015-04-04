@@ -340,6 +340,11 @@ public class Client implements Runnable{
 		return str + player.getPowerup().getPowerupName() + " ";
 	}
 
+	public String sendShield(){
+		String str = "MINESHIELD";
+		return str + " " + player.getAmIShielded();
+	}
+	
 	/**
 	 * The Thread: Reads in data from the client 
 	 * and uses it appropriately
@@ -491,6 +496,8 @@ public class Client implements Runnable{
 
 					//Send the map
 					output.println(sendMap());
+					 
+					output.println(sendShield());
 
 					//write powerups
 					output.println(power());
