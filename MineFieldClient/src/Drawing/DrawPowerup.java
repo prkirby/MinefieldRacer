@@ -31,5 +31,9 @@ private static final int scale = 10;
 			g.setColor(Color.white);
 			g.fillOval(0, height, 100, 100);
 		}
+		else if(name.equals("ViewportExtender")){
+			g.setColor(Color.green);
+			g.fillOval(0, height, 100, 100);
+		}
 	}
 }

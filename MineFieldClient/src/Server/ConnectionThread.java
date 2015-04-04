@@ -217,6 +217,9 @@ public class ConnectionThread implements Runnable{
 		else if(currentPowerup.equals("GodMode")){
 			in.mainGUI().setPowerup("GodMode");
 		}
+		else if(currentPowerup.equals("ViewportExtender")){
+			in.mainGUI().setPowerup("ViewportExtender");
+		}
 	}
 	public void readMineShieldDrawing(Scanner scan){
 		if(scan.next().equals("true")){

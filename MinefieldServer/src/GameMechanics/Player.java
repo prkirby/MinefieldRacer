@@ -14,7 +14,7 @@ public class Player extends Entity{
 	private final int numFlags = 10;			//The number of flags
 	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
 	private int flagIndex = 0;					//Index of the flag they are on
-	private Powerup p = new GodMode(5);			//Should default to nopowerup, change for testing purposes
+	private Powerup p = new ViewportExtender(5);			//Should default to nopowerup, change for testing purposes
 	private int points = 0;
 	private int highestStreak = 0;
 	private boolean amIVisible = true;
