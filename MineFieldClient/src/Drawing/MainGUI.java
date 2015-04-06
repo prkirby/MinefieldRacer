@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -179,18 +180,23 @@ public class MainGUI {
 	}
 
 	public void setMapName(String name){
+		
+	
+
+		
 		String temp = mapName;
 		this.mapName = name;
 		
 		if(!temp.equals(mapName)){
-			File m = new File("MAPS/"+mapName+".txt");
+			//Get input stream from src located maps directory
+			InputStream m = MainGUI.class.getResourceAsStream("/MAPS/"+mapName+".txt");
 	    	Scanner s = null;
-	    	try {
-				s = new Scanner(m);
-			} catch (FileNotFoundException e) {}
+	    	
+	    	s = new Scanner(m);
 	    	
 	    	int wid = s.nextInt();
 	    	int hei = s.nextInt();
+	    	
 	    	fullMap = new String[wid][hei];
 	    	for(int y = 0; y < hei; y++){
 	    		for(int x = 0; x < wid; x++){

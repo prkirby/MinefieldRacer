@@ -26,7 +26,8 @@ public class ConnectionThread implements Runnable{
 	private final int serverPort = 1111;
 
 
-	private final String ipAddress = "192.168.1.76";
+    private final String ipAddress = "minefieldracer.ddns.net";
+
 
 	private Socket socket = null;                                       //The client's socket
 	private BufferedReader input = null;                                //Input from server

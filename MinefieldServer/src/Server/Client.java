@@ -231,7 +231,7 @@ public class Client implements Runnable{
 					}
 					hasBeen[i][j] = true;
 				}
-				//Test code (reveal some surrounding tiles)
+				//Reveal four corners code 
 				else if(mineLayer.getMap()[x][y].compareTo("0") != 0 && 
 						mineLayer.getMap()[x][y].compareTo("m") != 0 &&
 						surroundingRevealed(x,y)<2){
@@ -284,6 +284,12 @@ public class Client implements Runnable{
 		return false;
 	}
 
+	/**
+	 * Check to see how many surrounding tiles have been revealed
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private int surroundingRevealed(int x, int y){
 		int count = 0;
 

@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+
 public class FileReading {
 	
 	public File[] getMaps(){
-		File f = new File("MAPS");
+		File f = new File(FileReading.class.getResource("/MAPS").getFile());
+
 
 		FilenameFilter textFilter = new FilenameFilter() {
 			public boolean accept(File dir, String name) {

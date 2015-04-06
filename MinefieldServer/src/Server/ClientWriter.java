@@ -21,7 +21,7 @@ import Main.FileReading;
 public class ClientWriter implements Runnable {
 
 	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
-	private Map map = new Map(new File("MAPS/funnel.txt"));
+	private Map map;
 	private Map mineLayer;
 	private static Map mapArray[];
 	private double minePercentage = 0.10;
@@ -47,7 +47,7 @@ public class ClientWriter implements Runnable {
 	 */
 	public ClientWriter(){
 		FileReading temp = new FileReading();
-		File f  [] = temp.getMaps();
+		File f [] = temp.getMaps();
 		mapArray = new Map[f.length];
 		for(int i = 0; i < mapArray.length; i++){
 			mapArray[i] = new Map(f[i]);

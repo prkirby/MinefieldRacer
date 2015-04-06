@@ -101,7 +101,7 @@ public abstract class DrawEntity {
      * 			The entity to draw
      */
     public static void draw(Graphics g, Entity e, int width, int height, String mapName){
-    	File m = new File("MAPS/"+mapName+".txt");
+    	File m = new File(DrawEntity.class.getResource("/MAPS/"+mapName+".txt").getFile());
     	Scanner s = null;
     	
     	try {
