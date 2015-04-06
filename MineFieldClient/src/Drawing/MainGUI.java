@@ -259,7 +259,8 @@ public class MainGUI {
 					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 				}
 				//draw powerup
-				DrawPowerup.draw(g, 0, mainpanel.getHeight()/2, powerupName);
+				DrawPowerup.draw(g, 0, mainpanel.getHeight(), powerupName);
+				
 				//draw MineShield
 				if(shield)
 					DrawMineShield.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());

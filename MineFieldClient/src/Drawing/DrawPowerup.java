@@ -1,39 +1,51 @@
 package Drawing;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import GameMechanics.Entity;
 
 public class DrawPowerup {
-private static final int scale = 10;
-	
-	public static void draw(Graphics g, int width, int height, String name){
+	private static final int scale = 10;
+
+	public static void draw(Graphics g, int xcoor, int ycoor, String name){
 		Graphics2D g2d = (Graphics2D)g;
+
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		Font font = new Font("Serif", Font.PLAIN, 36);//size is arbitrary
+		g2d.setFont(font);
 		
+		
+		//int height = 100; //size of drawing
+		//int width = 100;
+
 		if(name.equals("noPowerup")){
 			//draw no powerup
-			 g.setColor(Color.red);
-		     g.fillOval(0, height, 100, 100);
+			//g.setColor(Color.red);
+			g2d.setColor(Color.red);
+			
+			//g.fillOval(0, ycoor - height, width, height);
 		}
 		else if(name.equals("Invisibility")){
 			//draw invisibility
-			 g.setColor(Color.blue);
-		     g.fillOval(0, height, 100, 100);
+			g2d.setColor(Color.blue);
+			g2d.drawString("INVISIBILITY", xcoor, ycoor);
 		}
-		
+
 		else if(name.equals("MineShield")){
 			g.setColor(Color.magenta);
-			g.fillOval(0, height, 100, 100);
+			g2d.drawString("MINESHIELD", xcoor, ycoor);
 		}
 		else if(name.equals("GodMode")){
 			g.setColor(Color.white);
-			g.fillOval(0, height, 100, 100);
+			g2d.drawString("GODMODE", xcoor, ycoor);
 		}
 		else if(name.equals("ViewportExtender")){
 			g.setColor(Color.green);
-			g.fillOval(0, height, 100, 100);
+			g2d.drawString("VISION", xcoor, ycoor);
 		}
 	}
 }
