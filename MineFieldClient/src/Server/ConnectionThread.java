@@ -26,7 +26,7 @@ public class ConnectionThread implements Runnable{
 	private final int serverPort = 1111;
 
 
-    private final String ipAddress = "minefieldracer.ddns.net";
+    private final String ipAddress = "141.219.210.226";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -124,6 +124,9 @@ public class ConnectionThread implements Runnable{
 					}else
 						this.close();
 				}
+				
+
+				in.mainGUI().display();
 
 			} catch (IOException ex) {
 				System.out.println("Error getting output from server (IOException): "+inn);
@@ -140,7 +143,7 @@ public class ConnectionThread implements Runnable{
 				//e.printStackTrace(); //pretend this doesn't happen
 				this.close();
 			}
-			sleep(3);
+			sleep(4);
 		}
 	}
 
@@ -154,13 +157,17 @@ public class ConnectionThread implements Runnable{
 		ArrayList<Entity> data = new ArrayList<Entity>();
 		int x, y, crown, flags;
 		String color, pType;
+		
+		//The client
 		x = scan.nextInt();
 		y = scan.nextInt();
 		color = scan.next();
 		crown = scan.nextInt();
-		pType = scan.next();
 		in.mainGUI().setFlags(scan.nextInt());
+		pType = scan.next();
 		data.add(new Entity(x, y, color, crown == 1, pType));
+		
+		//Other clients
 		while(scan.hasNext()){
 			x = scan.nextInt();
 			y = scan.nextInt();
@@ -170,7 +177,6 @@ public class ConnectionThread implements Runnable{
 			data.add(new Entity(x, y, color, crown == 1, pType));
 		}        
 		in.mainGUI().coords(data);
-		in.mainGUI().display();
 	}
 
 	/**
@@ -196,7 +202,8 @@ public class ConnectionThread implements Runnable{
 	public void readMode(Scanner scan){
 		in.mainGUI().setMode(scan.next());
 		in.mainGUI().setTime(scan.next());
-		in.mainGUI().setMapName(scan.next());
+		if(in.mainGUI().getMode().equals("SPEC"))
+			in.mainGUI().setMapName(scan.next());
 	}
 
 	public void readWinner(Scanner scan){
