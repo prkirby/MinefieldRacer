@@ -128,7 +128,9 @@ public class Client implements Runnable{
 	 *          The winner message
 	 */
 	public void setWinMsg(String msg){
-		this.winMsg = msg;
+		this.winMsg = msg;	
+		
+
 		//Send if winner applicable
 		if(winMsg==null){
 			output.println("WINNER 0");
@@ -501,7 +503,7 @@ public class Client implements Runnable{
 		public void run() {
 			while(true){
 				output.println(data);
-
+				
 				try{
 					//Send the mode
 					if(spectatorMode){
@@ -509,26 +511,16 @@ public class Client implements Runnable{
 					}else{
 						output.println("MODE RACE "+time);
 					}
+					
 
 					//Send the map
 					output.println(sendMap());
 					
-					//draw mineshield
-					output.println(sendShield());
-
-					//draw godmode
-					output.println(sendGodMode());
-					
-					//write powerups
-					output.println(power());	
-					
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
-
-					//					output.println(sendMap());
-				}
-
-				this.sleep(16);
+				}catch(Exception e){break;}	
+				
+				this.sleep(15);
 			}
 		}
 

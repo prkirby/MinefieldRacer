@@ -180,14 +180,12 @@ public class MainGUI {
 	}
 
 	public void setMapName(String name){
-		
-	
-
-		
 		String temp = mapName;
 		this.mapName = name;
 		
 		if(!temp.equals(mapName)){
+			System.out.println("CHANGE MAP: "+mapName);
+			
 			//Get input stream from src located maps directory
 			InputStream m = MainGUI.class.getResourceAsStream("/MAPS/"+mapName+".txt");
 	    	Scanner s = null;
@@ -197,10 +195,15 @@ public class MainGUI {
 	    	int wid = s.nextInt();
 	    	int hei = s.nextInt();
 	    	
+	    	
+	    	
 	    	fullMap = new String[wid][hei];
 	    	for(int y = 0; y < hei; y++){
 	    		for(int x = 0; x < wid; x++){
-	    			fullMap[x][y] = s.next();
+	    			String t = s.next();
+	    			if(t == null)
+	    				System.out.println("ERROR IN MAP MAKE");
+	    			fullMap[x][y] = t;
 	    		}
 	    	}
 	    	s.close(); 
@@ -237,55 +240,59 @@ public class MainGUI {
 //				}
 //			}
 
-			if(mode == null) mode = "SPEC";
+			//System.out.println(temp.size());
 
-			if(mode.equals("SPEC")){
-				if(fullMap!=null)
-					DrawMap.draw(g, mapName, fullMap, mainpanel.getWidth(), mainpanel.getHeight());
-				for(int e = 1; e < temp.size(); e++){
-					DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
-
-				}
-				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
-				DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
-			}else if(mode.equals("RACE")){
-				if(map!=null){
-					DrawMap.draw(g, map,temp.get(0).getColor());
-				}
-				if(temp.size()>0){
-					if(god){
-						DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+				if(mode == null) mode = "SPEC";
+				
+				if(mode.equals("SPEC")){
+					if(fullMap!=null)
+						DrawMap.draw(g, mapName, fullMap, mainpanel.getWidth(), mainpanel.getHeight());
+					for(int e = 1; e < temp.size(); e++){
+						DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
+	
 					}
-					else{
-						DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+					DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
+					DrawTips.draw(g, mainpanel.getWidth(), mainpanel.getHeight());
+				}else if(mode.equals("RACE")){
+					if(map!=null && temp.size()>0){
+						DrawMap.draw(g, map,temp.get(0).getColor());
 					}
+					if(temp.size()>0){
+						if(god){
+							DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+						}
+						else{
+							DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+						}
+					}
+					for(int e = 1; e < temp.size(); e++){
+						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
+					}
+					//draw powerup
+					DrawPowerup.draw(g, 0, mainpanel.getHeight(), powerupName);
+					
+					//draw MineShield
+					if(shield)
+						DrawMineShield.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+					
+					DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
+					if(temp.size() <0)
+						DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
+					for(int e = 1; e < temp.size(); e++){
+						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
+					}
+					if(map!=null)
+						DrawMap.drawNumbers(g, map);
+					if(temp.size() < 0)
+						DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor(), fullMap, temp.get(0).getX(), temp.get(0).getY());
+					
 				}
-				for(int e = 1; e < temp.size(); e++){
-					DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
-					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
+				
+				//draw the winner
+				if(winner){
+					DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + " WINS!", winColor);
 				}
-				//draw powerup
-				DrawPowerup.draw(g, 0, mainpanel.getHeight(), powerupName);
-				
-				//draw MineShield
-				if(shield)
-					DrawMineShield.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
-				
-				DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
-				DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
-				for(int e = 1; e < temp.size(); e++){
-					DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
-				}
-				if(map!=null)
-					DrawMap.drawNumbers(g, map);
-				DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor(), fullMap, temp.get(0).getX(), temp.get(0).getY());
-				
-			}
-			
-			//draw the winner
-			if(winner){
-				DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + " WINS!", winColor);
-			}
 		}
 	}
 

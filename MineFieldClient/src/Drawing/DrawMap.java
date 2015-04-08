@@ -190,6 +190,10 @@ public abstract class DrawMap {
     	for(int y = 0; y < hei; y++){
     		for(int x = 0; x < wid; x++){
     			String block = map[x][y];
+    			if(block==null){
+    				System.out.println("ERROR-> "+x+", "+y);
+    				break;
+    			}
     			if(block.equals("W")){
     				g.setColor(Color.black);
     				g.fillRect(startX+x*5, startY+y*5, 5, 5);
