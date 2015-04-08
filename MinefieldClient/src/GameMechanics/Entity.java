@@ -13,6 +13,7 @@ public class Entity {
     private final int size = 5; //The size of the entity
     private Color color;        //The color of the entity
     private boolean winner;		//Determines if the player needs a crown
+    private String powerup;
 
     /**
      * Default Constructor (Not in use)
@@ -28,11 +29,12 @@ public class Entity {
      * @param color
      * 			The color of the entity
      */
-    public Entity(int x, int y, String color, boolean winner){
+    public Entity(int x, int y, String color, boolean winner, String powerup){
         this.x = x;
         this.y = y;
         this.setColor(color);
         this.winner = winner;
+        this.powerup = powerup;
     }
     
     /**
@@ -151,5 +153,14 @@ public class Entity {
      */
     public int getSize() {
         return size;
+    }
+    
+    /**
+     * Returns the powerup of the entity
+     * @return
+     * 			The powerup type
+     */
+    public String powerupType(){
+    	return this.powerup;
     }
 }
