@@ -129,6 +129,12 @@ public class Client implements Runnable{
 	 */
 	public void setWinMsg(String msg){
 		this.winMsg = msg;
+		//Send if winner applicable
+		if(winMsg==null){
+			output.println("WINNER 0");
+		}else{
+			output.println("WINNER 1 "+winMsg);
+		}
 	}
 
 	/**
@@ -514,17 +520,7 @@ public class Client implements Runnable{
 					output.println(sendGodMode());
 					
 					//write powerups
-					output.println(power());
-					
-					
-					//Send if winner applicable
-					if(winMsg==null){
-						output.println("WINNER 0");
-					}else{
-						output.println("WINNER 1 "+winMsg);
-					}
-
-					
+					output.println(power());	
 					
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
