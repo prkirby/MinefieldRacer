@@ -12,7 +12,7 @@ public class NoPowerup extends Powerup{
 	}
 	
 	public String getPowerupName(){
-		return "noPowerup";
+		return "NULL";
 	}
 
 }
