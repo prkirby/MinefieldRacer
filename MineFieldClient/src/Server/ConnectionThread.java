@@ -153,19 +153,21 @@ public class ConnectionThread implements Runnable{
 	public void readData(Scanner scan){
 		ArrayList<Entity> data = new ArrayList<Entity>();
 		int x, y, crown, flags;
-		String color;
+		String color, pType;
 		x = scan.nextInt();
 		y = scan.nextInt();
 		color = scan.next();
 		crown = scan.nextInt();
+		pType = scan.next();
 		in.mainGUI().setFlags(scan.nextInt());
-		data.add(new Entity(x, y, color, crown == 1));
+		data.add(new Entity(x, y, color, crown == 1, pType));
 		while(scan.hasNext()){
 			x = scan.nextInt();
 			y = scan.nextInt();
 			color = scan.next();
 			crown = scan.nextInt();
-			data.add(new Entity(x, y, color, crown == 1));
+			pType = scan.next();
+			data.add(new Entity(x, y, color, crown == 1, pType));
 		}        
 		in.mainGUI().coords(data);
 		in.mainGUI().display();
