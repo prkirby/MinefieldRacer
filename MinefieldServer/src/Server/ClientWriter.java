@@ -20,7 +20,7 @@ import Main.FileReading;
  */
 public class ClientWriter implements Runnable {
 
-	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contained within this thread
+	private ArrayList<Client> clients = new ArrayList<Client>(); //The clients contaed within this thread
 	private Map map;
 	private Map mineLayer;
 	private static Map mapArray[];
@@ -205,6 +205,25 @@ public class ClientWriter implements Runnable {
 					if(clients.get(cl).mineHit()){
 						this.mineHit(cl);
 					}
+
+					//if the client has a nuke ready to go
+					if(clients.get(cl).player().getNukeStatus()){
+						for(int nukeItr = 0; nukeItr < clients.size(); nukeItr++){
+							clients.get(cl).player().drawNuke();
+							clients.get(nukeItr).player().defuseNuke();
+							// Sets players back to start and resets the mineHit variable in Client.
+							// If the player is past the checkpoint, it moves them back to the checkpoint.
+							if (clients.get(nukeItr).player().getX() > (map.getWidth() / 2)) {
+								clients.get(nukeItr).player().setY(((int)((Math.random()*100)%(this.map.getHeight()/3)))+this.map.getHeight()/3);
+								clients.get(nukeItr).player().setX(map.getWidth() / 2);
+							}
+							else {
+								clients.get(nukeItr).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
+								clients.get(nukeItr).player().setX(1);
+							}
+						}
+					}
+
 				}
 			}
 		}catch(NullPointerException e){
@@ -263,13 +282,15 @@ public class ClientWriter implements Runnable {
 		String data = "DATA ";
 		try{
 			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() 
-					+ " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " +clients.get(clientN).player().flagsLeft() + " " + clients.get(clientN).player().getPowerup().getPowerupName() + " ";
+					+ " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " +clients.get(clientN).player().flagsLeft() + " " + clients.get(clientN).player().getPowerup().getPowerupName() + " "
+					+ clients.get(clientN).player().getDrawNuke() + " " + clients.get(clientN).player().getName() + " ";
 
 
 			for(int d = 0; d < clients.size(); d++){
 				if(!clients.get(d).inSpectatorMode() && d !=clientN)
 					if(clients.get(d).player().getVisibility())
-						data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + " " + clients.get(d).player().getPowerup().getPowerupName() + " " ;
+						data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + 
+						" " + clients.get(d).player().getPowerup().getPowerupName() + " " + clients.get(d).player().getDrawNuke() + " " + clients.get(d).player().getName() + " ";
 			}
 
 			//try adding a powerup
@@ -316,13 +337,13 @@ public class ClientWriter implements Runnable {
 
 		for (int k = 0; k < clients.size(); k++) {
 			// Checks if players are in this radius
-			
+
 			if(clients.get(k).player().godStatus()){//If I'm a god
 				//nothing
 			}
 			else if(clients.get(k).player().getAmIShielded()){//handles mineShield
 				clients.get(k).player().switchShield();
-				clients.get(k).setMineHit(false);//if we don't set this variable == godmode
+				clients.get(k).setMineHit(false);
 			}
 			else if (clients.get(k).player().getX() >= explosionXmin && clients.get(k).player().getX() <= explosionXmax
 					&& clients.get(k).player().getY() >= explosionYmin && clients.get(k).player().getY() <= explosionYmax) {

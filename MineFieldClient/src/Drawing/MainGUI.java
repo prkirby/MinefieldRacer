@@ -54,6 +54,9 @@ public class MainGUI {
 	private String powerupName = "";
 	private boolean shield = false;
 	private boolean god = false;
+	private boolean nuke = false;
+	private String nukeColor = "";
+	private String nukeName = "";
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
 	 */
@@ -131,6 +134,11 @@ public class MainGUI {
 	}
 	public void areWeAGod(boolean b){
 		god = b;
+	}
+	public void setNuke(boolean b, String c, String s){
+		nuke = b;
+		nukeColor = c;
+		nukeName = s;
 	}
 	public void setWinner(boolean win, String name, String color){
 		this.winner = win;
@@ -269,6 +277,8 @@ public class MainGUI {
 						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 					}
+					
+					
 					//draw powerup
 					DrawPowerup.draw(g, 0, mainpanel.getHeight(), powerupName);
 					
@@ -289,6 +299,9 @@ public class MainGUI {
 					
 				}
 				
+				if(nuke){
+					DrawNukeExplosion.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), nukeName, nukeColor);
+				}
 				//draw the winner
 				if(winner){
 					DrawWinner.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), name + " WINS!", winColor);

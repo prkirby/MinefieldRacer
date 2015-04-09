@@ -26,7 +26,7 @@ public class ConnectionThread implements Runnable{
 	private final int serverPort = 1111;
 
 
-    private final String ipAddress = "141.219.210.226";
+	private final String ipAddress = "192.168.1.76";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -101,7 +101,7 @@ public class ConnectionThread implements Runnable{
 					checkDupe = inn;
 					Scanner scan = new Scanner(inn);
 					String flag = scan.next();
-					
+
 					if(flag.equals("DATA")){
 						this.readData(scan);
 					}else if(flag.equals("MAP")){
@@ -124,7 +124,7 @@ public class ConnectionThread implements Runnable{
 					}else
 						this.close();
 				}
-				
+
 
 				in.mainGUI().display();
 
@@ -156,8 +156,9 @@ public class ConnectionThread implements Runnable{
 	public void readData(Scanner scan){
 		ArrayList<Entity> data = new ArrayList<Entity>();
 		int x, y, crown, flags;
-		String color, pType;
-		
+		String color, pType, name;
+		boolean nuke;
+
 		//The client
 		x = scan.nextInt();
 		y = scan.nextInt();
@@ -166,7 +167,15 @@ public class ConnectionThread implements Runnable{
 		in.mainGUI().setFlags(scan.nextInt());
 		pType = scan.next();
 		data.add(new Entity(x, y, color, crown == 1, pType));
-		
+		//draw powerup
+		in.mainGUI().setPowerup(pType);
+		nuke = scan.nextBoolean();
+		name = scan.next();
+		boolean IHaveNuke = false;
+		if(nuke) {
+			IHaveNuke = true;
+		}
+		in.mainGUI().setNuke(nuke, color, name);
 		//Other clients
 		while(scan.hasNext()){
 			x = scan.nextInt();
@@ -175,6 +184,12 @@ public class ConnectionThread implements Runnable{
 			crown = scan.nextInt();
 			pType = scan.next();
 			data.add(new Entity(x, y, color, crown == 1, pType));
+			nuke = scan.nextBoolean();
+			name = scan.next();
+			if(!IHaveNuke){
+				if(nuke)
+					in.mainGUI().setNuke(nuke, color, name);
+			}
 		}        
 		in.mainGUI().coords(data);
 	}
@@ -239,7 +254,7 @@ public class ConnectionThread implements Runnable{
 			in.mainGUI().doWeHaveAShield(false);
 		}
 	}
-	
+
 	public void readGodModeDrawing(Scanner scan){
 		if(scan.next().equals("true")){
 			in.mainGUI().areWeAGod(true);

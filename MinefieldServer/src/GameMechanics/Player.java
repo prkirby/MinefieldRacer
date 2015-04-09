@@ -1,6 +1,11 @@
 
 package GameMechanics;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import GameMechanics.Invisibility.makeVisible;
+
 /**
  * The
  * @author Joseph Ryan
@@ -14,12 +19,14 @@ public class Player extends Entity{
 	private final int numFlags = 10;			//The number of flags
 	private Flag[] flags = new Flag[numFlags]; 	//Flags that the player has
 	private int flagIndex = 0;					//Index of the flag they are on
-	private Powerup p = new ViewportExtender(5);			//Should default to nopowerup, change for testing purposes
+	private Powerup p = new Nuke(5);			//Should default to nopowerup, change for testing purposes
 	private int points = 0;
 	private int highestStreak = 0;
 	private boolean amIVisible = true;
 	private boolean amIShielded = false;
 	private boolean amIAGod = false;
+	private boolean nukeArmed = false;
+	private boolean drawNuke = false;
 
 
 	//Crowning a player
@@ -322,5 +329,37 @@ public class Player extends Entity{
 	
 	public void makeMortal(){
 		amIAGod = false; //reversed at end of match
+	}
+	
+	public void armNuke(){
+		nukeArmed = true;
+	}
+	
+	public boolean getNukeStatus(){
+		return nukeArmed;
+	}
+	
+	//Probably could merge with arming nuke, too lazy
+	public void defuseNuke(){
+		nukeArmed = false;
+	}
+	
+	public boolean getDrawNuke(){
+		return drawNuke;
+	}
+	
+	public void drawNuke(){
+		Timer t = new Timer();
+		drawNuke = true;
+		t.schedule(new drawNukeNotification(), 4000);//after duration seconds
+	}
+	
+
+	class drawNukeNotification extends TimerTask{
+		@Override
+		public void run() {
+			drawNuke = false;
+		}
+		
 	}
 }

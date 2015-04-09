@@ -174,6 +174,7 @@ public class Client implements Runnable{
 	}
 
 	public void setName(String s){
+		System.out.println("we read their name");
 		name = s;
 	}
 	public void setWinner(boolean winner){
@@ -373,12 +374,13 @@ public class Client implements Runnable{
 		String prints = "";
 		try {
 			prints = input.readLine();
-		} catch (IOException e1) {}
+		} catch (IOException e1) {
+		}
 		Scanner scan = new Scanner(prints);
-
 		player.setName(scan.next());
 		player.setColor(scan.next());
-
+		System.out.println(prints);
+		System.out.println(player.getName());
 
 		this.canGetInfo = true;
 		while(true){

@@ -22,10 +22,11 @@ public class DrawPowerup {
 		//int height = 100; //size of drawing
 		//int width = 100;
 
-		if(name.equals("noPowerup")){
+		if(name.equals("NULL")){
 			//draw no powerup
 			//g.setColor(Color.red);
 			g2d.setColor(Color.red);
+			g2d.drawString("NO POWERUP", xcoor, ycoor);
 			
 			//g.fillOval(0, ycoor - height, width, height);
 		}
@@ -46,6 +47,10 @@ public class DrawPowerup {
 		else if(name.equals("ViewportExtender")){
 			g.setColor(Color.green);
 			g2d.drawString("VISION", xcoor, ycoor);
+		}
+		else if(name.equals("Nuke")){
+			g.setColor(Color.orange);
+			g2d.drawString("NUKE", xcoor, ycoor);
 		}
 	}
 }
