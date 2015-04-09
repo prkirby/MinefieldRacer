@@ -431,6 +431,10 @@ public class Client implements Runnable{
 
 						//usedPoweurp
 						if(keys[8]){
+							String powerUpName = player.getPowerup().getPowerupName();
+							if (powerUpName.compareTo("Nuke") != 0) {
+								soundEffect(powerUpName);
+							}
 							player.usePowerup();
 						}
 						

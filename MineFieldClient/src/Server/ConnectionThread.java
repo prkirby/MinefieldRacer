@@ -26,7 +26,7 @@ public class ConnectionThread implements Runnable{
 	private final int serverPort = 1111;
 
 
-	private final String ipAddress = "141.219.210.226";
+	private final String ipAddress = "192.168.2.20";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -272,6 +272,16 @@ public class ConnectionThread implements Runnable{
 				SFX.EXPLODE.play();
 			} else if (sfxName.compareTo("flag") == 0) {
 				SFX.FLAG.play();
+			} else if (sfxName.compareTo("Nuke") == 0) {
+				SFX.NUKE.play();
+			} else if (sfxName.compareTo("MineShield") == 0) {
+				SFX.MINESHIELD.play();
+			} else if (sfxName.compareTo("Invisibility") == 0) {
+				SFX.INVISIBLE.play();
+			} else if (sfxName.compareTo("GodMode") == 0) {
+				SFX.GOD.play();
+			} else if (sfxName.compareTo("ViewportExtender") == 0) {
+				SFX.VIEWPORT.play();
 			}
 		} else if (tag.equals("MUSIC")) {
 			String songName = scan.next();

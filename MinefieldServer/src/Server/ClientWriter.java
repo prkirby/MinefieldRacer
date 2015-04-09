@@ -221,6 +221,7 @@ public class ClientWriter implements Runnable {
 								clients.get(nukeItr).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 								clients.get(nukeItr).player().setX(1);
 							}
+							clients.get(nukeItr).soundEffect("Nuke");
 						}
 					}
 

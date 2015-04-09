@@ -1,7 +1,3 @@
-
-/Drawing
-/GameMechanics
-/Main
-/Server
-/audio
-
+/Drawing/
+/audio/
+/Server/
