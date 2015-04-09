@@ -26,7 +26,7 @@ public class ConnectionThread implements Runnable{
 	private final int serverPort = 1111;
 
 
-	private final String ipAddress = "192.168.1.76";
+	private final String ipAddress = "141.219.210.226";
 
 
 	private Socket socket = null;                                       //The client's socket

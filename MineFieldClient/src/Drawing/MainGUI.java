@@ -287,14 +287,14 @@ public class MainGUI {
 						DrawMineShield.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
 					
 					DrawHUD.drawProgressBar(g, mainpanel.getWidth(), fullMap.length);
-					if(temp.size() <0)
+					if(temp.size() >0)
 						DrawHUD.drawSpotOnBar(g, temp.get(0).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(0).getX());
 					for(int e = 1; e < temp.size(); e++){
 						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 					}
 					if(map!=null)
 						DrawMap.drawNumbers(g, map);
-					if(temp.size() < 0)
+					if(temp.size() > 0)
 						DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), time, flags,temp.get(0).getColor(), fullMap, temp.get(0).getX(), temp.get(0).getY());
 					
 				}
