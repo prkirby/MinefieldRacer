@@ -2,6 +2,7 @@ package Drawing;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -26,7 +27,7 @@ public class DrawGodMode {
 	 * @param height
 	 * 			The height of the screen
 	 */
-	public static void draw(Graphics g, Entity p, int width, int height){
+	public static void draw(Graphics g, Entity p, int width, int height, String name){
 		int startX = (width / 2 - p.getSize()*scale / 2)-2;
 		int startY = (height / 2 - p.getSize()*scale / 2)-2;
 
@@ -43,5 +44,10 @@ public class DrawGodMode {
 		g.setColor(Color.yellow);
 		g.drawArc(startX+scale+6, startY+scale*2+5, scale*2, scale, 200, 140); //Smile
 		g2d.setStroke(new BasicStroke(1));
+		
+	     //draw name
+        g.setFont(new Font("Helvetica",Font.BOLD,15));
+		g.setColor(p.getColor());
+        g2d.drawString(name, startX + 6, startY - 6);
 	}
 }

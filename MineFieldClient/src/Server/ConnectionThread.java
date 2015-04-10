@@ -25,7 +25,7 @@ public class ConnectionThread implements Runnable{
 
 	private final int serverPort = 1111;
 
-	private final String ipAddress = "141.219.210.226";
+	private final String ipAddress = "141.219.207.160";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -167,9 +167,11 @@ public class ConnectionThread implements Runnable{
 		pType = scan.next();
 		nuke = scan.nextBoolean();
 		name = scan.next();
-		data.add(new Entity(x, y, color, crown == 1, pType, name));
+		boolean godStatus = scan.nextBoolean();
+		data.add(new Entity(x, y, color, crown == 1, pType, name, godStatus));
 		//draw powerup
 		in.mainGUI().setPowerup(pType);
+		in.mainGUI().areWeAGod(godStatus);
 	
 		boolean IHaveNuke = false;
 		if(nuke) {
@@ -185,7 +187,8 @@ public class ConnectionThread implements Runnable{
 			pType = scan.next();
 			nuke = scan.nextBoolean();
 			name = scan.next();
-			data.add(new Entity(x, y, color, crown == 1, pType, name));
+			godStatus = scan.nextBoolean();
+			data.add(new Entity(x, y, color, crown == 1, pType, name,godStatus));
 			if(!IHaveNuke){
 				if(nuke)
 					in.mainGUI().setNuke(nuke, color, name);

@@ -292,14 +292,14 @@ public class ClientWriter implements Runnable {
 		try{
 			data += clients.get(clientN).player().getX() + " " + clients.get(clientN).player().getY() + " " +  clients.get(clientN).player().getColor().toString() 
 					+ " " +  (clients.get(clientN).player().isPreviousWinner() ? "1" : "0") + " " +clients.get(clientN).player().flagsLeft() + " " + clients.get(clientN).player().getPowerup().getPowerupName() + " "
-					+ clients.get(clientN).player().getDrawNuke() + " " + clients.get(clientN).player().getName() + " ";
+					+ clients.get(clientN).player().getDrawNuke() + " " + clients.get(clientN).player().getName() + " " + clients.get(clientN).player().godStatus() + " ";
 
 
 			for(int d = 0; d < clients.size(); d++){
 				if(!clients.get(d).inSpectatorMode() && d !=clientN)
 					if(clients.get(d).player().getVisibility())
 						data += clients.get(d).player().getX() + " " + clients.get(d).player().getY() + " " + clients.get(d).player().getColor().toString() + " "+  (clients.get(d).player().isPreviousWinner() ? "1" : "0") + 
-						" " + clients.get(d).player().getPowerup().getPowerupName() + " " + clients.get(d).player().getDrawNuke() + " " + clients.get(d).player().getName() + " ";
+						" " + clients.get(d).player().getPowerup().getPowerupName() + " " + clients.get(d).player().getDrawNuke() + " " + clients.get(d).player().getName() + " " + clients.get(d).player().godStatus() + " ";
 			}
 
 			

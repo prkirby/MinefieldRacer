@@ -335,7 +335,7 @@ public class MainGUI {
 					}
 					if(temp.size()>0){
 						if(god){
-							DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+							DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight(), temp.get(0).getName());
 						}
 						else{
 							DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight(),  temp.get(0).getName());
@@ -343,7 +343,14 @@ public class MainGUI {
 					}
 					//draws other players
 					for(int e = 1; e < temp.size(); e++){
-						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight(), temp.get(e).getName());
+						if(temp.get(e).getGodMode()){
+							DrawGodModeEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight(), temp.get(e).getName());
+						
+						}
+						else{
+							DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight(), temp.get(e).getName());
+						}
+						
 						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 					}
 					

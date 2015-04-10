@@ -15,6 +15,7 @@ public class Entity {
     private boolean winner;		//Determines if the player needs a crown
     private String powerup;
     private String name = "undefined";
+    private boolean godMode = false;
 
     /**
      * Default Constructor (Not in use)
@@ -30,13 +31,14 @@ public class Entity {
      * @param color
      * 			The color of the entity
      */
-    public Entity(int x, int y, String color, boolean winner, String powerup, String name){
+    public Entity(int x, int y, String color, boolean winner, String powerup, String name, Boolean b){
         this.x = x;
         this.y = y;
         this.setColor(color);
         this.winner = winner;
         this.powerup = powerup;
         this.name = name;
+        this.godMode = b;
     }
     
     /**
@@ -184,4 +186,11 @@ public class Entity {
 		// TODO Auto-generated method stub
 		return name;
 	}
+	
+	  public void setGodMode(Boolean b){
+	    	godMode = b;
+	    }
+	    public Boolean getGodMode(){
+	    	return godMode;
+	    }
 }

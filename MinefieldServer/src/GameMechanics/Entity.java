@@ -10,6 +10,7 @@ public class Entity {
     private int x, y;           		//Entity Coordinates
     private final int size = 5; 		//The size of the entity
     private String name = "undefined";
+    private boolean godMode = false;
 
 	/**
      * Default Constructor (Not in use)
@@ -67,5 +68,11 @@ public class Entity {
     
     public void setName(String s){
     	name = s;
+    }
+    public void setGodMode(Boolean b){
+    	godMode = b;
+    }
+    public Boolean getGodMode(){
+    	return godMode;
     }
 }
