@@ -409,18 +409,22 @@ public class Client implements Runnable{
 						if(keys[4] && map.validLocation(player.getX()-1, player.getY()) && 
 								!hasBeen[player.getX()-1][player.getY()]) {
 							setFlag = player.setFlag(player.getX()-1, player.getY());
+							correctFlag(player.getX()-1, player.getY());
 						}
 						if(keys[5] && map.validLocation(player.getX(), player.getY()-1) &&
 								!hasBeen[player.getX()][player.getY()-1]) {
 							setFlag = player.setFlag(player.getX(), player.getY()-1);
+							correctFlag(player.getX(), player.getY()-1);
 						}
 						if(keys[6] && map.validLocation(player.getX()+1, player.getY()) &&
 								!hasBeen[player.getX()+1][player.getY()]) {
 							setFlag = player.setFlag(player.getX()+1, player.getY());
+							correctFlag(player.getX()+1, player.getY());
 						}
 						if(keys[7] && map.validLocation(player.getX(), player.getY()+1) &&
 								!hasBeen[player.getX()][player.getY()+1]){
 							setFlag =player.setFlag(player.getX(), player.getY()+1);
+							correctFlag(player.getX(), player.getY()+1);
 						}
 
 						if(setFlag) {
@@ -461,6 +465,12 @@ public class Client implements Runnable{
 				this.close();
 				break;
 			}
+		}
+	}
+	
+	public void correctFlag(int x, int y) {
+		if(mineLayer.checkForMine(x, y)) {
+			this.player().incrementFlagStreak();
 		}
 	}
 
