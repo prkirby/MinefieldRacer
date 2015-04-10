@@ -7,10 +7,28 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 
+/**
+ * Draws the winner message of the winner
+ * @author Joseph Ryan
+ *
+ */
 public abstract class DrawWinner {
 	
 	private static final int scale = 10;
 	
+	/**
+	 * The method that draws the winner message
+	 * @param g
+	 * 			The graphics to draw with
+	 * @param width
+	 * 			The width of the screen
+	 * @param height
+	 * 			The height of the screen
+	 * @param name
+	 * 			The name of the winner
+	 * @param c
+	 * 			The winner's color
+	 */
 	public static void draw(Graphics g, int width, int height, String name, Color c){
 		int len = 12;
 		g.setFont(new Font("Courier",Font.BOLD,40));

@@ -25,7 +25,7 @@ public class ConnectionThread implements Runnable{
 
 	private final int serverPort = 1111;
 
-	private final String ipAddress = "192.168.1.76";
+	private final String ipAddress = "141.219.210.226";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -221,6 +221,11 @@ public class ConnectionThread implements Runnable{
 			in.mainGUI().setMapName(scan.next());
 	}
 
+	/**
+	 * Reads the winner data type
+	 * @param scan
+	 * 			The scanner being used
+	 */
 	public void readWinner(Scanner scan){
 		boolean winner = scan.nextInt()==1;
 		if(winner)
@@ -228,6 +233,12 @@ public class ConnectionThread implements Runnable{
 		else
 			in.mainGUI().setWinner(winner, "", "");
 	}
+	
+	/**
+	 * Reads the powerup type
+	 * @param scan
+	 * 			The scanner being used
+	 */
 	public void readPowerup(Scanner scan){
 		String currentPowerup = scan.next();
 		if(currentPowerup.equals("noPowerup")){
@@ -246,6 +257,12 @@ public class ConnectionThread implements Runnable{
 			in.mainGUI().setPowerup("ViewportExtender");
 		}
 	}
+	
+	/**
+	 * Reads the mineshield powerup type
+	 * @param scan
+	 * 			The scanner being used
+	 */
 	public void readMineShieldDrawing(Scanner scan){
 		if(scan.next().equals("true")){
 			in.mainGUI().doWeHaveAShield(true);
@@ -255,6 +272,11 @@ public class ConnectionThread implements Runnable{
 		}
 	}
 
+	/**
+	 * Reads the godmode powerup type
+	 * @param scan
+	 * 			The scanner being used
+	 */
 	public void readGodModeDrawing(Scanner scan){
 		if(scan.next().equals("true")){
 			in.mainGUI().areWeAGod(true);
@@ -263,6 +285,13 @@ public class ConnectionThread implements Runnable{
 			in.mainGUI().areWeAGod(false);
 		}
 	}
+	/**
+	 * Reads what audio to play
+	 * @param scan
+	 * 			The scanner being used
+	 * @throws InterruptedException
+	 * 			The instance where the music is not played
+	 */
 	public void readAudio(Scanner scan) throws InterruptedException {
 		String tag = scan.next();
 

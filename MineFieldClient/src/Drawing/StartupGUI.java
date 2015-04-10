@@ -64,6 +64,9 @@ public class StartupGUI {
 		this.display();
 	}
 	
+	/**
+	 * Sets up all of the components relating to the GUI
+	 */
 	private void setupComponents(){
 		
 		//Setup Color Buttons
@@ -114,6 +117,11 @@ public class StartupGUI {
 		return name;
 	}
 	
+	/**
+	 * Sets the name of the client
+	 * @param s
+	 * 			the new name
+	 */
 	public void setName(String s){
 		this.name = s;
 	}
@@ -173,22 +181,43 @@ public class StartupGUI {
 		}
 	}
 	
+	/**
+	 * This class is for all of the colored buttons
+	 * @author Joseph Ryan
+	 *
+	 */
 	private class myJButton extends JButton implements ActionListener{
 		
 		private Color buttonColor;
 		
+		/**
+		 * This sets up the button with a color
+		 * @param c
+		 * 			The color of the button
+		 */
 		public myJButton(Color c){
 			buttonColor = c;
 			this.setBackground(c);
 		}
 
+		/**
+		 * Whenever the button is clicked the color is changed to the clicked button's color
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			color = this.buttonColor;
 			
 		}
 	}
 	
+	/**
+	 * The start button used on the GUI
+	 * @author Joseph Ryan
+	 *
+	 */
 	private class Start implements ActionListener{
+		/**
+		 * When the button is clicked, the final set up is done to set up the new client
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			//Set name in startupgui to be passed
 			name = namer.getText();

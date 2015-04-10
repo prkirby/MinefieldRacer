@@ -7,9 +7,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 
+/**
+ * This class draws the nuke's explosion when a nuke goes off
+ * @author 
+ *
+ */
 public class DrawNukeExplosion {
 private static final int scale = 10;
 	
+	/**
+	 * The drawing of the nuke when the bomb blows
+	 * @param g
+	 * 			The graphics to draw with
+	 * @param width
+	 * 			The width of the screen
+	 * @param height
+	 * 			The height of the screen
+	 * @param name
+	 * 			The name of the detonator
+	 * @param color
+	 * 			The color of the detonator
+	 */
 	public static void draw(Graphics g, int width, int height, String name, String color){
 		Color c;
 		if(color.equals("red")){

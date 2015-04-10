@@ -11,6 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * This class draws the map and all things relating to the map
+ * @author Joseph Ryan
+ *
+ */
 public abstract class DrawMap {
 	
 	private static final int scale = 10;

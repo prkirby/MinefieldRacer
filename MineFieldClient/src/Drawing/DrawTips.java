@@ -37,7 +37,7 @@ public abstract class DrawTips {
 										  "#YOLO",
 										  "If you see a bug, it's Paul's fault.    Blame him for your struggles.",
 										  "Remember: You are always right, everyoneelse is to blame for your problems.",
-										  "Aww yiss. Mutha. Fuckin. Bread crumbs.",
+										  "To use a powerup, press the 'M' key.",
 										  "The meme was dank.",
 										  "It's the final countdown...",
 										  "The clock at the top of the screen is   not just for show. It also tells you howmuch time you have left.",
@@ -46,7 +46,16 @@ public abstract class DrawTips {
 										  "Joey: Write \"Pro Tips\" here.",
 										  "Hello World!",
 										  "James Walker is awesome.",
-										  "Always get consent before you descent."};
+										  "Always get consent before you descent.",
+										  "The name in the bottom left corner it   the type of powerup you have. Use it    well.",
+										  "Invisiblity makes you invisible to your enemies. So they can't see your bad     playing style.",
+										  "Godmode is the ancient powerup that     makes you faster, and invincible. the   only way to get it is to not miss.",
+										  "Viewport increases your range of viewingtiles.",
+										  "Nukes kill everyone, restarting their   position.",
+										  "Shield gives you one free hit. Use this to your advantage.",
+										  "Don't taze me bro.",
+										  "The developers would like to thank you  for playing our game.",
+										  "Don't forget to thank the developers."};
 	private static int index = ((int)(Math.random()*100)%tips.length);
 	private static Timer timer;
 	private static final int chars = 40;
@@ -82,6 +91,11 @@ public abstract class DrawTips {
     	}
     }
     
+    /**
+     * This updates and randomly selects a new tip when the time is ready
+     * @author Joseph Ryan
+     *
+     */
     private static class RemindTask extends TimerTask{
 
 		public void run() {

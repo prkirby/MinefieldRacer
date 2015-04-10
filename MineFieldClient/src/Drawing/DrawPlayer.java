@@ -29,7 +29,6 @@ public abstract class DrawPlayer {
      * @param e 
      *          The entity to draw
      */
-
     public static void draw(Graphics g, Entity p, int width, int height, String name){
     	int startX = (width / 2 - p.getSize()*scale / 2)-2;
     	int startY = (height / 2 - p.getSize()*scale / 2)-2;

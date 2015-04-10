@@ -11,6 +11,11 @@ import java.util.Scanner;
 
 import GameMechanics.Entity;
 
+/**
+ * This class draws the player HUD
+ * @author Joseph Ryan
+ *
+ */
 public abstract class DrawHUD {
 	
 	/**
@@ -135,6 +140,15 @@ public abstract class DrawHUD {
 //		g.fillRect(10+10*scale, height-70+7*scale, scale, scale);
 	}
 	
+	/**
+	 * This draws the progess bar
+	 * @param g
+	 * 			The graphics to draw with
+	 * @param width
+	 * 			The width of the screen
+	 * @param mapLength
+	 * 			The length of the map
+	 */
 	public static void drawProgressBar(Graphics g, int width, int mapLength){
 		//Map Progress bar (option 2)
 		int scale = 5;
@@ -151,6 +165,19 @@ public abstract class DrawHUD {
 		g.fillRect(width/2-scale*mapLength/2+scale*mapLength-scale*3, 5, scale*2, 12);
 	}
 	
+	/**
+	 * The individual entity gets drawn on the progress bar
+	 * @param g
+	 * 			The graphics to draw with
+	 * @param c
+	 * 			The color of the entity
+	 * @param width
+	 * 			The width of the screen
+	 * @param mapLength
+	 * 			The length of the map
+	 * @param x
+	 * 			The x coordinate of the player
+	 */
 	public static void drawSpotOnBar(Graphics g, Color c, int width, int mapLength, int x){
 		int scale = 5;
 		g.setColor(c);

@@ -5,6 +5,11 @@ import java.net.URL;
 
 import javax.sound.sampled.*;
 
+/**
+ * This class is a thread that plays music
+ * @author Paul Kirby
+ *
+ */
 public class SongPlayer implements Runnable{
 
 	private SourceDataLine song;
@@ -15,10 +20,18 @@ public class SongPlayer implements Runnable{
 	//Buffer size for sourceLine
 	int BUFFER_SIZE = 64*1024;
 
+	/**
+	 * Starts the music thread with the given file name.
+	 * @param filename
+	 * 			The name of the audio
+	 */
 	public SongPlayer(String filename) {
 		this.filename = filename;
 	}
 
+	/**
+	 * The thread
+	 */
 	public void run() {
 
 		while (running) {
@@ -48,7 +61,9 @@ public class SongPlayer implements Runnable{
 				e.printStackTrace();
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
-			} finally {
+			} catch(java.lang.IllegalArgumentException e){
+				
+			}finally {
 				song.drain();
 				song.close();
 			}
@@ -57,15 +72,28 @@ public class SongPlayer implements Runnable{
 
 	}
 	
+	/**
+	 * Stops the music
+	 */
 	public void stop() {
 		running = false;
 	}
 	
+	/**
+	 * Starts the music
+	 */
 	public void start() {
 		running = true;
 		run();
 	}
 	
+	/**
+	 * 
+	 * @param filename
+	 * 			The name
+	 * @throws InterruptedException
+	 * 			Welp
+	 */
 	public void newSong(String filename) throws InterruptedException {
 		this.filename = filename;
 	}

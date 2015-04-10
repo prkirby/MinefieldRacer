@@ -8,9 +8,24 @@ import java.awt.RenderingHints;
 
 import GameMechanics.Entity;
 
+/**
+ * This class serves to draw the powerup text for the client
+ * @author 
+ */
 public class DrawPowerup {
 	private static final int scale = 10;
 
+	/**
+	 * This method draws the given powerup name in the bottom left corner
+	 * @param g
+	 * 			The graphics of the mainpanel
+	 * @param xcoor
+	 * 			The x coordinate to draw
+	 * @param ycoor
+	 * 			The y coordinate to draw
+	 * @param name
+	 * 			The name of the power the player has
+	 */
 	public static void draw(Graphics g, int xcoor, int ycoor, String name){
 		Graphics2D g2d = (Graphics2D)g;
 

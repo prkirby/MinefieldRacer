@@ -7,8 +7,25 @@ import java.awt.Graphics2D;
 
 import GameMechanics.Entity;
 
+/**
+ * This class draws the godmode buff
+ * @author 
+ *
+ */
 public class DrawGodMode {
 	static final int scale = 10;
+	
+	/**
+	 * Draws the god mode buff on the player
+	 * @param g
+	 * 			The graphics to draw with
+	 * @param p
+	 * 			The entity to draw with
+	 * @param width
+	 * 			The width of the screen
+	 * @param height
+	 * 			The height of the screen
+	 */
 	public static void draw(Graphics g, Entity p, int width, int height){
 		int startX = (width / 2 - p.getSize()*scale / 2)-2;
 		int startY = (height / 2 - p.getSize()*scale / 2)-2;

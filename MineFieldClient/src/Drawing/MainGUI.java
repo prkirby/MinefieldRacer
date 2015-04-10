@@ -57,6 +57,7 @@ public class MainGUI {
 	private boolean nuke = false;
 	private String nukeColor = "";
 	private String nukeName = "";
+	
 	/**
 	 * Default Constructor: Sets up all of the drawing and audio
 	 */
@@ -122,24 +123,66 @@ public class MainGUI {
 		this.map = m;
 	}
 
+	/**
+	 * The time of the race
+	 * @return
+	 * 			The time of the race
+	 */
 	public String getTime() {
 		return time;
 	}
+	
+	/**
+	 * Sets the powerup to the client
+	 * @param s
+	 * 			The powerup to change to
+	 */
 	public void setPowerup(String s){
 		powerupName = s;
 	}
 	
+	/**
+	 * Sets if the client has the shield powerup
+	 * @param b
+	 * 			if the client has the shield powerup
+	 */
 	public void doWeHaveAShield(boolean b){
 		shield = b;
 	}
+	
+	/**
+	 * Sets if the client has the godmode powerup
+	 * @param b
+	 * 			if the client has the godmode powerup
+	 */
 	public void areWeAGod(boolean b){
 		god = b;
 	}
+	
+	/**
+	 * Sets the nuke powerup conditions
+	 * @param b
+	 * 			if we have a nuke
+	 * @param c
+	 * 			the color of the nuker
+	 * @param s
+	 * 			The name of the nuker
+	 */
 	public void setNuke(boolean b, String c, String s){
 		nuke = b;
 		nukeColor = c;
 		nukeName = s;
 	}
+	
+	/**
+	 * Sets the winner if we have a winner
+	 * @param win
+	 * 			if we have a winner
+	 * @param name
+	 * 			The name of the person that won
+	 * @param color
+	 * 			The color of the person that won
+	 */
 	public void setWinner(boolean win, String name, String color){
 		this.winner = win;
 		if(win){
@@ -171,22 +214,47 @@ public class MainGUI {
 		}
 	}
 
+	/**
+	 * Sets the time
+	 * @param time
+	 * 			The new time
+	 */
 	public void setTime(String time) {
 		this.time = time;
 	}
 	
+	/**
+	 * Sets the number of flags the client has
+	 * @param flags
+	 * 			The new number
+	 */
 	public void setFlags(int flags) {
 		this.flags = flags;
 	}
-
+	
+	/**
+	 * Returns the current mode the client is in
+	 * @return
+	 * 			The new mode the client is in
+	 */
 	public String getMode() {
 		return mode;
 	}
 
+	/**
+	 * Sets the mode the client is about to be in
+	 * @param mode
+	 * 			The mode of the client
+	 */
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
 
+	/**
+	 * Changes the name of the map. If a new map, it loads the map
+	 * @param name
+	 * 			The name of the map
+	 */
 	public void setMapName(String name){
 		String temp = mapName;
 		this.mapName = name;

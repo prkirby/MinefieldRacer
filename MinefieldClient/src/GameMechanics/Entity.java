@@ -166,9 +166,20 @@ public class Entity {
     	return this.powerup;
     }
 
+    /**
+     * Sets the name of the entity
+     * @param s
+     * 			The name to change to
+     */
     public void setName(String s){
     	name = s;
     }
+    
+    /**
+     * Returns the name of the entity
+     * @return
+     * 			The name
+     */
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
