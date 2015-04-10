@@ -278,26 +278,42 @@ public class ConnectionThread implements Runnable{
 				SFX.MINESHIELD.play();
 			} else if (sfxName.compareTo("Invisibility") == 0) {
 				SFX.INVISIBLE.play();
-			} else if (sfxName.compareTo("GodMode") == 0) {
-				SFX.GOD.play();
 			} else if (sfxName.compareTo("ViewportExtender") == 0) {
 				SFX.VIEWPORT.play();
 			}
 		} else if (tag.equals("MUSIC")) {
 			String songName = scan.next();
 			if (songName.compareTo("lobby") == 0) {
-				songPlayer.stop();
-				musicThread.join();
-				songPlayer = new SongPlayer("lobby");
-				musicThread = new Thread(songPlayer);
-				musicThread.start();
+				songPlayer.newSong("lobby");
+//				songPlayer.stop();
+//				musicThread.join();
+//				songPlayer = new SongPlayer("lobby");
+//				musicThread = new Thread(songPlayer);
+//				musicThread.start();
 			}
-			if (songName.compareTo("bg1") == 0) {
-				songPlayer.stop();
-				musicThread.join();
-				songPlayer = new SongPlayer("bg1");
-				musicThread = new Thread(songPlayer);
-				musicThread.start();
+			else if (songName.compareTo("bg1") == 0) {
+				songPlayer.newSong("bg1");
+//				songPlayer.stop();
+//				musicThread.join();
+//				songPlayer = new SongPlayer("bg1");
+//				musicThread = new Thread(songPlayer);
+//				musicThread.start();
+			}
+			else if (songName.compareTo("God") == 0) {
+				songPlayer.newSong("God");
+//				songPlayer.stop();
+//				musicThread.join();
+//				songPlayer = new SongPlayer("God");
+//				musicThread = new Thread(songPlayer);
+//				musicThread.start();
+			}
+			else if (songName.compareTo("Win") == 0) {
+				songPlayer.newSong("lobby");
+//				songPlayer.stop();
+//				musicThread.join();
+//				songPlayer = new SongPlayer("lobby");
+//				musicThread = new Thread(songPlayer);
+//				musicThread.start();
 			}
 		}
 	}

@@ -11,6 +11,7 @@ public class SongPlayer implements Runnable{
 	private String filename = "";
 	boolean playCompleted = false;
 	boolean running = true;
+	boolean newSong = false;
 	//Buffer size for sourceLine
 	int BUFFER_SIZE = 64*1024;
 
@@ -22,6 +23,7 @@ public class SongPlayer implements Runnable{
 
 		while (running) {
 			try {
+				String tempFile = filename;
 				// Get URL of audio resource
 				URL url = SongPlayer.class.getResource("/audio/music/" + filename + ".wav");
 				// Set up an audio input stream piped from the sound file.
@@ -33,7 +35,7 @@ public class SongPlayer implements Runnable{
 				song.start();
 				int nBytesRead = 0;
 				byte[] sampledData = new byte[BUFFER_SIZE];
-				while (nBytesRead != -1 && running) {
+				while (nBytesRead != -1 && tempFile == filename) {
 					nBytesRead = audioInputStream.read(sampledData, 0, sampledData.length);
 					if (nBytesRead >= 0) {
 						// Writes audio data to the mixer via this source data line.
@@ -62,6 +64,10 @@ public class SongPlayer implements Runnable{
 	public void start() {
 		running = true;
 		run();
+	}
+	
+	public void newSong(String filename) throws InterruptedException {
+		this.filename = filename;
 	}
 
 
