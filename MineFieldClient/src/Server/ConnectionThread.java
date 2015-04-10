@@ -98,7 +98,6 @@ public class ConnectionThread implements Runnable{
 			try {
 
 				inn = input.readLine();
-				System.out.println(inn);
 				if((!checkDupe.equals(inn) && checkDupe.startsWith("TEXT")) || !checkDupe.startsWith("TEXT")){
 					checkDupe = inn;
 					Scanner scan = new Scanner(inn);
