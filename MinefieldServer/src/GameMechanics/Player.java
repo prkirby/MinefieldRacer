@@ -371,7 +371,6 @@ public class Player extends Entity{
 	
 	public void incrementFlagStreak() {
 		flagStreak += 1;
-		System.out.println("Flag Streak incremented, now: " + flagStreak);
 	}
 	
 	public void resetFlagStreak() {

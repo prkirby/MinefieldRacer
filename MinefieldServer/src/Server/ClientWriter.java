@@ -6,9 +6,15 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import GameMechanics.GodMode;
+import GameMechanics.Invisibility;
 import GameMechanics.Map;
 import GameMechanics.MineCreation;
+import GameMechanics.MineShield;
+import GameMechanics.Nuke;
 import GameMechanics.Player;
+import GameMechanics.Powerup;
+import GameMechanics.ViewportExtender;
 import Main.FileReading;
 
 /**
@@ -120,6 +126,7 @@ public class ClientWriter implements Runnable {
 					this.clients.get(c).player().setX(1);
 					this.clients.get(c).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-3)))+1);
 					this.clients.get(c).player().resetFlags();
+					this.clients.get(c).player().resetFlagStreak();
 					this.clients.get(c).setWinMsg(null);
 					//reset godmode
 					if(this.clients.get(c).player().godStatus()){
@@ -394,15 +401,42 @@ public class ClientWriter implements Runnable {
 
 	public class PowerupRemindTask extends TimerTask{
 		public void run() {
-
 			//Check to see if the race is still on
 			if(inRace && !someoneWon){
 				for(int c = 0; c < clients.size(); c++){
 					double chance = clients.get(c).player().getPoints()/powerupRatio;
+					System.out.println("Calculating if you get a chance: " + chance);
 					if(Math.random() < chance){
+						
+						System.out.println("you get a powerup!");
+						
+						Powerup A = new GodMode(5);
+						Powerup B = new Invisibility(5);
+						Powerup C = new MineShield(5);
+						Powerup D = new Nuke(5);
+						Powerup E = new ViewportExtender(5);
+						
 						//Give them a powerup
-
+						int powerUp = (int) (Math.random() * 100);
+						
+						System.out.println("Powerup randomizer: " + powerUp);
+						if (clients.get(c).player().getFlagStreak() == 10) {
+							clients.get(c).player().setPowerup(A);
+						}
+						else if (powerUp == 99 || powerUp == 100) {
+							clients.get(c).player().setPowerup(D);
+						}
+						else if (powerUp < 25) {
+							clients.get(c).player().setPowerup(B);
+						}
+						else if (powerUp > 75) {
+							clients.get(c).player().setPowerup(C);
+						}
+						else {
+							clients.get(c).player().setPowerup(E);
+						}
 						//Reset points?
+						clients.get(c).player().resetPoints();
 					}
 				}
 				powerupTimer.schedule(new PowerupRemindTask(), powerupCheck*1000);
