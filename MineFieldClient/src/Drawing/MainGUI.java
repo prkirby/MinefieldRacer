@@ -371,16 +371,6 @@ public class MainGUI {
 					canPress = false;
 					break;
 				}
-
-				for (int i : movementKeys) {
-					if (e.getKeyCode() == i) {
-						SFX.MOVE.play();
-					}
-				}
-				
-				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					SFX.SHOOT.play();
-				}
 			}
 		}
 

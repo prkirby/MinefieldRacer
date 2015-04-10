@@ -185,6 +185,7 @@ public class ClientWriter implements Runnable {
 
 					//If a client met win Condition
 					if(checkWinCondition(cl) && !this.someoneWon){
+						winMusic(); //Play the winning music
 						this.currentTime = 10*1000; //Ten seconds left
 						this.someoneWon = true;
 
@@ -221,6 +222,7 @@ public class ClientWriter implements Runnable {
 								clients.get(nukeItr).player().setY(((int)((Math.random()*100)%(this.map.getHeight()-2)))+1);
 								clients.get(nukeItr).player().setX(1);
 							}
+							clients.get(nukeItr).soundEffect("Nuke");
 						}
 					}
 
@@ -382,6 +384,12 @@ public class ClientWriter implements Runnable {
 			return true;
 		}
 		return false;
+	}
+	
+	public void winMusic() {
+		for (int i = 0; i < clients.size(); i++) {
+			clients.get(i).music("Win");
+		}
 	}
 
 	public class PowerupRemindTask extends TimerTask{

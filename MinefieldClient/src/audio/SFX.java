@@ -1,10 +1,12 @@
 package audio;
 
 public enum SFX {
-	MOVE("move.wav"),
-	SHOOT("gun.wav"),
+	NUKE("Nuke.wav"),
 	EXPLODE("explosion.wav"),
-	FLAG("flag.wav");
+	FLAG("flag.wav"),
+	MINESHIELD("Shield.wav"),
+	VIEWPORT("vision.wav"),
+	INVISIBLE("Invisible.wav");
 
 	private String filename;
 
