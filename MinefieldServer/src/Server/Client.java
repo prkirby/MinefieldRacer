@@ -594,7 +594,7 @@ public class Client implements Runnable{
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
 				}catch(Exception e){break;}	
 				
-				this.sleep(5);
+				this.sleep(15);
 			}
 		}
 

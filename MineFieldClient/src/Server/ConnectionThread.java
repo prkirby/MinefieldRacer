@@ -130,7 +130,7 @@ public class ConnectionThread implements Runnable{
 			} catch (IOException ex) {
 				System.out.println("Error getting output from server (IOException): "+inn);
 				//ex.printStackTrace(); //pretend this doesn't happen
-				//this.close();
+				this.close();
 			} catch (java.lang.NullPointerException e){
 				System.out.println("Error getting output from server (NULL): "+inn);
 				e.printStackTrace(); //pretend this doesn't happen
