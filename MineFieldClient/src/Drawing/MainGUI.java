@@ -275,7 +275,7 @@ public class MainGUI {
 					}
 					//draws other players
 					for(int e = 1; e < temp.size(); e++){
-						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
+						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight(), temp.get(e).getName());
 						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());
 					}
 					

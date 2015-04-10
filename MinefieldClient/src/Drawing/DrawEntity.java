@@ -4,6 +4,7 @@ import GameMechanics.Entity;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -25,7 +26,7 @@ public abstract class DrawEntity {
      * @param e 
      *          The entity to draw
      */
-    public static void draw(Graphics g, Entity e, Entity p, int width, int height){
+    public static void draw(Graphics g, Entity e, Entity p, int width, int height, String name){
     	int startX = (e.getX() * 50 + (width / 2 - 25) - p.getX() * 50)-2;
     	int startY = ((height / 2 - 25) - (p.getY() * 50 - e.getY() * 50))-2;
     	
@@ -58,6 +59,10 @@ public abstract class DrawEntity {
         g.drawArc(startX+3*scale/2+1, startY+scale*3, scale*2, scale, 30, 120);
         g2d.setStroke(new BasicStroke(1));
         
+        //draw name
+        g.setFont(new Font("Helvetica",Font.BOLD,15));
+		g.setColor(e.getColor());
+        g2d.drawString(name, startX + 6, startY - 6);
         //Crown
         if(e.isWinner()){
         	//Crown

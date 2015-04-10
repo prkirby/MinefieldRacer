@@ -36,13 +36,16 @@ private static final int scale = 10;
 		int len = 12;
 		g.setFont(new Font("Courier",Font.BOLD,28));
 		g.setColor(Color.black);
+		if(name.length() >= 10){
+			name = name.substring(0,9);
+		}
 		name = name + " just nuked the map!";
 		g.drawString(name, 0, height/5);
 		g.setColor(c);
 		g.drawString(name,0, height/5);
 		
 		//Draw player
-		int startX = width - ((name.length() + 5) * 2);
+		int startX = width - 50;
     	int startY = height/5 - 40;
         
         Graphics2D g2d = (Graphics2D)g;
