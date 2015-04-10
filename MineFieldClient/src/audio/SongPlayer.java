@@ -92,7 +92,7 @@ public class SongPlayer implements Runnable{
 	 * @param filename
 	 * 			The name
 	 * @throws InterruptedException
-	 * 			Welp
+	 * 			throws a bad bad error
 	 */
 	public void newSong(String filename) throws InterruptedException {
 		this.filename = filename;

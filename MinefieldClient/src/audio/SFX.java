@@ -1,5 +1,9 @@
 package audio;
 
+/**
+ * The enum value for SFX
+ *
+ */
 public enum SFX {
 	NUKE("Nuke.wav"),
 	EXPLODE("explosion.wav"),
@@ -10,6 +14,11 @@ public enum SFX {
 
 	private String filename;
 
+	/**
+	 * The SFX
+	 * @param filename
+	 * 			The name of the file
+	 */
 	private SFX(String filename) {
 		this.filename = filename;
 	}

@@ -160,7 +160,11 @@ public class ClientWriter implements Runnable {
 		}
 	}
 
-
+	/**
+	 * Returns a random number for choosing a map
+	 * @return
+	 * 			The number that was randomly choosen
+	 */
 	public static int getRandomNumber(){
 		Random rand = new Random();
 
@@ -393,13 +397,24 @@ public class ClientWriter implements Runnable {
 		return false;
 	}
 	
+	/**
+	 * The music played when someone wins
+	 */
 	public void winMusic() {
 		for (int i = 0; i < clients.size(); i++) {
 			clients.get(i).music("Win");
 		}
 	}
 
+	/**
+	 * The timer to denote when a player gets a powerup
+	 *
+	 */
 	public class PowerupRemindTask extends TimerTask{
+		
+		/**
+		 * runs when the timer completes
+		 */
 		public void run() {
 			//Check to see if the race is still on
 			if(inRace && !someoneWon){

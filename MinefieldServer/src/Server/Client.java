@@ -12,8 +12,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- *
- * @author Xazaviar
+ * This represents the client thread
+ * @author Joseph Ryan
  */
 public class Client implements Runnable{
 
@@ -45,6 +45,10 @@ public class Client implements Runnable{
 	//Other info to send to client
 	private String time = "n/a";
 	private String winMsg = null;
+	
+	//Passing audio correctly
+	private String newSFX = "";
+	private String newMusic = "";
 
 	/**
 	 * This constructor sets up the client 
@@ -130,14 +134,6 @@ public class Client implements Runnable{
 	 */
 	public void setWinMsg(String msg){
 		this.winMsg = msg;	
-		
-
-		//Send if winner applicable
-		if(winMsg==null){
-			output.println("WINNER 0");
-		}else{
-			output.println("WINNER 1 "+winMsg);
-		}
 	}
 
 	/**
@@ -166,18 +162,39 @@ public class Client implements Runnable{
 		return this.spectatorMode;
 	}
 
+	/**
+	 * Sets if the client is in spectator mode
+	 * @param b
+	 * 			if in spectator mode
+	 */
 	public void setSpectatorMode(boolean b){
 		this.spectatorMode = b;
 	}
 
+	/**
+	 * Returns the name of the client
+	 * @return
+	 * 			The name of the client
+	 */
 	public String getName(){
 		return name;
 	}
-
+	
+	/**
+	 * Sets the name of the client
+	 * @param s
+	 * 			The new name
+	 */
 	public void setName(String s){
 		System.out.println("we read their name");
 		name = s;
 	}
+	
+	/**
+	 * Sets if the game has winner
+	 * @param winner
+	 * 			The client has a winner
+	 */
 	public void setWinner(boolean winner){
 		win = winner;
 	}
@@ -297,8 +314,11 @@ public class Client implements Runnable{
 	/**
 	 * Check to see how many surrounding tiles have been revealed
 	 * @param x
+	 * 			The x coord
 	 * @param y
+	 * 			The y coord
 	 * @return
+	 * 			The number of surronding open blocks
 	 */
 	private int surroundingRevealed(int x, int y){
 		int count = 0;
@@ -332,22 +352,39 @@ public class Client implements Runnable{
 		}
 	}
 
+	/**
+	 * Denotes if the client has hit a mine
+	 * @return
+	 * 			If the client hit a mine
+	 */
 	public boolean mineHit() {
 		return mineHit;
 	}
 
+	/**
+	 * Sets if the client hit a mine
+	 * @param newHit
+	 * 			The client hit a mine maybe?
+	 */
 	public void setMineHit(boolean newHit) {
 		mineHit = newHit;
 	}
 
+	/**
+	 * Sends the sound effects.
+	 * @param sfx
+	 * 			The sfx to player
+	 */
 	public void soundEffect(String sfx) {
-		String str = "AUDIO SFX " + sfx;
-		output.println(str);
+		this.newSFX = "AUDIO SFX " +sfx;
 	}
 
+	/**
+	 * 
+	 * @param song
+	 */
 	public void music(String song) {
-		String str = "AUDIO MUSIC " + song;
-		output.println(str);	
+		newMusic = "AUDIO MUSIC " + song;
 	}
 	
 	//powerups
@@ -533,11 +570,28 @@ public class Client implements Runnable{
 					//Send the map
 					output.println(sendMap());
 					
+					//Send if winner applicable
+					if(winMsg==null){
+						output.println("WINNER 0");
+					}else{
+						output.println("WINNER 1 "+winMsg);
+					}
+					
+					//Send audio/music
+					if(!newSFX.equals("")){
+						output.println(newSFX);
+						newSFX = "";
+					}
+					if(!newMusic.equals("")){
+						output.println(newMusic);
+						newMusic = "";
+					}
+					
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
 				}catch(Exception e){break;}	
 				
-				this.sleep(15);
+				this.sleep(5);
 			}
 		}
 
