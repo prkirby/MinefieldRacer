@@ -25,7 +25,7 @@ public class ConnectionThread implements Runnable{
 
 	private final int serverPort = 1111;
 
-	private final String ipAddress = "141.219.207.160";
+	private final String ipAddress = "141.219.210.226";
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -130,7 +130,7 @@ public class ConnectionThread implements Runnable{
 			} catch (IOException ex) {
 				System.out.println("Error getting output from server (IOException): "+inn);
 				//ex.printStackTrace(); //pretend this doesn't happen
-				this.close();
+				//this.close();
 			} catch (java.lang.NullPointerException e){
 				System.out.println("Error getting output from server (NULL): "+inn);
 				e.printStackTrace(); //pretend this doesn't happen
