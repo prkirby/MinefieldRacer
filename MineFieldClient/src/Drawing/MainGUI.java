@@ -270,9 +270,10 @@ public class MainGUI {
 							DrawGodMode.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
 						}
 						else{
-							DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight());
+							DrawPlayer.draw(g, temp.get(0), mainpanel.getWidth(), mainpanel.getHeight(),  temp.get(0).getName());
 						}
 					}
+					//draws other players
 					for(int e = 1; e < temp.size(); e++){
 						DrawEntity.draw(g, temp.get(e),temp.get(0),mainpanel.getWidth(),mainpanel.getHeight());
 						DrawHUD.drawSpotOnBar(g, temp.get(e).getColor(), mainpanel.getWidth(), fullMap.length, temp.get(e).getX());

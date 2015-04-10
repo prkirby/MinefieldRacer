@@ -3,6 +3,7 @@ package Server;
 import GameMechanics.Map;
 import GameMechanics.Player;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -379,9 +380,6 @@ public class Client implements Runnable{
 		Scanner scan = new Scanner(prints);
 		player.setName(scan.next());
 		player.setColor(scan.next());
-		System.out.println(prints);
-		System.out.println(player.getName());
-
 		this.canGetInfo = true;
 		while(true){
 			try{

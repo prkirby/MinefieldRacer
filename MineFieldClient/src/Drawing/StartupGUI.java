@@ -109,7 +109,13 @@ public class StartupGUI {
 		if(name==null || name.equals("") || name.equals("Enter Name Here")){
 			return "LAME";
 		}
-		return this.name;
+		
+		//return this.name;
+		return name;
+	}
+	
+	public void setName(String s){
+		this.name = s;
 	}
 	
 	/**
@@ -184,11 +190,11 @@ public class StartupGUI {
 	
 	private class Start implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
-			dataReady = true;
+			//Set name in startupgui to be passed
 			name = namer.getText();
-			
-			
-			
+			setName(name);
+
+			//stores name in separate file, probably antiquated now
 			try {
 				PrintWriter writer = new PrintWriter("Username", "UTF-8");
 				writer.println(name);
@@ -203,7 +209,7 @@ public class StartupGUI {
 			}
 			
 			
-			
+			dataReady = true;
 			
 			frame.dispose();
 		}

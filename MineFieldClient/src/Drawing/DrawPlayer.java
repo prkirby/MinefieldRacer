@@ -30,7 +30,7 @@ public abstract class DrawPlayer {
      *          The entity to draw
      */
 
-    public static void draw(Graphics g, Entity p, int width, int height){
+    public static void draw(Graphics g, Entity p, int width, int height, String name){
     	int startX = (width / 2 - p.getSize()*scale / 2)-2;
     	int startY = (height / 2 - p.getSize()*scale / 2)-2;
 
@@ -56,10 +56,10 @@ public abstract class DrawPlayer {
         g2d.setStroke(new BasicStroke(1));
         
         //draw name
-       /* g.setFont(new Font("Helvetica",Font.BOLD,15));
+        g.setFont(new Font("Helvetica",Font.BOLD,15));
 		g.setColor(p.getColor());
-        g2d.drawString("BLragh", startX + 6, startY + 6);
-        */
+        g2d.drawString(name, startX + 6, startY - 6);
+        
         
       //Crown
         if(p.isWinner()){

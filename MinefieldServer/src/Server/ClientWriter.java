@@ -293,8 +293,7 @@ public class ClientWriter implements Runnable {
 						" " + clients.get(d).player().getPowerup().getPowerupName() + " " + clients.get(d).player().getDrawNuke() + " " + clients.get(d).player().getName() + " ";
 			}
 
-			//try adding a powerup
-			//data += clients.get(clientN).player().getPowerup().getPowerupName()  + " ";
+			
 
 		}catch (java.lang.NullPointerException e){clients.remove(clientN); e.printStackTrace(); System.out.println();}
 

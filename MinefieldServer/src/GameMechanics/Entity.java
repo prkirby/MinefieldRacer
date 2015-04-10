@@ -9,6 +9,7 @@ public class Entity {
     
     private int x, y;           		//Entity Coordinates
     private final int size = 5; 		//The size of the entity
+    private String name = "undefined";
 
 	/**
      * Default Constructor (Not in use)
@@ -58,5 +59,13 @@ public class Entity {
      */
     public int getSize() {
         return size;
+    }
+    
+    public String getName(){
+    	return name;
+    }
+    
+    public void setName(String s){
+    	name = s;
     }
 }
