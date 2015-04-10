@@ -134,14 +134,6 @@ public class Client implements Runnable{
 	 */
 	public void setWinMsg(String msg){
 		this.winMsg = msg;	
-
-		
-		//Send if winner applicable
-		if(winMsg==null){
-			output.println("WINNER 0");
-		}else{
-			output.println("WINNER 1 "+winMsg);
-		}
 	}
 
 	/**
@@ -577,6 +569,13 @@ public class Client implements Runnable{
 
 					//Send the map
 					output.println(sendMap());
+					
+					//Send if winner applicable
+					if(winMsg==null){
+						output.println("WINNER 0");
+					}else{
+						output.println("WINNER 1 "+winMsg);
+					}
 					
 					//Send audio/music
 //					if(!newSFX.equals("")){

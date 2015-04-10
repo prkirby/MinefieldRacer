@@ -25,7 +25,9 @@ public class ConnectionThread implements Runnable{
 
 	private final int serverPort = 1111;
 
-	private final String ipAddress = "141.219.207.160";
+
+	private final String ipAddress = "minefieldracer.ddns.net";
+
 
 
 	private Socket socket = null;                                       //The client's socket
@@ -96,6 +98,7 @@ public class ConnectionThread implements Runnable{
 			try {
 
 				inn = input.readLine();
+				System.out.println(inn);
 				if((!checkDupe.equals(inn) && checkDupe.startsWith("TEXT")) || !checkDupe.startsWith("TEXT")){
 					checkDupe = inn;
 					Scanner scan = new Scanner(inn);
@@ -142,7 +145,7 @@ public class ConnectionThread implements Runnable{
 				//e.printStackTrace(); //pretend this doesn't happen
 				this.close();
 			}
-			sleep(4);
+			sleep(2);
 		}
 	}
 
