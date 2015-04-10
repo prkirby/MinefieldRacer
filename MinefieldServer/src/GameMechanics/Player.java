@@ -21,7 +21,7 @@ public class Player extends Entity{
 	private int flagIndex = 0;					//Index of the flag they are on
 	private int flagStreak = 0;
 	
-	private Powerup p = new GodMode(20);	//Should default to nopowerup, change for testing purposes
+	private Powerup p = new NoPowerup(10);		//Should default to nopowerup, change for testing purposes
 	private int points = 0;
 	private int highestStreak = 0;
 	private boolean amIVisible = true;
@@ -262,10 +262,20 @@ public class Player extends Entity{
 	}
 
 
+	/**
+	 *Gets player's points
+	 * @return
+	 * 		points
+	 */
 	public int getPoints() {
 		return points;
 	}
 
+	/**
+	 * Sets the player's winner points
+	 * @param newPoints
+	 * 			sets points
+	 */
 	public void setPoints(int newPoints) {
 		points = newPoints;
 	}
@@ -278,22 +288,38 @@ public class Player extends Entity{
 		points = 0;
 	}
 
+	//adds points for the player
 	public void addAPoint() {
 		points += 1;
 	}
-	
+	/**
+	 * Sets the player's powerup
+	 * @param power
+	 * 		power is the new powerup
+	 */
 	public void setPowerup(Powerup power){
 		p = power;
 	}
 	
+	//uses the pouwerup's ability
 	public void usePowerup(){
 		p.useAbility(this);
 	}
 	
+	/**
+	 * Gets the player's powerup
+	 * @return
+	 *  p, the player's powerup
+	 */
 	public Powerup getPowerup(){
 		return p;
 	}
 	
+	/**
+	 * Gets the player's visibility
+	 * @return
+	 * 	the visibility of the player to others
+	 */
 	public boolean getVisibility(){
 		return amIVisible;
 	}
@@ -308,9 +334,15 @@ public class Player extends Entity{
 			
 	}
 	
+	/**
+	 * Gets if the player is shielded
+	 * @return
+	 * 	amIshielded
+	 */
 	public boolean getAmIShielded(){
 		return amIShielded;
 	}
+	//switches the player's  shielded variable
 	public void switchShield(){
 		if(amIShielded){
 			amIShielded = false;
@@ -319,24 +351,32 @@ public class Player extends Entity{
 			amIShielded = true;
 		}
 	}
+	/**
+	 * Gets the player'sgod Status
+	 * @return
+	 * If the player is a god or not
+	 */
 	public boolean godStatus(){
 		return amIAGod;
 	}
-	
+	//sets the Player to being a god
 	public void setGodStatus(){
 		if(!amIAGod){
 			amIAGod = true;//one time transformation, can't go back
 		}
 	}
 	
+	//Gets rid of the player being a god
 	public void makeMortal(){
 		amIAGod = false; //reversed at end of match
 	}
 	
+	//makes the nuke true so that we can use it
 	public void armNuke(){
 		nukeArmed = true;
 	}
 	
+	//returns the value of if we have a used nuke or not
 	public boolean getNukeStatus(){
 		return nukeArmed;
 	}
@@ -346,10 +386,12 @@ public class Player extends Entity{
 		nukeArmed = false;
 	}
 	
+	//method used for drawing the nuke message
 	public boolean getDrawNuke(){
 		return drawNuke;
 	}
 	
+	//draws the nuke message for 4 seconds
 	public void drawNuke(){
 		Timer t = new Timer();
 		drawNuke = true;
@@ -357,6 +399,7 @@ public class Player extends Entity{
 	}
 	
 
+	//gets rid of the message after 4 seconds
 	class drawNukeNotification extends TimerTask{
 		@Override
 		public void run() {
@@ -365,14 +408,17 @@ public class Player extends Entity{
 		
 	}
 	
+	//returns the flag streak
 	public int getFlagStreak() {
 		return flagStreak;
 	}
 	
+	//increments the flag streak
 	public void incrementFlagStreak() {
 		flagStreak += 1;
 	}
 	
+	//resets the flag streak
 	public void resetFlagStreak() {
 		flagStreak = 0;
 	}

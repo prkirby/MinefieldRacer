@@ -29,10 +29,9 @@ public abstract class DrawEntity {
     public static void draw(Graphics g, Entity e, Entity p, int width, int height, String name){
     	int startX = (e.getX() * 50 + (width / 2 - 25) - p.getX() * 50)-2;
     	int startY = ((height / 2 - 25) - (p.getY() * 50 - e.getY() * 50))-2;
+
     	
-//        g.setColor(e.getColor());
-//        g.fillOval(startX, startY, e.getSize()*10, e.getSize()*10);
-        
+        //sets up drawing
         Graphics2D g2d = (Graphics2D)g;
         //body
         g.setColor(Color.black);

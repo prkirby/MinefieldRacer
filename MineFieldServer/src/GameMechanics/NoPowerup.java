@@ -4,13 +4,13 @@ public class NoPowerup extends Powerup{
 
 	public NoPowerup(int d) {
 		super(d);
-		// TODO Auto-generated constructor stub
 	}
 
+	//does nothing
 	public void useAbility(){
-		System.out.println("I have no powerup");
+		
 	}
-	
+	//returns null
 	public String getPowerupName(){
 		return "NULL";
 	}

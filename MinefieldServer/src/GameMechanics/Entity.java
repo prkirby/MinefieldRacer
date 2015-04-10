@@ -6,7 +6,8 @@ package GameMechanics;
  * @author Joseph Ryan
  */
 public class Entity {
-    
+   
+	//variables for all players
     private int x, y;           		//Entity Coordinates
     private final int size = 5; 		//The size of the entity
     private String name = "undefined";
@@ -62,16 +63,40 @@ public class Entity {
         return size;
     }
     
+    /**
+     * Returns the name of the entity
+     * @return 
+     *          The name of the entity
+     */
     public String getName(){
     	return name;
     }
     
+
+    /**
+     * Sets the entity's name
+     * @param y 
+     *          The name we want to set
+     */
     public void setName(String s){
     	name = s;
     }
+    
+
+    /**
+     * Sets the entity's god mode
+     * @param y 
+     *          The value of godmode
+     */
     public void setGodMode(Boolean b){
     	godMode = b;
     }
+    
+    /**
+     * Returns if the entity is in godmode
+     * @return 
+     *          godmode
+     */
     public Boolean getGodMode(){
     	return godMode;
     }

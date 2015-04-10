@@ -1,5 +1,6 @@
 package GameMechanics;
 
+//All powerups inherit this structure
 public class Powerup {
 	int duration;
 	public Powerup(int d){
@@ -11,6 +12,7 @@ public class Powerup {
 		
 	}
 	
+	//return the name of the powerup
 	public String getPowerupName(){
 		return "";	
 	}

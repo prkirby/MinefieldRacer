@@ -194,7 +194,6 @@ public class Client implements Runnable{
 	 * 			The new name
 	 */
 	public void setName(String s){
-		//System.out.println("we read their name");
 		name = s;
 	}
 	
@@ -313,7 +312,6 @@ public class Client implements Runnable{
 	 */
 	private boolean changeHasBeen(boolean currVal) {
 		if (currVal == false) {
-			//System.out.println("Player's points: " + player.getPoints());
 			return true;
 		}
 		return false;
@@ -326,7 +324,7 @@ public class Client implements Runnable{
 	 * @param y
 	 * 			The y coord
 	 * @return
-	 * 			The number of surronding open blocks
+	 * 			The number of surrounding open blocks
 	 */
 	private int surroundingRevealed(int x, int y){
 		int count = 0;
