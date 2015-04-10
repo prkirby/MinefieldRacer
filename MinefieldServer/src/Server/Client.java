@@ -186,7 +186,7 @@ public class Client implements Runnable{
 	 * 			The new name
 	 */
 	public void setName(String s){
-		System.out.println("we read their name");
+		//System.out.println("we read their name");
 		name = s;
 	}
 	
@@ -377,6 +377,7 @@ public class Client implements Runnable{
 	 */
 	public void soundEffect(String sfx) {
 		this.newSFX = "AUDIO SFX " +sfx;
+		output.println(newSFX);
 	}
 
 	/**
@@ -385,6 +386,7 @@ public class Client implements Runnable{
 	 */
 	public void music(String song) {
 		newMusic = "AUDIO MUSIC " + song;
+		output.println(newMusic);
 	}
 	
 	//powerups
@@ -578,20 +580,20 @@ public class Client implements Runnable{
 					}
 					
 					//Send audio/music
-					if(!newSFX.equals("")){
-						output.println(newSFX);
-						newSFX = "";
-					}
-					if(!newMusic.equals("")){
-						output.println(newMusic);
-						newMusic = "";
-					}
+//					if(!newSFX.equals("")){
+//						output.println(newSFX);
+//						newSFX = "";
+//					}
+//					if(!newMusic.equals("")){
+//						output.println(newMusic);
+//						newMusic = "";
+//					}
 					
 				}catch(NullPointerException e){
 				}catch(java.lang.ArrayIndexOutOfBoundsException e){
 				}catch(Exception e){break;}	
 				
-				this.sleep(5);
+				this.sleep(8);
 			}
 		}
 
