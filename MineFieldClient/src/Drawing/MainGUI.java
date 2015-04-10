@@ -324,7 +324,7 @@ public class MainGUI {
 					if(fullMap!=null)
 						DrawMap.draw(g, mapName, fullMap, mainpanel.getWidth(), mainpanel.getHeight());
 					for(int e = 1; e < temp.size(); e++){
-						DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName);
+						DrawEntity.draw(g, temp.get(e),mainpanel.getWidth(), mainpanel.getHeight(),mapName, fullMap.length, fullMap[0].length);
 	
 					}
 					DrawHUD.draw(g, mainpanel.getWidth(), mainpanel.getHeight(), "NEXT RACE IN: "+time);
